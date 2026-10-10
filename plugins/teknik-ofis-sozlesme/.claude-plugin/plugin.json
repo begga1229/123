@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-sozlesme",
+  "version": "1.0.0",
+  "description": "Sözleşme ve Hak Talepleri: Sözleşme madde analizi, değişiklik emirleri (change order), hak talebi (claim) dosyası, yazışma, izin ve uyum takibi.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}

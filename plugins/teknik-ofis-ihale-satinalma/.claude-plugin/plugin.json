@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-ihale-satinalma",
+  "version": "1.0.0",
+  "description": "İhale ve Satınalma: Teklif karşılaştırma, taşeron ön yeterlilik, malzeme tedarik ve sevkiyat takibi, ihale.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}

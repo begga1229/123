@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-bim",
+  "version": "1.0.0",
+  "description": "BIM Koordinasyon: Clash detection, BIM doğrulama, IDS kontrolü, sınıflandırma, dijital ikiz.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}

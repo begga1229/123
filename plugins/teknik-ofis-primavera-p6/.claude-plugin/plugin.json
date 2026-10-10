@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-primavera-p6",
+  "version": "1.0.0",
+  "description": "Primavera P6 .xer iş programı analizi: kritik yol, bolluk (float), EVM, baseline-güncel karşılaştırma, program kalite kontrolü, XER düzenleme.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}

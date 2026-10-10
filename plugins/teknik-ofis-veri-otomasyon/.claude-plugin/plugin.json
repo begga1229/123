@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-veri-otomasyon",
+  "version": "1.0.0",
+  "description": "Veri, Otomasyon ve Yapay Zekâ: İnşaat verisi için ETL, Excel/CSV/SQL işleme, n8n/Airflow otomasyonları, ML tahmin modelleri, RAG.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-cwicr",
+  "version": "1.0.0",
+  "description": "CWICR Birim Fiyat Veritabanı Araçları: DDC CWICR açık maliyet veritabanı ile maliyet hesabı, kaynak analizi, fiyat güncelleme, eskalasyon. Veritabanı CC BY-NC 4.0: ticari kullanım için DDC lisansı gerekir.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,84 @@
+{
+  "name": "teknik-ofis",
+  "owner": {
+    "name": "begga1229"
+  },
+  "metadata": {
+    "description": "İnşaat teknik ofisi için skill ve araçlar: metraj, bütçe, hakediş, planlama, sözleşme, ihale, doküman kontrol."
+  },
+  "plugins": [
+    {
+      "name": "teknik-ofis-metraj",
+      "source": "./plugins/teknik-ofis-metraj",
+      "description": "Metraj / Keşif (QTO, BOQ) — 19 skill. Çizim, PDF, DWG, RVT ve IFC'den metraj çıkarma, birim dönüşümü, fire hesabı, Excel'e aktarım."
+    },
+    {
+      "name": "teknik-ofis-butce",
+      "source": "./plugins/teknik-ofis-butce",
+      "description": "Bütçe, Maliyet ve Hakediş — 22 skill. Yaklaşık maliyet, birim fiyat, bütçe-gerçekleşen sapması, nakit akışı, hakediş, teminat kesintisi, КС-2/КС-3."
+    },
+    {
+      "name": "teknik-ofis-planlama",
+      "source": "./plugins/teknik-ofis-planlama",
+      "description": "İş Programı ve Planlama — 29 skill. Kritik yol, gecikme analizi, look-ahead, kaynak dengeleme, 4D/5D, Gantt, ilerleme takibi, hava etkisi."
+    },
+    {
+      "name": "teknik-ofis-sozlesme",
+      "source": "./plugins/teknik-ofis-sozlesme",
+      "description": "Sözleşme ve Hak Talepleri — 11 skill. Sözleşme madde analizi, değişiklik emirleri (change order), hak talebi (claim) dosyası, yazışma, izin ve uyum takibi."
+    },
+    {
+      "name": "teknik-ofis-ihale-satinalma",
+      "source": "./plugins/teknik-ofis-ihale-satinalma",
+      "description": "İhale ve Satınalma — 9 skill. Teklif karşılaştırma, taşeron ön yeterlilik, malzeme tedarik ve sevkiyat takibi, ihale."
+    },
+    {
+      "name": "teknik-ofis-dokuman",
+      "source": "./plugins/teknik-ofis-dokuman",
+      "description": "Doküman Kontrol ve Raporlar — 17 skill. RFI, submittal, toplantı tutanağı, günlük rapor, as-built, garanti, kapanış; Word/Excel/PDF/PPT üretimi."
+    },
+    {
+      "name": "teknik-ofis-saha-kalite-isg",
+      "source": "./plugins/teknik-ofis-saha-kalite-isg",
+      "description": "Saha, Kalite ve İSG — 18 skill. Punch list, kalite kontrol, iş güvenliği denetimi, olay raporu, ilerleme fotoğrafı analizi, saha raporları."
+    },
+    {
+      "name": "teknik-ofis-raporlama-risk",
+      "source": "./plugins/teknik-ofis-raporlama-risk",
+      "description": "Yönetim Raporu ve Risk — 12 skill. KPI panoları, yönetici özeti, portföy, senaryo analizi, risk değerlendirme."
+    },
+    {
+      "name": "teknik-ofis-bim",
+      "source": "./plugins/teknik-ofis-bim",
+      "description": "BIM Koordinasyon — 16 skill. Clash detection, BIM doğrulama, IDS kontrolü, sınıflandırma, dijital ikiz."
+    },
+    {
+      "name": "teknik-ofis-surdurulebilirlik",
+      "source": "./plugins/teknik-ofis-surdurulebilirlik",
+      "description": "Karbon ve Sürdürülebilirlik — 5 skill. CO2 / gömülü karbon, yaşam döngüsü karbon hesabı, ESG."
+    },
+    {
+      "name": "teknik-ofis-cwicr",
+      "source": "./plugins/teknik-ofis-cwicr",
+      "description": "CWICR Birim Fiyat Veritabanı Araçları — 31 skill. DDC CWICR açık maliyet veritabanı ile maliyet hesabı, kaynak analizi, fiyat güncelleme, eskalasyon. Veritabanı CC BY-NC 4.0: ticari kullanım için DDC lisansı gerekir."
+    },
+    {
+      "name": "teknik-ofis-veri-otomasyon",
+      "source": "./plugins/teknik-ofis-veri-otomasyon",
+      "description": "Veri, Otomasyon ve Yapay Zekâ — 53 skill. İnşaat verisi için ETL, Excel/CSV/SQL işleme, n8n/Airflow otomasyonları, ML tahmin modelleri, RAG."
+    },
+    {
+      "name": "teknik-ofis-primavera-p6",
+      "source": "./plugins/teknik-ofis-primavera-p6",
+      "description": "Primavera P6 XER analizi (MCP sunucusu, yerelde uvx ile çalışır): kritik yol, float, EVM, gecikme karşılaştırma."
+    },
+    {
+      "name": "construction",
+      "source": {
+        "source": "github",
+        "repo": "dleerdefi/claude-code-construction"
+      },
+      "description": "Proje mühendisi skill'leri: çizim seti bölme, şartname bölme, kapı/pencere listesi çıkarma, submittal log, teklif tablosu ve değerlendirme, RFI, taşeron sözleşmesi, etiket sayımı ile metraj."
+    }
+  ]
+}

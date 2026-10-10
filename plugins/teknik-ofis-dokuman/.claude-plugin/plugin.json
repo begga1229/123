@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-dokuman",
+  "version": "1.0.0",
+  "description": "Doküman Kontrol ve Raporlar: RFI, submittal, toplantı tutanağı, günlük rapor, as-built, garanti, kapanış; Word/Excel/PDF/PPT üretimi.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}

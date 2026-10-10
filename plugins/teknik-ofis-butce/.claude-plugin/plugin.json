@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-butce",
+  "version": "1.0.0",
+  "description": "Bütçe, Maliyet ve Hakediş: Yaklaşık maliyet, birim fiyat, bütçe-gerçekleşen sapması, nakit akışı, hakediş, teminat kesintisi, КС-2/КС-3.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "pyp6xer": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/paulieb89/pyp6xer-mcp@5a88c0c1e7f4629f10268184d67035b2dc813a5a",
+        "pyp6xer-mcp"
+      ],
+      "env": {
+        "FASTMCP_TRANSPORT": "stdio"
+      }
+    }
+  }
+}

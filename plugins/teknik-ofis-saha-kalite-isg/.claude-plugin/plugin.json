@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-saha-kalite-isg",
+  "version": "1.0.0",
+  "description": "Saha, Kalite ve İSG: Punch list, kalite kontrol, iş güvenliği denetimi, olay raporu, ilerleme fotoğrafı analizi, saha raporları.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-raporlama-risk",
+  "version": "1.0.0",
+  "description": "Yönetim Raporu ve Risk: KPI panoları, yönetici özeti, portföy, senaryo analizi, risk değerlendirme.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}

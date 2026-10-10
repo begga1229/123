@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-planlama",
+  "version": "1.0.0",
+  "description": "İş Programı ve Planlama: Kritik yol, gecikme analizi, look-ahead, kaynak dengeleme, 4D/5D, Gantt, ilerleme takibi, hava etkisi.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "teknik-ofis-metraj",
+  "version": "1.0.0",
+  "description": "Metraj / Keşif (QTO, BOQ): Çizim, PDF, DWG, RVT ve IFC'den metraj çıkarma, birim dönüşümü, fire hesabı, Excel'e aktarım.",
+  "author": {
+    "name": "begga1229"
+  },
+  "license": "MIT"
+}
