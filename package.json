@@ -1,0 +1,16 @@
+{
+  "name": "formula-studio",
+  "version": "1.0.0",
+  "description": "Offline Excel formula assistant: write what you need in Turkish or Russian, get the formula, explanation and apply it to your workbook.",
+  "private": true,
+  "scripts": {
+    "test": "node tests/run.js",
+    "test:verbose": "node tests/run.js --verbose",
+    "fixtures": "node tests/fixtures/make-samples.js",
+    "smoke": "node tests/smoke.js",
+    "serve": "python3 -m http.server 8765 --bind 127.0.0.1",
+    "start": "electron ."
+  },
+  "main": "electron/main.js",
+  "license": "MIT"
+}
