@@ -1,0 +1,506 @@
+[
+  {
+    "id": "d-001",
+    "en": "=SUMIF(A1:A5,\">3,5\")",
+    "tr": "=ETOPLA(A1:A5;\">3,5\")",
+    "ru": "=СУММЕСЛИ(A1:A5;\">3,5\")",
+    "note": "separator inside a string literal stays"
+  },
+  {
+    "id": "d-002",
+    "en": "=ROUND(A1*1.5,2)",
+    "tr": "=YUVARLA(A1*1,5;2)",
+    "ru": "=ОКРУГЛ(A1*1,5;2)",
+    "note": "decimal point ↔ decimal comma"
+  },
+  {
+    "id": "d-003",
+    "en": "=TEXTJOIN(\", \",TRUE,A1:A5)",
+    "tr": "=METİNBİRLEŞTİR(\", \";DOĞRU;A1:A5)",
+    "ru": "=ОБЪЕДИНИТЬ(\", \";ИСТИНА;A1:A5)",
+    "note": "string with separator + boolean"
+  },
+  {
+    "id": "d-004",
+    "en": "=IF(A1>100,\"Yüksek\",\"Düşük\")",
+    "tr": "=EĞER(A1>100;\"Yüksek\";\"Düşük\")",
+    "ru": "=ЕСЛИ(A1>100;\"Yüksek\";\"Düşük\")",
+    "note": "IF with Turkish strings"
+  },
+  {
+    "id": "d-005",
+    "en": "=VLOOKUP(A2,Ürünler!$A$2:$C$50,3,FALSE)",
+    "tr": "=DÜŞEYARA(A2;Ürünler!$A$2:$C$50;3;YANLIŞ)",
+    "ru": "=ВПР(A2;Ürünler!$A$2:$C$50;3;ЛОЖЬ)",
+    "note": "VLOOKUP with FALSE and a sheet ref"
+  },
+  {
+    "id": "d-006",
+    "en": "=XLOOKUP(A2,Товары!$A$2:$A$50,Товары!$C$2:$C$50,\"Не найдено\")",
+    "tr": "=ÇAPRAZARA(A2;Товары!$A$2:$A$50;Товары!$C$2:$C$50;\"Не найдено\")",
+    "ru": "=ПРОСМОТРX(A2;Товары!$A$2:$A$50;Товары!$C$2:$C$50;\"Не найдено\")",
+    "note": "XLOOKUP with Cyrillic sheet name"
+  },
+  {
+    "id": "d-007",
+    "en": "=DATEDIF(K2,TODAY(),\"Y\")",
+    "tr": "=ETARİHLİ(K2;BUGÜN();\"Y\")",
+    "ru": "=РАЗНДАТ(K2;СЕГОДНЯ();\"Y\")",
+    "note": "DATEDIF + TODAY nested"
+  },
+  {
+    "id": "d-008",
+    "en": "=COUNTA(A2:A200)",
+    "tr": "=BAĞ_DEĞ_DOLU_SAY(A2:A200)",
+    "ru": "=СЧЁТЗ(A2:A200)",
+    "note": "COUNTA with underscore name"
+  },
+  {
+    "id": "d-009",
+    "en": "=SUMPRODUCT(C2:C200,D2:D200)",
+    "tr": "=TOPLA.ÇARPIM(C2:C200;D2:D200)",
+    "ru": "=СУММПРОИЗВ(C2:C200;D2:D200)",
+    "note": "name with a dot"
+  },
+  {
+    "id": "d-010",
+    "en": "=IFERROR(E2/C2,\"\")",
+    "tr": "=EĞERHATA(E2/C2;\"\")",
+    "ru": "=ЕСЛИОШИБКА(E2/C2;\"\")",
+    "note": "IFERROR with empty string"
+  },
+  {
+    "id": "d-011",
+    "en": "=SUMIFS(E2:E200,B2:B200,\"Gıda\",H2:H200,\"Ankara\")",
+    "tr": "=ÇOKETOPLA(E2:E200;B2:B200;\"Gıda\";H2:H200;\"Ankara\")",
+    "ru": "=СУММЕСЛИМН(E2:E200;B2:B200;\"Gıda\";H2:H200;\"Ankara\")",
+    "note": "SUMIFS"
+  },
+  {
+    "id": "d-012",
+    "en": "=IFS(E2>1000,\"A\",E2>500,\"B\",TRUE,\"C\")",
+    "tr": "=ÇOKEĞER(E2>1000;\"A\";E2>500;\"B\";DOĞRU;\"C\")",
+    "ru": "=ЕСЛИМН(E2>1000;\"A\";E2>500;\"B\";ИСТИНА;\"C\")",
+    "note": "IFS with TRUE"
+  },
+  {
+    "id": "d-013",
+    "en": "=IF(AND(B2=\"Gıda\",E2>100),\"Kontrol\",\"\")",
+    "tr": "=EĞER(VE(B2=\"Gıda\";E2>100);\"Kontrol\";\"\")",
+    "ru": "=ЕСЛИ(И(B2=\"Gıda\";E2>100);\"Kontrol\";\"\")",
+    "note": "nested AND"
+  },
+  {
+    "id": "d-014",
+    "en": "=IF(OR(H2=\"İstanbul\",H2=\"Ankara\"),1,0)",
+    "tr": "=EĞER(YADA(H2=\"İstanbul\";H2=\"Ankara\");1;0)",
+    "ru": "=ЕСЛИ(ИЛИ(H2=\"İstanbul\";H2=\"Ankara\");1;0)",
+    "note": "nested OR (Turkish Excel: YADA)"
+  },
+  {
+    "id": "d-015",
+    "en": "=INDEX(Ürünler!$C$2:$C$50,MATCH(A2,Ürünler!$A$2:$A$50,0))",
+    "tr": "=İNDİS(Ürünler!$C$2:$C$50;KAÇINCI(A2;Ürünler!$A$2:$A$50;0))",
+    "ru": "=ИНДЕКС(Ürünler!$C$2:$C$50;ПОИСКПОЗ(A2;Ürünler!$A$2:$A$50;0))",
+    "note": "INDEX/MATCH"
+  },
+  {
+    "id": "d-016",
+    "en": "=LEFT(L2,FIND(\"@\",L2)-1)",
+    "tr": "=SOLDAN(L2;BUL(\"@\";L2)-1)",
+    "ru": "=ЛЕВСИМВ(L2;НАЙТИ(\"@\";L2)-1)",
+    "note": "LEFT/FIND"
+  },
+  {
+    "id": "d-017",
+    "en": "=MID(L2,FIND(\"@\",L2)+1,255)",
+    "tr": "=PARÇAAL(L2;BUL(\"@\";L2)+1;255)",
+    "ru": "=ПСТР(L2;НАЙТИ(\"@\";L2)+1;255)",
+    "note": "MID/FIND"
+  },
+  {
+    "id": "d-018",
+    "en": "=TRIM(RIGHT(SUBSTITUTE(M2,\" \",REPT(\" \",100)),100))",
+    "tr": "=KIRP(SAĞDAN(YERİNEKOY(M2;\" \";YİNELE(\" \";100));100))",
+    "ru": "=СЖПРОБЕЛЫ(ПРАВСИМВ(ПОДСТАВИТЬ(M2;\" \";ПОВТОР(\" \";100));100))",
+    "note": "deeply nested text functions"
+  },
+  {
+    "id": "d-019",
+    "en": "=EOMONTH(F2,-1)+1",
+    "tr": "=SERİAY(F2;-1)+1",
+    "ru": "=КОНМЕСЯЦА(F2;-1)+1",
+    "note": "negative argument + operator after call"
+  },
+  {
+    "id": "d-020",
+    "en": "=EDATE(F2,12*2)",
+    "tr": "=SERİTARİH(F2;12*2)",
+    "ru": "=ДАТАМЕС(F2;12*2)",
+    "note": "arithmetic inside argument"
+  },
+  {
+    "id": "d-021",
+    "en": "=ROUNDUP(MONTH(F2)/3,0)",
+    "tr": "=YUKARIYUVARLA(AY(F2)/3;0)",
+    "ru": "=ОКРУГЛВВЕРХ(МЕСЯЦ(F2)/3;0)",
+    "note": "quarter formula"
+  },
+  {
+    "id": "d-022",
+    "en": "=TEXT(F2,\"dddd\")",
+    "tr": "=METNEÇEVİR(F2;\"dddd\")",
+    "ru": "=ТЕКСТ(F2;\"dddd\")",
+    "note": "TEXT with format string"
+  },
+  {
+    "id": "d-023",
+    "en": "=NETWORKDAYS(A2,B2)",
+    "tr": "=TAMİŞGÜNÜ(A2;B2)",
+    "ru": "=ЧИСТРАБДНИ(A2;B2)",
+    "note": "NETWORKDAYS"
+  },
+  {
+    "id": "d-024",
+    "en": "=WORKDAY(F2,10)",
+    "tr": "=İŞGÜNÜ(F2;10)",
+    "ru": "=РАБДЕНЬ(F2;10)",
+    "note": "WORKDAY"
+  },
+  {
+    "id": "d-025",
+    "en": "=WEEKDAY(F2,2)>5",
+    "tr": "=HAFTANINGÜNÜ(F2;2)>5",
+    "ru": "=ДЕНЬНЕД(F2;2)>5",
+    "note": "comparison after a call"
+  },
+  {
+    "id": "d-026",
+    "en": "=E2/SUM($E$2:$E$200)",
+    "tr": "=E2/TOPLA($E$2:$E$200)",
+    "ru": "=E2/СУММ($E$2:$E$200)",
+    "note": "absolute refs"
+  },
+  {
+    "id": "d-027",
+    "en": "=RANK.EQ(E2,$E$2:$E$200,0)",
+    "tr": "=RANK.EŞİT(E2;$E$2:$E$200;0)",
+    "ru": "=РАНГ.РВ(E2;$E$2:$E$200;0)",
+    "note": "dotted name in all dialects"
+  },
+  {
+    "id": "d-028",
+    "en": "=SUMPRODUCT(1/COUNTIF(A2:A200,A2:A200))",
+    "tr": "=TOPLA.ÇARPIM(1/EĞERSAY(A2:A200;A2:A200))",
+    "ru": "=СУММПРОИЗВ(1/СЧЁТЕСЛИ(A2:A200;A2:A200))",
+    "note": "classic count unique"
+  },
+  {
+    "id": "d-029",
+    "en": "=ROWS(UNIQUE(A2:A200))",
+    "tr": "=SATIRSAY(BENZERSİZ(A2:A200))",
+    "ru": "=ЧСТРОК(УНИК(A2:A200))",
+    "note": "modern count unique"
+  },
+  {
+    "id": "d-030",
+    "en": "=FILTER(A2:M200,B2:B200=\"Gıda\",\"\")",
+    "tr": "=FİLTRE(A2:M200;B2:B200=\"Gıda\";\"\")",
+    "ru": "=ФИЛЬТР(A2:M200;B2:B200=\"Gıda\";\"\")",
+    "note": "FILTER with comparison argument"
+  },
+  {
+    "id": "d-031",
+    "en": "=SORT(E2:E200,1,-1)",
+    "tr": "=SIRALA(E2:E200;1;-1)",
+    "ru": "=СОРТ(E2:E200;1;-1)",
+    "note": "SORT with negative number"
+  },
+  {
+    "id": "d-032",
+    "en": "=PMT(24%/12,36,-100000)",
+    "tr": "=DEVRESEL_ÖDEME(24%/12;36;-100000)",
+    "ru": "=ПЛТ(24%/12;36;-100000)",
+    "note": "PMT with percent and unary minus"
+  },
+  {
+    "id": "d-033",
+    "en": "=SUM('Satış Raporu'!A1:A10)",
+    "tr": "=TOPLA('Satış Raporu'!A1:A10)",
+    "ru": "=СУММ('Satış Raporu'!A1:A10)",
+    "note": "quoted sheet name with space"
+  },
+  {
+    "id": "d-034",
+    "en": "=IF(ISERROR(A1),#N/A,A1)",
+    "tr": "=EĞER(EHATALIYSA(A1);#YOK;A1)",
+    "ru": "=ЕСЛИ(ЕОШИБКА(A1);#Н/Д;A1)",
+    "note": "#N/A error literal"
+  },
+  {
+    "id": "d-035",
+    "en": "=IFNA(VLOOKUP(A2,Products!$A$2:$C$50,3,FALSE),\"\")",
+    "tr": "=EĞERYOKSA(DÜŞEYARA(A2;Products!$A$2:$C$50;3;YANLIŞ);\"\")",
+    "ru": "=ЕСНД(ВПР(A2;Products!$A$2:$C$50;3;ЛОЖЬ);\"\")",
+    "note": "IFNA + VLOOKUP + FALSE"
+  },
+  {
+    "id": "d-036",
+    "en": "=SUM({1,2;3,4})",
+    "tr": "=TOPLA({1\\2;3\\4})",
+    "ru": "=СУММ({1;2:3;4})",
+    "note": "array constant separators"
+  },
+  {
+    "id": "d-037",
+    "en": "=A1*2.5+B1/0.5",
+    "tr": "=A1*2,5+B1/0,5",
+    "ru": "=A1*2,5+B1/0,5",
+    "note": "decimals without functions"
+  },
+  {
+    "id": "d-038",
+    "en": "=AND(A1>=1.5,A1<=2.5)",
+    "tr": "=VE(A1>=1,5;A1<=2,5)",
+    "ru": "=И(A1>=1,5;A1<=2,5)",
+    "note": "decimals as arguments"
+  },
+  {
+    "id": "d-039",
+    "en": "=MAXIFS(E2:E200,B2:B200,\"Gıda\")",
+    "tr": "=ÇOKEĞERMAK(E2:E200;B2:B200;\"Gıda\")",
+    "ru": "=МАКСЕСЛИ(E2:E200;B2:B200;\"Gıda\")",
+    "note": "MAXIFS"
+  },
+  {
+    "id": "d-040",
+    "en": "=COUNTIFS(H2:H200,\"İstanbul\",I2:I200,\"Ödendi\")",
+    "tr": "=ÇOKEĞERSAY(H2:H200;\"İstanbul\";I2:I200;\"Ödendi\")",
+    "ru": "=СЧЁТЕСЛИМН(H2:H200;\"İstanbul\";I2:I200;\"Ödendi\")",
+    "note": "COUNTIFS"
+  },
+  {
+    "id": "d-041",
+    "en": "=STDEV.S(E2:E200)",
+    "tr": "=STDSAPMA.S(E2:E200)",
+    "ru": "=СТАНДОТКЛОН.В(E2:E200)",
+    "note": "STDEV.S"
+  },
+  {
+    "id": "d-042",
+    "en": "=UPPER(TRIM(H2))",
+    "tr": "=BÜYÜKHARF(KIRP(H2))",
+    "ru": "=ПРОПИСН(СЖПРОБЕЛЫ(H2))",
+    "note": "nested text functions"
+  },
+  {
+    "id": "d-043",
+    "en": "=ISNUMBER(SEARCH(\"kalem\",A2))",
+    "tr": "=ESAYIYSA(MBUL(\"kalem\";A2))",
+    "ru": "=ЕЧИСЛО(ПОИСК(\"kalem\";A2))",
+    "note": "ISNUMBER/SEARCH"
+  },
+  {
+    "id": "d-044",
+    "en": "=TEXT(E2,\"0.00\")",
+    "tr": "=METNEÇEVİR(E2;\"0.00\")",
+    "ru": "=ТЕКСТ(E2;\"0.00\")",
+    "note": "format string keeps its dot"
+  },
+  {
+    "id": "d-045",
+    "en": "=IF(A1=\"a;b\",\"x\",\"y\")",
+    "tr": "=EĞER(A1=\"a;b\";\"x\";\"y\")",
+    "ru": "=ЕСЛИ(A1=\"a;b\";\"x\";\"y\")",
+    "note": "semicolon inside a string"
+  },
+  {
+    "id": "d-046",
+    "en": "=IF(A1=TRUE,FALSE,TRUE)",
+    "tr": "=EĞER(A1=DOĞRU;YANLIŞ;DOĞRU)",
+    "ru": "=ЕСЛИ(A1=ИСТИНА;ЛОЖЬ;ИСТИНА)",
+    "note": "booleans everywhere"
+  },
+  {
+    "id": "d-047",
+    "en": "=MOD(C2,3)+POWER(C2,3)-SQRT(E2)",
+    "tr": "=MOD(C2;3)+KUVVET(C2;3)-KAREKÖK(E2)",
+    "ru": "=ОСТАТ(C2;3)+СТЕПЕНЬ(C2;3)-КОРЕНЬ(E2)",
+    "note": "MOD keeps its EN name in TR"
+  },
+  {
+    "id": "d-048",
+    "en": "=LARGE(E2:E200,3)-SMALL(E2:E200,2)",
+    "tr": "=BÜYÜK(E2:E200;3)-KÜÇÜK(E2:E200;2)",
+    "ru": "=НАИБОЛЬШИЙ(E2:E200;3)-НАИМЕНЬШИЙ(E2:E200;2)",
+    "note": "LARGE/SMALL"
+  },
+  {
+    "id": "d-049",
+    "en": "=DATE(2024,5,15)",
+    "tr": "=TARİH(2024;5;15)",
+    "ru": "=ДАТА(2024;5;15)",
+    "note": "DATE"
+  },
+  {
+    "id": "d-050",
+    "en": "=NPV(10%,B2:B10)+IRR(B2:B10)",
+    "tr": "=NBD(10%;B2:B10)+İÇ_VERİM_ORANI(B2:B10)",
+    "ru": "=ЧПС(10%;B2:B10)+ВСД(B2:B10)",
+    "note": "finance names"
+  },
+  {
+    "id": "d-051",
+    "en": "='Satış Raporu'!A1+Продажи!B2",
+    "tr": "='Satış Raporu'!A1+Продажи!B2",
+    "ru": "='Satış Raporu'!A1+Продажи!B2",
+    "note": "sheet refs are identical in every dialect"
+  },
+  {
+    "id": "d-052",
+    "en": "=SUM(Ürünler!A:A)",
+    "tr": "=TOPLA(Ürünler!A:A)",
+    "ru": "=СУММ(Ürünler!A:A)",
+    "note": "whole column on another sheet"
+  },
+  {
+    "id": "d-053",
+    "en": "=COUNTBLANK(H2:H200)+COUNT(C2:C200)",
+    "tr": "=BOŞLUKSAY(H2:H200)+BAĞ_DEĞ_SAY(C2:C200)",
+    "ru": "=СЧИТАТЬПУСТОТЫ(H2:H200)+СЧЁТ(C2:C200)",
+    "note": "COUNTBLANK/COUNT"
+  },
+  {
+    "id": "d-054",
+    "en": "=MEDIAN(E2:E200)",
+    "tr": "=ORTANCA(E2:E200)",
+    "ru": "=МЕДИАНА(E2:E200)",
+    "note": "MEDIAN"
+  },
+  {
+    "id": "d-055",
+    "en": "=SEQUENCE(10)",
+    "tr": "=SIRALI(10)",
+    "ru": "=ПОСЛЕД(10)",
+    "note": "SEQUENCE"
+  },
+  {
+    "id": "d-056",
+    "en": "=IF(E2<TODAY(),\"Gecikti\",\"\")",
+    "tr": "=EĞER(E2<BUGÜN();\"Gecikti\";\"\")",
+    "ru": "=ЕСЛИ(E2<СЕГОДНЯ();\"Gecikti\";\"\")",
+    "note": "TODAY with no args"
+  },
+  {
+    "id": "d-057",
+    "en": "=ROUNDDOWN(E2*1.18,1)",
+    "tr": "=AŞAĞIYUVARLA(E2*1,18;1)",
+    "ru": "=ОКРУГЛВНИЗ(E2*1,18;1)",
+    "note": "decimal inside an argument expression"
+  },
+  {
+    "id": "d-058",
+    "en": "=PROPER(LOWER(M2))",
+    "tr": "=YAZIM.DÜZENİ(KÜÇÜKHARF(M2))",
+    "ru": "=ПРОПНАЧ(СТРОЧН(M2))",
+    "note": "PROPER/LOWER"
+  },
+  {
+    "id": "d-059",
+    "en": "=VALUE(C2)*ABS(J2)",
+    "tr": "=SAYIYAÇEVİR(C2)*MUTLAK(J2)",
+    "ru": "=ЗНАЧЕН(C2)*ABS(J2)",
+    "note": "ABS keeps its EN name in RU"
+  },
+  {
+    "id": "d-060",
+    "en": "=NOW()-INT(NOW())",
+    "tr": "=ŞİMDİ()-TAMSAYI(ŞİMDİ())",
+    "ru": "=ТДАТА()-ЦЕЛОЕ(ТДАТА())",
+    "note": "NOW/INT"
+  },
+  {
+    "id": "d-061",
+    "en": "=A1&\" \"&B1",
+    "tr": "=A1&\" \"&B1",
+    "ru": "=A1&\" \"&B1",
+    "note": "operators only, identical everywhere"
+  },
+  {
+    "id": "d-062",
+    "en": "=WEEKNUM(F2)&\"/\"&YEAR(F2)",
+    "tr": "=HAFTASAY(F2)&\"/\"&YIL(F2)",
+    "ru": "=НОМНЕДЕЛИ(F2)&\"/\"&ГОД(F2)",
+    "note": "concatenation of calls"
+  },
+  {
+    "id": "d-063",
+    "en": "=HLOOKUP(\"x\",A1:Z2,2,FALSE)",
+    "tr": "=YATAYARA(\"x\";A1:Z2;2;YANLIŞ)",
+    "ru": "=ГПР(\"x\";A1:Z2;2;ЛОЖЬ)",
+    "note": "HLOOKUP with FALSE"
+  },
+  {
+    "id": "d-064",
+    "en": "=IF(A1<>\"\",#VALUE!,#DIV/0!)",
+    "tr": "=EĞER(A1<>\"\";#DEĞER!;#SAYI/0!)",
+    "ru": "=ЕСЛИ(A1<>\"\";#ЗНАЧ!;#ДЕЛ/0!)",
+    "note": "error literals #VALUE! and #DIV/0!"
+  },
+  {
+    "id": "d-065",
+    "en": "=CONCATENATE(A1,\"-\",B1)",
+    "tr": "=BİRLEŞTİR(A1;\"-\";B1)",
+    "ru": "=СЦЕПИТЬ(A1;\"-\";B1)",
+    "note": "CONCATENATE"
+  },
+  {
+    "id": "d-066",
+    "en": "=LEN(\"say \"\"hi\"\"\")",
+    "tr": "=UZUNLUK(\"say \"\"hi\"\"\")",
+    "ru": "=ДЛСТР(\"say \"\"hi\"\"\")",
+    "note": "doubled quotes inside a string"
+  },
+  {
+    "id": "d-067",
+    "en": "=-A1*10%",
+    "tr": "=-A1*10%",
+    "ru": "=-A1*10%",
+    "note": "unary minus and percent"
+  },
+  {
+    "id": "d-068",
+    "en": "=AVERAGEIF(B2:B200,\"Gıda\",E2:E200)",
+    "tr": "=EĞERORTALAMA(B2:B200;\"Gıda\";E2:E200)",
+    "ru": "=СРЗНАЧЕСЛИ(B2:B200;\"Gıda\";E2:E200)",
+    "note": "AVERAGEIF"
+  },
+  {
+    "id": "d-069",
+    "en": "=MINIFS(E2:E200,H2:H200,\"İstanbul\")",
+    "tr": "=ÇOKEĞERMİN(E2:E200;H2:H200;\"İstanbul\")",
+    "ru": "=МИНЕСЛИ(E2:E200;H2:H200;\"İstanbul\")",
+    "note": "MINIFS"
+  },
+  {
+    "id": "d-070",
+    "en": "=MAX(IF(B2:B200=\"Gıda\",E2:E200))",
+    "tr": "=MAK(EĞER(B2:B200=\"Gıda\";E2:E200))",
+    "ru": "=МАКС(ЕСЛИ(B2:B200=\"Gıda\";E2:E200))",
+    "note": "MAX(IF()) classic"
+  },
+  {
+    "id": "d-071",
+    "en": "=MIN(D2:D200)",
+    "tr": "=MİN(D2:D200)",
+    "ru": "=МИН(D2:D200)",
+    "note": "MIN with Turkish dotted İ"
+  },
+  {
+    "id": "d-072",
+    "en": "=DAY(F2)&\".\"&MONTH(F2)",
+    "tr": "=GÜN(F2)&\".\"&AY(F2)",
+    "ru": "=ДЕНЬ(F2)&\".\"&МЕСЯЦ(F2)",
+    "note": "DAY/MONTH concatenated"
+  }
+]

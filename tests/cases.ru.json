@@ -1,0 +1,1731 @@
+[
+  {
+    "id": "ru-001",
+    "text": "Посчитай сумму по столбцу Сумма",
+    "ctx": "ru",
+    "expect": "=SUM(E2:E200)",
+    "note": "§15.1 header → data range"
+  },
+  {
+    "id": "ru-002",
+    "text": "Сумма A2:A100",
+    "ctx": "none",
+    "expect": "=SUM(A2:A100)",
+    "note": "§15.1 explicit ref, no ctx"
+  },
+  {
+    "id": "ru-003",
+    "text": "Среднее значение по столбцу Сумма",
+    "ctx": "ru",
+    "expect": "=AVERAGE(E2:E200)",
+    "note": "§15.1 AVERAGE"
+  },
+  {
+    "id": "ru-004",
+    "text": "Максимальная сумма",
+    "ctx": "ru",
+    "expect": "=MAX(E2:E200)",
+    "note": "§15.1 MAX"
+  },
+  {
+    "id": "ru-005",
+    "text": "Какая минимальная цена?",
+    "ctx": "ru",
+    "expect": "=MIN(D2:D200)",
+    "note": "§15.1 MIN, question form"
+  },
+  {
+    "id": "ru-006",
+    "text": "Сколько непустых ячеек в столбце Товар?",
+    "ctx": "ru",
+    "expect": "=COUNTA(A2:A200)",
+    "note": "§15.1 COUNTA"
+  },
+  {
+    "id": "ru-007",
+    "text": "Посчитай количество чисел в столбце Кол-во",
+    "ctx": "ru",
+    "expect": "=COUNT(C2:C200)",
+    "note": "§15.1 COUNT"
+  },
+  {
+    "id": "ru-008",
+    "text": "Сколько пустых ячеек в столбце Город?",
+    "ctx": "ru",
+    "expect": "=COUNTBLANK(H2:H200)",
+    "note": "§15.1 COUNTBLANK"
+  },
+  {
+    "id": "ru-009",
+    "text": "Сумма столбца E",
+    "ctx": "ru",
+    "expect": "=SUM(E2:E200)",
+    "note": "§15.1 column letter with ctx → data range"
+  },
+  {
+    "id": "ru-010",
+    "text": "Сумма всего столбца E",
+    "ctx": "ru",
+    "expect": "=SUM(E:E)",
+    "note": "§15.1 \"весь столбец\" → E:E"
+  },
+  {
+    "id": "ru-011",
+    "text": "Сумма столбца E",
+    "ctx": "none",
+    "expect": "=SUM(E:E)",
+    "note": "§15.1 column letter without ctx"
+  },
+  {
+    "id": "ru-012",
+    "text": "Среднее по диапазону B2:B50",
+    "ctx": "none",
+    "expect": "=AVERAGE(B2:B50)",
+    "note": "§15.1 explicit range"
+  },
+  {
+    "id": "ru-013",
+    "text": "Максимум в C3:C40",
+    "ctx": "none",
+    "expect": "=MAX(C3:C40)",
+    "note": "§15.1 explicit range MAX"
+  },
+  {
+    "id": "ru-014",
+    "text": "Минимальное число в диапазоне D2:D20",
+    "ctx": "none",
+    "expect": "=MIN(D2:D20)",
+    "note": "§15.1 explicit range MIN"
+  },
+  {
+    "id": "ru-015",
+    "text": "Медиана по столбцу Сумма",
+    "ctx": "ru",
+    "expect": "=MEDIAN(E2:E200)",
+    "note": "§15.9 median"
+  },
+  {
+    "id": "ru-016",
+    "text": "Мода по столбцу Кол-во",
+    "ctx": "ru",
+    "expect": "=MODE.SNGL(C2:C200)",
+    "note": "§15.9 mode"
+  },
+  {
+    "id": "ru-017",
+    "text": "Стандартное отклонение по столбцу Сумма",
+    "ctx": "ru",
+    "expect": "=STDEV.S(E2:E200)",
+    "note": "§15.9 stdev"
+  },
+  {
+    "id": "ru-018",
+    "text": "Подскажи, пожалуйста, как посчитать итог по столбцу Кол-во",
+    "ctx": "ru",
+    "expect": "=SUM(C2:C200)",
+    "note": "§15.1 polite form"
+  },
+  {
+    "id": "ru-019",
+    "text": "Сумма по столбцу Скидка",
+    "ctx": "ru",
+    "expect": "=SUM(J2:J200)",
+    "note": "§15.1 another numeric header"
+  },
+  {
+    "id": "ru-020",
+    "text": "Сколько заполненных ячеек в столбце H целиком?",
+    "ctx": "ru",
+    "expect": "=COUNTA(H:H)",
+    "note": "§15.1 \"целиком\" → whole column"
+  },
+  {
+    "id": "ru-021",
+    "text": "Сумма по столбцу Сумма, где Категория равна \"Еда\"",
+    "ctx": "ru",
+    "expect": "=SUMIF(B2:B200,\"Еда\",E2:E200)",
+    "note": "§15.4 one text condition → SUMIF"
+  },
+  {
+    "id": "ru-022",
+    "text": "Сложи значения в столбце Сумма, которые больше 100",
+    "ctx": "ru",
+    "expect": "=SUMIF(E2:E200,\">100\")",
+    "note": "§15.4 number criteria, two-arg SUMIF"
+  },
+  {
+    "id": "ru-023",
+    "text": "Сколько продаж в городе Москва?",
+    "ctx": "ru",
+    "expect": "=COUNTIF(H2:H200,\"Москва\")",
+    "note": "§15.4 COUNTIF text"
+  },
+  {
+    "id": "ru-024",
+    "text": "Количество продаж с суммой больше 500",
+    "ctx": "ru",
+    "expect": "=COUNTIF(E2:E200,\">500\")",
+    "note": "§15.4 COUNTIF number"
+  },
+  {
+    "id": "ru-025",
+    "text": "Средняя сумма для категории \"Еда\"",
+    "ctx": "ru",
+    "expect": "=AVERAGEIF(B2:B200,\"Еда\",E2:E200)",
+    "note": "§15.4 AVERAGEIF"
+  },
+  {
+    "id": "ru-026",
+    "text": "Сумма продаж, где Статус не равен \"Оплачено\"",
+    "ctx": "ru",
+    "expect": "=SUMIF(I2:I200,\"<>Оплачено\",E2:E200)",
+    "note": "§15.4 not equal text"
+  },
+  {
+    "id": "ru-027",
+    "text": "Сумма по товарам, название которых содержит \"Ручка\"",
+    "ctx": "ru",
+    "expect": "=SUMIF(A2:A200,\"*Ручка*\",E2:E200)",
+    "note": "§15.4 contains"
+  },
+  {
+    "id": "ru-028",
+    "text": "Сколько товаров начинается на \"Тет\"?",
+    "ctx": "ru",
+    "expect": "=COUNTIF(A2:A200,\"Тет*\")",
+    "note": "§15.4 starts with"
+  },
+  {
+    "id": "ru-029",
+    "text": "Сколько товаров заканчивается на \"ка\"?",
+    "ctx": "ru",
+    "expect": "=COUNTIF(A2:A200,\"*ка\")",
+    "note": "§15.4 ends with"
+  },
+  {
+    "id": "ru-030",
+    "text": "Сколько строк с пустым Статусом?",
+    "ctx": "ru",
+    "expect": "=COUNTIF(I2:I200,\"\")",
+    "note": "§15.4 empty → \"\""
+  },
+  {
+    "id": "ru-031",
+    "text": "Сумма продаж, у которых Статус заполнен",
+    "ctx": "ru",
+    "expect": "=SUMIF(I2:I200,\"<>\",E2:E200)",
+    "note": "§15.4 not empty → \"<>\""
+  },
+  {
+    "id": "ru-032",
+    "text": "Количество строк, где Кол-во меньше или равно 10",
+    "ctx": "ru",
+    "expect": "=COUNTIF(C2:C200,\"<=10\")",
+    "note": "§15.4 \"<=\" criteria"
+  },
+  {
+    "id": "ru-033",
+    "text": "Сумма продаж, которые больше значения в ячейке P1",
+    "ctx": "ru",
+    "expect": "=SUMIF(E2:E200,\">\"&P1)",
+    "note": "§15.4 cell comparison → \">\"&P1"
+  },
+  {
+    "id": "ru-034",
+    "text": "Сумма продаж после 01.01.2024",
+    "ctx": "ru",
+    "expect": "=SUMIF(F2:F200,\">\"&DATE(2024,1,1),E2:E200)",
+    "note": "§15.4 date literal → DATE()"
+  },
+  {
+    "id": "ru-035",
+    "text": "Максимальная сумма для категории \"Еда\"",
+    "ctx": "ru",
+    "expect": "=MAXIFS(E2:E200,B2:B200,\"Еда\")",
+    "style": "modern",
+    "note": "§15.4 MAXIFS modern"
+  },
+  {
+    "id": "ru-036",
+    "text": "Максимальная сумма для категории \"Еда\"",
+    "ctx": "ru",
+    "expect": "=MAX(IF(B2:B200=\"Еда\",E2:E200))",
+    "style": "classic",
+    "note": "§15.4 classic MAX(IF())"
+  },
+  {
+    "id": "ru-037",
+    "text": "Минимальная сумма, где Город равен \"Казань\"",
+    "ctx": "ru",
+    "expect": "=MINIFS(E2:E200,H2:H200,\"Казань\")",
+    "style": "modern",
+    "note": "§15.4 MINIFS modern"
+  },
+  {
+    "id": "ru-038",
+    "text": "Сколько продаж со скидкой не равной 0?",
+    "ctx": "ru",
+    "expect": "=COUNTIF(J2:J200,\"<>0\")",
+    "note": "§15.4 not equal number"
+  },
+  {
+    "id": "ru-039",
+    "text": "Сумма значений больше 50 в A2:A100",
+    "ctx": "none",
+    "expect": "=SUMIF(A2:A100,\">50\")",
+    "note": "§15.4 explicit refs"
+  },
+  {
+    "id": "ru-040",
+    "text": "Сколько раз в B2:B100 встречается \"Да\"?",
+    "ctx": "none",
+    "expect": "=COUNTIF(B2:B100,\"Да\")",
+    "note": "§15.4 COUNTIF explicit range"
+  },
+  {
+    "id": "ru-041",
+    "text": "Сумма Кол-во, где Менеджер равен \"Анна\"",
+    "ctx": "ru",
+    "expect": "=SUMIF(G2:G200,\"Анна\",C2:C200)",
+    "note": "§15.4 another sum column"
+  },
+  {
+    "id": "ru-042",
+    "text": "Сколько продаж с суммой больше или равной 1000?",
+    "ctx": "ru",
+    "expect": "=COUNTIF(E2:E200,\">=1000\")",
+    "note": "§15.4 \">=\" criteria"
+  },
+  {
+    "id": "ru-043",
+    "text": "Сумма продаж с датой позже, чем в ячейке F2",
+    "ctx": "ru",
+    "expect": "=SUMIF(F2:F200,\">\"&F2,E2:E200)",
+    "note": "§15.4 date compared with a cell"
+  },
+  {
+    "id": "ru-044",
+    "text": "Количество строк, где Категория равна \"Еда\"",
+    "ctx": "ru",
+    "expect": "=COUNTIF(B2:B200,\"Еда\")",
+    "note": "§15.4 COUNTIF text"
+  },
+  {
+    "id": "ru-045",
+    "text": "Сколько продаж не в городе \"Казань\"?",
+    "ctx": "ru",
+    "expect": "=COUNTIF(H2:H200,\"<>Казань\")",
+    "note": "§15.4 COUNTIF not equal text"
+  },
+  {
+    "id": "ru-046",
+    "text": "Сумма, где Категория \"Еда\" и Город \"Казань\"",
+    "ctx": "ru",
+    "expect": "=SUMIFS(E2:E200,B2:B200,\"Еда\",H2:H200,\"Казань\")",
+    "note": "§15.4 two conditions → SUMIFS in text order"
+  },
+  {
+    "id": "ru-047",
+    "text": "Количество продаж, где Город равен \"Москва\" и Статус равен \"Оплачено\"",
+    "ctx": "ru",
+    "expect": "=COUNTIFS(H2:H200,\"Москва\",I2:I200,\"Оплачено\")",
+    "note": "§15.4 COUNTIFS"
+  },
+  {
+    "id": "ru-048",
+    "text": "Средняя сумма, где Категория \"Канцелярия\" и Сумма больше 100",
+    "ctx": "ru",
+    "expect": "=AVERAGEIFS(E2:E200,B2:B200,\"Канцелярия\",E2:E200,\">100\")",
+    "note": "§15.4 AVERAGEIFS"
+  },
+  {
+    "id": "ru-049",
+    "text": "Сумма продаж от 100 до 500",
+    "ctx": "ru",
+    "expect": "=SUMIFS(E2:E200,E2:E200,\">=100\",E2:E200,\"<=500\")",
+    "note": "§15.4+§15.5 between → two criteria"
+  },
+  {
+    "id": "ru-050",
+    "text": "Сумма Кол-во, где Менеджер \"Иван\", Категория \"Еда\" и Город \"Казань\"",
+    "ctx": "ru",
+    "expect": "=SUMIFS(C2:C200,G2:G200,\"Иван\",B2:B200,\"Еда\",H2:H200,\"Казань\")",
+    "note": "§15.4 three conditions"
+  },
+  {
+    "id": "ru-051",
+    "text": "Количество продаж со статусом \"Ожидает\" и суммой больше 1000",
+    "ctx": "ru",
+    "expect": "=COUNTIFS(I2:I200,\"Ожидает\",E2:E200,\">1000\")",
+    "note": "§15.4 COUNTIFS text + number"
+  },
+  {
+    "id": "ru-052",
+    "text": "Максимальная сумма, где Категория \"Еда\" и Город \"Казань\"",
+    "ctx": "ru",
+    "expect": "=MAXIFS(E2:E200,B2:B200,\"Еда\",H2:H200,\"Казань\")",
+    "style": "modern",
+    "note": "§15.4 MAXIFS two conditions"
+  },
+  {
+    "id": "ru-053",
+    "text": "Сумма продаж с датой между 01.01.2024 и 31.12.2024",
+    "ctx": "ru",
+    "expect": "=SUMIFS(E2:E200,F2:F200,\">=\"&DATE(2024,1,1),F2:F200,\"<=\"&DATE(2024,12,31))",
+    "note": "§15.4 date between"
+  },
+  {
+    "id": "ru-054",
+    "text": "Сколько строк, где Категория не \"Еда\" и Сумма больше 0?",
+    "ctx": "ru",
+    "expect": "=COUNTIFS(B2:B200,\"<>Еда\",E2:E200,\">0\")",
+    "note": "§15.4 \"<>text\" + number"
+  },
+  {
+    "id": "ru-055",
+    "text": "Сумма C2:C100, где A2:A100 равно \"X\" и B2:B100 больше 5",
+    "ctx": "none",
+    "expect": "=SUMIFS(C2:C100,A2:A100,\"X\",B2:B100,\">5\")",
+    "note": "§15.4 SUMIFS explicit refs"
+  },
+  {
+    "id": "ru-056",
+    "text": "Среднее Кол-во, где Город \"Казань\" и Категория \"Канцелярия\"",
+    "ctx": "ru",
+    "expect": "=AVERAGEIFS(C2:C200,H2:H200,\"Казань\",B2:B200,\"Канцелярия\")",
+    "note": "§15.4 AVERAGEIFS condition order as in text"
+  },
+  {
+    "id": "ru-057",
+    "text": "Сколько строк, где Категория \"Еда\" и Статус пустой?",
+    "ctx": "ru",
+    "expect": "=COUNTIFS(B2:B200,\"Еда\",I2:I200,\"\")",
+    "note": "§15.4 COUNTIFS with empty criteria"
+  },
+  {
+    "id": "ru-058",
+    "text": "Если Сумма больше 100, то \"Высокий\", иначе \"Низкий\"",
+    "ctx": "ru",
+    "expect": "=IF(E2>100,\"Высокий\",\"Низкий\")",
+    "note": "§15.5 IF then/else"
+  },
+  {
+    "id": "ru-059",
+    "text": "Если E2 больше 100 то \"Высокий\" иначе \"Низкий\"",
+    "ctx": "none",
+    "expect": "=IF(E2>100,\"Высокий\",\"Низкий\")",
+    "note": "§15.5 IF explicit cell"
+  },
+  {
+    "id": "ru-060",
+    "text": "Если Статус равен \"Оплачено\", напиши \"ОК\", иначе оставь пустым",
+    "ctx": "ru",
+    "expect": "=IF(I2=\"Оплачено\",\"ОК\",\"\")",
+    "note": "§15.5 \"оставь пустым\" → \"\""
+  },
+  {
+    "id": "ru-061",
+    "text": "Кол-во больше 0?",
+    "ctx": "ru",
+    "expect": "=IF(C2>0,\"Да\",\"Нет\")",
+    "note": "§15.5 missing then/else → \"Да\"/\"Нет\""
+  },
+  {
+    "id": "ru-062",
+    "text": "Если Сумма больше 1000, то \"Крупная\", если больше 500, то \"Средняя\", иначе \"Мелкая\"",
+    "ctx": "ru",
+    "expect": "=IFS(E2>1000,\"Крупная\",E2>500,\"Средняя\",TRUE,\"Мелкая\")",
+    "style": "modern",
+    "note": "§15.5 ordered conditions → IFS"
+  },
+  {
+    "id": "ru-063",
+    "text": "Если Сумма больше 1000, то \"Крупная\", если больше 500, то \"Средняя\", иначе \"Мелкая\"",
+    "ctx": "ru",
+    "expect": "=IF(E2>1000,\"Крупная\",IF(E2>500,\"Средняя\",\"Мелкая\"))",
+    "style": "classic",
+    "note": "§15.5 ordered conditions → nested IF"
+  },
+  {
+    "id": "ru-064",
+    "text": "Если Категория \"Еда\" и Сумма больше 100, то \"Проверить\", иначе оставь пустым",
+    "ctx": "ru",
+    "expect": "=IF(AND(B2=\"Еда\",E2>100),\"Проверить\",\"\")",
+    "note": "§15.5 \"и\" → AND"
+  },
+  {
+    "id": "ru-065",
+    "text": "Если Город \"Москва\" или \"Казань\", то \"Крупный\", иначе \"Другой\"",
+    "ctx": "ru",
+    "expect": "=IF(OR(H2=\"Москва\",H2=\"Казань\"),\"Крупный\",\"Другой\")",
+    "note": "§15.5 \"или\" → OR"
+  },
+  {
+    "id": "ru-066",
+    "text": "Если Сумма между 100 и 500, то \"Средняя\", иначе \"Другая\"",
+    "ctx": "ru",
+    "expect": "=IF(AND(E2>=100,E2<=500),\"Средняя\",\"Другая\")",
+    "note": "§15.5 between → AND(>=,<=)"
+  },
+  {
+    "id": "ru-067",
+    "text": "Если Статус пустой, напиши \"Нет данных\", иначе \"ОК\"",
+    "ctx": "ru",
+    "expect": "=IF(I2=\"\",\"Нет данных\",\"ОК\")",
+    "note": "§15.5 empty check"
+  },
+  {
+    "id": "ru-068",
+    "text": "Если Сумма меньше Цены, то \"Ошибка\", иначе \"ОК\"",
+    "ctx": "ru",
+    "expect": "=IF(E2<D2,\"Ошибка\",\"ОК\")",
+    "note": "§15.5 cell-to-cell comparison"
+  },
+  {
+    "id": "ru-069",
+    "text": "Если Скидка больше 0, то Сумма умножить на Скидка, иначе 0",
+    "ctx": "ru",
+    "expect": "=IF(J2>0,E2*J2,0)",
+    "note": "§15.5 then = expression"
+  },
+  {
+    "id": "ru-070",
+    "text": "Если Кол-во не равно 5, то \"Другое\", иначе \"Пять\"",
+    "ctx": "ru",
+    "expect": "=IF(C2<>5,\"Другое\",\"Пять\")",
+    "note": "§15.5 not equal number"
+  },
+  {
+    "id": "ru-071",
+    "text": "Если Статус \"Оплачено\", то Сумма, иначе 0",
+    "ctx": "ru",
+    "expect": "=IF(I2=\"Оплачено\",E2,0)",
+    "note": "§15.5 then = cell ref"
+  },
+  {
+    "id": "ru-072",
+    "text": "Если Категория \"Еда\", то \"Е\", если \"Канцелярия\", то \"К\", иначе \"Д\"",
+    "ctx": "ru",
+    "expect": "=IFS(B2=\"Еда\",\"Е\",B2=\"Канцелярия\",\"К\",TRUE,\"Д\")",
+    "style": "modern",
+    "note": "§15.5 text conditions → IFS"
+  },
+  {
+    "id": "ru-073",
+    "text": "Если Категория \"Еда\", то \"Е\", если \"Канцелярия\", то \"К\", иначе \"Д\"",
+    "ctx": "ru",
+    "expect": "=IF(B2=\"Еда\",\"Е\",IF(B2=\"Канцелярия\",\"К\",\"Д\"))",
+    "style": "classic",
+    "note": "§15.5 text conditions → nested IF"
+  },
+  {
+    "id": "ru-074",
+    "text": "Если A2 не пустая, то \"Заполнено\", иначе \"Пусто\"",
+    "ctx": "none",
+    "expect": "=IF(A2<>\"\",\"Заполнено\",\"Пусто\")",
+    "note": "§15.5 not empty → A2<>\"\""
+  },
+  {
+    "id": "ru-075",
+    "text": "Если Сумма больше 1000 и Статус \"Оплачено\", то \"VIP\", иначе оставь пустым",
+    "ctx": "ru",
+    "expect": "=IF(AND(E2>1000,I2=\"Оплачено\"),\"VIP\",\"\")",
+    "note": "§15.5 AND number + text"
+  },
+  {
+    "id": "ru-076",
+    "text": "Если Кол-во равно 0, напиши \"Нет в наличии\", иначе \"В наличии\"",
+    "ctx": "ru",
+    "expect": "=IF(C2=0,\"Нет в наличии\",\"В наличии\")",
+    "note": "§15.5 equality with number"
+  },
+  {
+    "id": "ru-077",
+    "text": "E2 больше 100?",
+    "ctx": "none",
+    "expect": "=IF(E2>100,\"Да\",\"Нет\")",
+    "note": "§15.5 defaults with explicit cell"
+  },
+  {
+    "id": "ru-078",
+    "text": "Если Город \"Москва\", напиши \"Столица\", иначе оставь пустым",
+    "ctx": "ru",
+    "expect": "=IF(H2=\"Москва\",\"Столица\",\"\")",
+    "note": "§15.5 text equality + blank else"
+  },
+  {
+    "id": "ru-079",
+    "text": "Если Сумма меньше 50, то \"Низкая\", если меньше 200, то \"Средняя\", если меньше 1000, то \"Высокая\", иначе \"Очень высокая\"",
+    "ctx": "ru",
+    "expect": "=IFS(E2<50,\"Низкая\",E2<200,\"Средняя\",E2<1000,\"Высокая\",TRUE,\"Очень высокая\")",
+    "style": "modern",
+    "note": "§15.5 four ordered conditions → IFS"
+  },
+  {
+    "id": "ru-080",
+    "text": "Если Сумма меньше 50, то \"Низкая\", если меньше 200, то \"Средняя\", если меньше 1000, то \"Высокая\", иначе \"Очень высокая\"",
+    "ctx": "ru",
+    "expect": "=IF(E2<50,\"Низкая\",IF(E2<200,\"Средняя\",IF(E2<1000,\"Высокая\",\"Очень высокая\")))",
+    "style": "classic",
+    "note": "§15.5 four ordered conditions → nested IF"
+  },
+  {
+    "id": "ru-081",
+    "text": "Найди код товара на листе Товары и верни Цену",
+    "ctx": "ru",
+    "expect": "=XLOOKUP(A2,Товары!$A$2:$A$50,Товары!$C$2:$C$50)",
+    "style": "modern",
+    "note": "§15.6 modern XLOOKUP"
+  },
+  {
+    "id": "ru-082",
+    "text": "Найди код товара на листе Товары и верни Цену",
+    "ctx": "ru",
+    "expect": "=VLOOKUP(A2,Товары!$A$2:$C$50,3,FALSE)",
+    "style": "classic",
+    "note": "§15.6 classic VLOOKUP, index 3 = Цена"
+  },
+  {
+    "id": "ru-083",
+    "text": "Найди товар на листе Товары, верни Цену, если не найдено — напиши \"Не найдено\"",
+    "ctx": "ru",
+    "expect": "=XLOOKUP(A2,Товары!$A$2:$A$50,Товары!$C$2:$C$50,\"Не найдено\")",
+    "style": "modern",
+    "note": "§15.6 not-found text when asked"
+  },
+  {
+    "id": "ru-084",
+    "text": "Подтяни Наименование с листа Товары по коду товара",
+    "ctx": "ru",
+    "expect": "=XLOOKUP(A2,Товары!$A$2:$A$50,Товары!$B$2:$B$50)",
+    "style": "modern",
+    "note": "§15.6 return column B"
+  },
+  {
+    "id": "ru-085",
+    "text": "Подтяни Наименование с листа Товары по коду товара",
+    "ctx": "ru",
+    "expect": [
+      "=VLOOKUP(A2,Товары!$A$2:$C$50,2,FALSE)",
+      "=VLOOKUP(A2,Товары!$A$2:$B$50,2,FALSE)"
+    ],
+    "style": "classic",
+    "note": "§15.6 classic, index 2"
+  },
+  {
+    "id": "ru-086",
+    "text": "Через ВПР найди код товара на листе Товары и верни Цену",
+    "ctx": "ru",
+    "expect": "=VLOOKUP(A2,Товары!$A$2:$C$50,3,FALSE)",
+    "style": "modern",
+    "note": "§15.6 explicit ВПР wins over modern style"
+  },
+  {
+    "id": "ru-087",
+    "text": "Через ИНДЕКС и ПОИСКПОЗ найди товар на листе Товары и верни Цену",
+    "ctx": "ru",
+    "expect": "=INDEX(Товары!$C$2:$C$50,MATCH(A2,Товары!$A$2:$A$50,0))",
+    "note": "§15.6 INDEX/MATCH when the user says so"
+  },
+  {
+    "id": "ru-088",
+    "text": "Найди товар на листе Товары и верни Цену, если ошибка — оставь пустым",
+    "ctx": "ru",
+    "expect": "=IFERROR(VLOOKUP(A2,Товары!$A$2:$C$50,3,FALSE),\"\")",
+    "style": "classic",
+    "note": "§15.6+§15.11 classic lookup in IFERROR"
+  },
+  {
+    "id": "ru-089",
+    "text": "Найди значение A2 на листе Список в диапазоне A:B и верни второй столбец",
+    "ctx": "none",
+    "expect": [
+      "=VLOOKUP(A2,Список!A:B,2,FALSE)",
+      "=VLOOKUP(A2,Список!$A:$B,2,FALSE)"
+    ],
+    "style": "classic",
+    "note": "§15.6 explicit table ref without ctx"
+  },
+  {
+    "id": "ru-090",
+    "text": "Через ПРОСМОТРX найди код товара на листе Товары и верни Цену",
+    "ctx": "ru",
+    "expect": "=XLOOKUP(A2,Товары!$A$2:$A$50,Товары!$C$2:$C$50)",
+    "style": "classic",
+    "note": "§15.6 explicit ПРОСМОТРX wins over classic style"
+  },
+  {
+    "id": "ru-091",
+    "text": "Подставь Цену с листа Товары по коду товара",
+    "ctx": "ru",
+    "expect": "=XLOOKUP(A2,Товары!$A$2:$A$50,Товары!$C$2:$C$50)",
+    "style": "modern",
+    "note": "§15.6 alternative phrasing"
+  },
+  {
+    "id": "ru-092",
+    "text": "Найди код товара на листе Товары и верни Цену, если не найдено — напиши \"Нет\"",
+    "ctx": "ru",
+    "expect": "=IFERROR(VLOOKUP(A2,Товары!$A$2:$C$50,3,FALSE),\"Нет\")",
+    "style": "classic",
+    "note": "§15.6+§15.11 classic not-found → IFERROR text"
+  },
+  {
+    "id": "ru-093",
+    "text": "Найди код товара на листе Товары и верни Цену, если не найдено — оставь пустым",
+    "ctx": "ru",
+    "expect": "=XLOOKUP(A2,Товары!$A$2:$A$50,Товары!$C$2:$C$50,\"\")",
+    "style": "modern",
+    "note": "§15.6 modern not-found blank"
+  },
+  {
+    "id": "ru-094",
+    "text": "Найди A2 на листе Прайс в диапазоне A2:C100 и верни третий столбец",
+    "ctx": "none",
+    "expect": [
+      "=VLOOKUP(A2,Прайс!A2:C100,3,FALSE)",
+      "=VLOOKUP(A2,Прайс!$A$2:$C$100,3,FALSE)"
+    ],
+    "style": "classic",
+    "note": "§15.6 explicit table on another sheet"
+  },
+  {
+    "id": "ru-095",
+    "text": "Первые 3 символа названия товара",
+    "ctx": "ru",
+    "expect": "=LEFT(A2,3)",
+    "note": "§15.7 LEFT"
+  },
+  {
+    "id": "ru-096",
+    "text": "Последние 4 символа Email",
+    "ctx": "ru",
+    "expect": "=RIGHT(L2,4)",
+    "note": "§15.7 RIGHT"
+  },
+  {
+    "id": "ru-097",
+    "text": "Возьми 3 символа из названия товара начиная со 2-го",
+    "ctx": "ru",
+    "expect": "=MID(A2,2,3)",
+    "note": "§15.7 MID"
+  },
+  {
+    "id": "ru-098",
+    "text": "Длина ФИО в символах",
+    "ctx": "ru",
+    "expect": "=LEN(M2)",
+    "note": "§15.7 LEN"
+  },
+  {
+    "id": "ru-099",
+    "text": "Убери лишние пробелы в ФИО",
+    "ctx": "ru",
+    "expect": "=TRIM(M2)",
+    "note": "§15.7 TRIM"
+  },
+  {
+    "id": "ru-100",
+    "text": "Город прописными буквами",
+    "ctx": "ru",
+    "expect": "=UPPER(H2)",
+    "note": "§15.7 UPPER"
+  },
+  {
+    "id": "ru-101",
+    "text": "Email строчными буквами",
+    "ctx": "ru",
+    "expect": "=LOWER(L2)",
+    "note": "§15.7 LOWER"
+  },
+  {
+    "id": "ru-102",
+    "text": "ФИО с заглавной буквы каждого слова",
+    "ctx": "ru",
+    "expect": "=PROPER(M2)",
+    "note": "§15.7 PROPER"
+  },
+  {
+    "id": "ru-103",
+    "text": "Объедини Товар и Категорию через пробел",
+    "ctx": "ru",
+    "expect": "=A2&\" \"&B2",
+    "note": "§15.7 join two cells with space"
+  },
+  {
+    "id": "ru-104",
+    "text": "Объедини A2 и B2 через пробел",
+    "ctx": "none",
+    "expect": "=A2&\" \"&B2",
+    "note": "§15.7 join explicit cells"
+  },
+  {
+    "id": "ru-105",
+    "text": "Объедини все города через запятую в одной ячейке",
+    "ctx": "ru",
+    "expect": "=TEXTJOIN(\", \",TRUE,H2:H200)",
+    "note": "§15.7 TEXTJOIN"
+  },
+  {
+    "id": "ru-106",
+    "text": "Замени в названии товара \"Ручка\" на \"Pen\"",
+    "ctx": "ru",
+    "expect": "=SUBSTITUTE(A2,\"Ручка\",\"Pen\")",
+    "note": "§15.7 SUBSTITUTE"
+  },
+  {
+    "id": "ru-107",
+    "text": "Первое слово из ФИО",
+    "ctx": "ru",
+    "expect": "=LEFT(M2,FIND(\" \",M2&\" \")-1)",
+    "note": "§15.7 first word"
+  },
+  {
+    "id": "ru-108",
+    "text": "Последнее слово из ФИО",
+    "ctx": "ru",
+    "expect": "=TRIM(RIGHT(SUBSTITUTE(M2,\" \",REPT(\" \",100)),100))",
+    "note": "§15.7 last word"
+  },
+  {
+    "id": "ru-109",
+    "text": "Возьми часть email до @",
+    "ctx": "ru",
+    "expect": "=LEFT(L2,FIND(\"@\",L2)-1)",
+    "style": "classic",
+    "note": "§15.7 text before @ (classic)"
+  },
+  {
+    "id": "ru-110",
+    "text": "Возьми часть email до @",
+    "ctx": "ru",
+    "expect": "=TEXTBEFORE(L2,\"@\")",
+    "style": "modern",
+    "note": "§15.7 text before @ (modern)"
+  },
+  {
+    "id": "ru-111",
+    "text": "Домен из email (часть после @)",
+    "ctx": "ru",
+    "expect": "=MID(L2,FIND(\"@\",L2)+1,255)",
+    "style": "classic",
+    "note": "§15.7 domain after @ (classic)"
+  },
+  {
+    "id": "ru-112",
+    "text": "Домен из email (часть после @)",
+    "ctx": "ru",
+    "expect": "=TEXTAFTER(L2,\"@\")",
+    "style": "modern",
+    "note": "§15.7 domain after @ (modern)"
+  },
+  {
+    "id": "ru-113",
+    "text": "Проверь, содержит ли название товара \"ручка\"",
+    "ctx": "ru",
+    "expect": "=ISNUMBER(SEARCH(\"ручка\",A2))",
+    "note": "§15.7 contains check"
+  },
+  {
+    "id": "ru-114",
+    "text": "Преобразуй текст в столбце Кол-во в число",
+    "ctx": "ru",
+    "expect": "=VALUE(C2)",
+    "note": "§15.7 VALUE"
+  },
+  {
+    "id": "ru-115",
+    "text": "Преобразуй Сумму в текст с двумя знаками после запятой",
+    "ctx": "ru",
+    "expect": "=TEXT(E2,\"0.00\")",
+    "note": "§15.7 TEXT with format"
+  },
+  {
+    "id": "ru-116",
+    "text": "Удали все пробелы из названия товара",
+    "ctx": "ru",
+    "expect": "=SUBSTITUTE(A2,\" \",\"\")",
+    "note": "§15.7 remove spaces"
+  },
+  {
+    "id": "ru-117",
+    "text": "Объедини A2 и B2 через дефис",
+    "ctx": "none",
+    "expect": "=A2&\"-\"&B2",
+    "note": "§15.7 join with another separator"
+  },
+  {
+    "id": "ru-118",
+    "text": "Два символа справа из названия товара",
+    "ctx": "ru",
+    "expect": "=RIGHT(A2,2)",
+    "note": "§15.7 RIGHT phrasing variant"
+  },
+  {
+    "id": "ru-119",
+    "text": "Длина ФИО в символах, результат запиши в столбец N",
+    "ctx": "ru",
+    "expect": "=LEN(M2)",
+    "note": "§15.7 + target phrase"
+  },
+  {
+    "id": "ru-120",
+    "text": "Объедини Город и Товар через запятую и пробел",
+    "ctx": "ru",
+    "expect": "=H2&\", \"&A2",
+    "note": "§15.7 join with \", \""
+  },
+  {
+    "id": "ru-121",
+    "text": "Первые 5 символов из M2",
+    "ctx": "none",
+    "expect": "=LEFT(M2,5)",
+    "note": "§15.7 LEFT explicit cell"
+  },
+  {
+    "id": "ru-122",
+    "text": "Позиция символа \"@\" в Email",
+    "ctx": "ru",
+    "expect": "=FIND(\"@\",L2)",
+    "note": "§15.7 FIND position"
+  },
+  {
+    "id": "ru-123",
+    "text": "Сегодняшняя дата",
+    "ctx": "none",
+    "expect": "=TODAY()",
+    "note": "§15.8 today"
+  },
+  {
+    "id": "ru-124",
+    "text": "Текущие дата и время",
+    "ctx": "none",
+    "expect": "=NOW()",
+    "note": "§15.8 now"
+  },
+  {
+    "id": "ru-125",
+    "text": "Посчитай возраст по дате рождения",
+    "ctx": "ru",
+    "expect": "=DATEDIF(K2,TODAY(),\"Y\")",
+    "note": "§15.8 age"
+  },
+  {
+    "id": "ru-126",
+    "text": "Сколько дней между A2 (начало) и B2 (конец)?",
+    "ctx": "none",
+    "expect": "=B2-A2",
+    "note": "§15.8 days between"
+  },
+  {
+    "id": "ru-127",
+    "text": "Сколько месяцев между A2 и B2?",
+    "ctx": "none",
+    "expect": "=DATEDIF(A2,B2,\"M\")",
+    "note": "§15.8 months between"
+  },
+  {
+    "id": "ru-128",
+    "text": "Сколько полных лет между A2 и B2?",
+    "ctx": "none",
+    "expect": "=DATEDIF(A2,B2,\"Y\")",
+    "note": "§15.8 years between"
+  },
+  {
+    "id": "ru-129",
+    "text": "Сколько дней осталось до Даты?",
+    "ctx": "ru",
+    "expect": "=F2-TODAY()",
+    "note": "§15.8 days until"
+  },
+  {
+    "id": "ru-130",
+    "text": "Сколько дней прошло с Даты?",
+    "ctx": "ru",
+    "expect": "=TODAY()-F2",
+    "note": "§15.8 days since"
+  },
+  {
+    "id": "ru-131",
+    "text": "Прибавь к Дате 30 дней",
+    "ctx": "ru",
+    "expect": "=F2+30",
+    "note": "§15.8 add N days"
+  },
+  {
+    "id": "ru-132",
+    "text": "Прибавь к Дате 3 месяца",
+    "ctx": "ru",
+    "expect": "=EDATE(F2,3)",
+    "note": "§15.8 add N months"
+  },
+  {
+    "id": "ru-133",
+    "text": "Прибавь к Дате 2 года",
+    "ctx": "ru",
+    "expect": [
+      "=EDATE(F2,12*2)",
+      "=EDATE(F2,24)"
+    ],
+    "note": "§15.8 add N years"
+  },
+  {
+    "id": "ru-134",
+    "text": "Конец месяца для Даты",
+    "ctx": "ru",
+    "expect": "=EOMONTH(F2,0)",
+    "note": "§15.8 end of month"
+  },
+  {
+    "id": "ru-135",
+    "text": "Начало месяца для Даты",
+    "ctx": "ru",
+    "expect": "=EOMONTH(F2,-1)+1",
+    "note": "§15.8 start of month"
+  },
+  {
+    "id": "ru-136",
+    "text": "Год из Даты",
+    "ctx": "ru",
+    "expect": "=YEAR(F2)",
+    "note": "§15.8 year"
+  },
+  {
+    "id": "ru-137",
+    "text": "Месяц из Даты",
+    "ctx": "ru",
+    "expect": "=MONTH(F2)",
+    "note": "§15.8 month"
+  },
+  {
+    "id": "ru-138",
+    "text": "День из Даты",
+    "ctx": "ru",
+    "expect": "=DAY(F2)",
+    "note": "§15.8 day"
+  },
+  {
+    "id": "ru-139",
+    "text": "Квартал по Дате",
+    "ctx": "ru",
+    "expect": "=ROUNDUP(MONTH(F2)/3,0)",
+    "note": "§15.8 quarter"
+  },
+  {
+    "id": "ru-140",
+    "text": "Название дня недели для Даты",
+    "ctx": "ru",
+    "expect": "=TEXT(F2,\"dddd\")",
+    "note": "§15.8 weekday name"
+  },
+  {
+    "id": "ru-141",
+    "text": "Название месяца для Даты",
+    "ctx": "ru",
+    "expect": "=TEXT(F2,\"mmmm\")",
+    "note": "§15.8 month name"
+  },
+  {
+    "id": "ru-142",
+    "text": "Количество рабочих дней между A2 и B2",
+    "ctx": "none",
+    "expect": "=NETWORKDAYS(A2,B2)",
+    "note": "§15.8 working days between"
+  },
+  {
+    "id": "ru-143",
+    "text": "Прибавь к Дате 10 рабочих дней",
+    "ctx": "ru",
+    "expect": "=WORKDAY(F2,10)",
+    "note": "§15.8 add N workdays"
+  },
+  {
+    "id": "ru-144",
+    "text": "Номер недели для Даты",
+    "ctx": "ru",
+    "expect": "=WEEKNUM(F2)",
+    "note": "§15.8 week number"
+  },
+  {
+    "id": "ru-145",
+    "text": "Дата выпадает на выходной?",
+    "ctx": "ru",
+    "expect": "=WEEKDAY(F2,2)>5",
+    "note": "§15.8 is weekend"
+  },
+  {
+    "id": "ru-146",
+    "text": "Составь дату из 2024 года, 5 месяца и 15 дня",
+    "ctx": "none",
+    "expect": "=DATE(2024,5,15)",
+    "note": "§15.8 date from parts"
+  },
+  {
+    "id": "ru-147",
+    "text": "Если Дата раньше сегодняшней, напиши \"Просрочено\", иначе оставь пустым",
+    "ctx": "ru",
+    "expect": "=IF(F2<TODAY(),\"Просрочено\",\"\")",
+    "note": "§15.8 overdue flag with explicit text"
+  },
+  {
+    "id": "ru-148",
+    "text": "Посчитай возраст по дате рождения и запиши в столбец N",
+    "ctx": "ru",
+    "expect": "=DATEDIF(K2,TODAY(),\"Y\")",
+    "note": "§15.8 age + target"
+  },
+  {
+    "id": "ru-149",
+    "text": "Прибавь к Дате рождения 18 лет",
+    "ctx": "ru",
+    "expect": [
+      "=EDATE(K2,12*18)",
+      "=EDATE(K2,216)"
+    ],
+    "note": "§15.8 add years to K"
+  },
+  {
+    "id": "ru-150",
+    "text": "Сколько дней прошло с даты рождения?",
+    "ctx": "ru",
+    "expect": "=TODAY()-K2",
+    "note": "§15.8 days since K"
+  },
+  {
+    "id": "ru-151",
+    "text": "Отними от Даты 7 дней",
+    "ctx": "ru",
+    "expect": "=F2-7",
+    "note": "§15.8 subtract days"
+  },
+  {
+    "id": "ru-152",
+    "text": "Дата минус 1 месяц",
+    "ctx": "ru",
+    "expect": "=EDATE(F2,-1)",
+    "note": "§15.8 subtract months"
+  },
+  {
+    "id": "ru-153",
+    "text": "Рабочие дни между датами A2 и B2, результат в C2",
+    "ctx": "none",
+    "expect": "=NETWORKDAYS(A2,B2)",
+    "note": "§15.8 + target cell"
+  },
+  {
+    "id": "ru-154",
+    "text": "Если Дата уже прошла, пометь \"Просрочено\", иначе пусто",
+    "ctx": "ru",
+    "expect": "=IF(F2<TODAY(),\"Просрочено\",\"\")",
+    "note": "§15.8 overdue flag, \"пусто\" → \"\""
+  },
+  {
+    "id": "ru-155",
+    "text": "10% от Суммы",
+    "ctx": "ru",
+    "expect": "=E2*10%",
+    "note": "§15.9 percent of value"
+  },
+  {
+    "id": "ru-156",
+    "text": "Увеличь Сумму на 15%",
+    "ctx": "ru",
+    "expect": "=E2*(1+15%)",
+    "note": "§15.9 percent increase"
+  },
+  {
+    "id": "ru-157",
+    "text": "Скидка 20% на Сумму",
+    "ctx": "ru",
+    "expect": "=E2*(1-20%)",
+    "note": "§15.9 discount"
+  },
+  {
+    "id": "ru-158",
+    "text": "Доля суммы от общего итога",
+    "ctx": "ru",
+    "expect": "=E2/SUM($E$2:$E$200)",
+    "note": "§15.9 share of total"
+  },
+  {
+    "id": "ru-159",
+    "text": "Процент изменения от D2 к E2",
+    "ctx": "none",
+    "expect": "=(E2-D2)/D2",
+    "note": "§15.9 percent change"
+  },
+  {
+    "id": "ru-160",
+    "text": "Добавь НДС к Сумме",
+    "ctx": "ru",
+    "expect": "=E2*1.2",
+    "note": "§15.9 VAT add, RU default 20%"
+  },
+  {
+    "id": "ru-161",
+    "text": "Сумма НДС от Суммы",
+    "ctx": "ru",
+    "expect": "=E2*20%",
+    "note": "§15.9 VAT amount"
+  },
+  {
+    "id": "ru-162",
+    "text": "Добавь НДС 10% к Сумме",
+    "ctx": "ru",
+    "expect": "=E2*1.1",
+    "note": "§15.9 VAT add explicit rate"
+  },
+  {
+    "id": "ru-163",
+    "text": "Округли Сумму до 2 знаков",
+    "ctx": "ru",
+    "expect": "=ROUND(E2,2)",
+    "note": "§15.9 round N decimals"
+  },
+  {
+    "id": "ru-164",
+    "text": "Округли Сумму",
+    "ctx": "ru",
+    "expect": "=ROUND(E2,2)",
+    "note": "§15.9 round default"
+  },
+  {
+    "id": "ru-165",
+    "text": "Округли Сумму до целого",
+    "ctx": "ru",
+    "expect": "=ROUND(E2,0)",
+    "note": "§15.9 \"до целого\" → 0"
+  },
+  {
+    "id": "ru-166",
+    "text": "Округли Сумму вверх до целого",
+    "ctx": "ru",
+    "expect": "=ROUNDUP(E2,0)",
+    "note": "§15.9 round up"
+  },
+  {
+    "id": "ru-167",
+    "text": "Округли Сумму вниз до 1 знака",
+    "ctx": "ru",
+    "expect": "=ROUNDDOWN(E2,1)",
+    "note": "§15.9 round down"
+  },
+  {
+    "id": "ru-168",
+    "text": "Модуль Суммы",
+    "ctx": "ru",
+    "expect": "=ABS(E2)",
+    "note": "§15.9 abs"
+  },
+  {
+    "id": "ru-169",
+    "text": "Остаток от деления Кол-во на 3",
+    "ctx": "ru",
+    "expect": "=MOD(C2,3)",
+    "note": "§15.9 MOD"
+  },
+  {
+    "id": "ru-170",
+    "text": "Кол-во в квадрате",
+    "ctx": "ru",
+    "expect": "=C2^2",
+    "note": "§15.9 power → ^"
+  },
+  {
+    "id": "ru-171",
+    "text": "Через функцию СТЕПЕНЬ возведи Кол-во в куб",
+    "ctx": "ru",
+    "expect": "=POWER(C2,3)",
+    "note": "§15.9 POWER when asked"
+  },
+  {
+    "id": "ru-172",
+    "text": "Квадратный корень из Суммы",
+    "ctx": "ru",
+    "expect": "=SQRT(E2)",
+    "note": "§15.9 sqrt"
+  },
+  {
+    "id": "ru-173",
+    "text": "Среднее A2 и B2",
+    "ctx": "none",
+    "expect": "=AVERAGE(A2,B2)",
+    "note": "§15.9 average of two cells"
+  },
+  {
+    "id": "ru-174",
+    "text": "Разница между B2 и A2",
+    "ctx": "none",
+    "expect": "=B2-A2",
+    "note": "§15.9 difference"
+  },
+  {
+    "id": "ru-175",
+    "text": "Умножь Кол-во на Цену",
+    "ctx": "ru",
+    "expect": "=C2*D2",
+    "note": "§15.9 multiply columns"
+  },
+  {
+    "id": "ru-176",
+    "text": "Нарастающий итог по Сумме",
+    "ctx": "ru",
+    "expect": "=SUM($E$2:E2)",
+    "note": "§15.9 running total"
+  },
+  {
+    "id": "ru-177",
+    "text": "Ранг по Сумме (наибольшая — первая)",
+    "ctx": "ru",
+    "expect": "=RANK.EQ(E2,$E$2:$E$200,0)",
+    "note": "§15.9 rank descending"
+  },
+  {
+    "id": "ru-178",
+    "text": "Ранг по Сумме по возрастанию",
+    "ctx": "ru",
+    "expect": "=RANK.EQ(E2,$E$2:$E$200,1)",
+    "note": "§15.9 rank ascending"
+  },
+  {
+    "id": "ru-179",
+    "text": "Третья по величине сумма",
+    "ctx": "ru",
+    "expect": "=LARGE(E2:E200,3)",
+    "note": "§15.9 nth largest"
+  },
+  {
+    "id": "ru-180",
+    "text": "Вторая наименьшая сумма",
+    "ctx": "ru",
+    "expect": "=SMALL(E2:E200,2)",
+    "note": "§15.9 nth smallest"
+  },
+  {
+    "id": "ru-181",
+    "text": "Сколько уникальных товаров?",
+    "ctx": "ru",
+    "expect": "=ROWS(UNIQUE(A2:A200))",
+    "style": "modern",
+    "note": "§15.9 count unique modern"
+  },
+  {
+    "id": "ru-182",
+    "text": "Сколько уникальных товаров?",
+    "ctx": "ru",
+    "expect": "=SUMPRODUCT(1/COUNTIF(A2:A200,A2:A200))",
+    "style": "classic",
+    "note": "§15.9 count unique classic"
+  },
+  {
+    "id": "ru-183",
+    "text": "Если Товар повторяется, напиши \"Дубликат\", иначе оставь пустым",
+    "ctx": "ru",
+    "expect": "=IF(COUNTIF($A$2:$A$200,A2)>1,\"Дубликат\",\"\")",
+    "note": "§15.9 duplicate flag explicit text"
+  },
+  {
+    "id": "ru-184",
+    "text": "Раздели Сумму на Кол-во",
+    "ctx": "ru",
+    "expect": "=E2/C2",
+    "note": "§15.9 divide"
+  },
+  {
+    "id": "ru-185",
+    "text": "A2 плюс B2",
+    "ctx": "none",
+    "expect": "=A2+B2",
+    "note": "§15.9 plus"
+  },
+  {
+    "id": "ru-186",
+    "text": "Сумма произведений Кол-во и Цены",
+    "ctx": "ru",
+    "expect": "=SUMPRODUCT(C2:C200,D2:D200)",
+    "note": "§15.9 sum of products"
+  },
+  {
+    "id": "ru-187",
+    "text": "Целая часть Суммы",
+    "ctx": "ru",
+    "expect": "=INT(E2)",
+    "note": "§15.9 integer part"
+  },
+  {
+    "id": "ru-188",
+    "text": "Сумма плюс 10%",
+    "ctx": "ru",
+    "expect": "=E2*(1+10%)",
+    "note": "§15.9 increase phrasing variant"
+  },
+  {
+    "id": "ru-189",
+    "text": "Цена минус 5%",
+    "ctx": "ru",
+    "expect": "=D2*(1-5%)",
+    "note": "§15.9 decrease phrasing variant"
+  },
+  {
+    "id": "ru-190",
+    "text": "A2 делить на B2",
+    "ctx": "none",
+    "expect": "=A2/B2",
+    "note": "§15.9 divide explicit cells"
+  },
+  {
+    "id": "ru-191",
+    "text": "Из Суммы вычти Скидку",
+    "ctx": "ru",
+    "expect": "=E2-J2",
+    "note": "§15.9 subtract columns"
+  },
+  {
+    "id": "ru-192",
+    "text": "Произведение C2 и D2",
+    "ctx": "none",
+    "expect": "=C2*D2",
+    "note": "§15.9 multiply explicit cells"
+  },
+  {
+    "id": "ru-193",
+    "text": "Процент суммы от общей суммы всех продаж",
+    "ctx": "ru",
+    "expect": "=E2/SUM($E$2:$E$200)",
+    "note": "§15.9 share of total variant"
+  },
+  {
+    "id": "ru-194",
+    "text": "Уменьши Сумму на 10%",
+    "ctx": "ru",
+    "expect": "=E2*(1-10%)",
+    "note": "§15.9 decrease"
+  },
+  {
+    "id": "ru-195",
+    "text": "Процент изменения B2 относительно A2",
+    "ctx": "none",
+    "expect": "=(B2-A2)/A2",
+    "note": "§15.9 percent change explicit cells"
+  },
+  {
+    "id": "ru-196",
+    "text": "Пятая по величине сумма",
+    "ctx": "ru",
+    "expect": "=LARGE(E2:E200,5)",
+    "note": "§15.9 nth largest (5)"
+  },
+  {
+    "id": "ru-197",
+    "text": "Отметь повторяющиеся товары словом \"Повтор\", иначе пусто",
+    "ctx": "ru",
+    "expect": "=IF(COUNTIF($A$2:$A$200,A2)>1,\"Повтор\",\"\")",
+    "note": "§15.9 duplicate flag, user text"
+  },
+  {
+    "id": "ru-198",
+    "text": "Список уникальных городов",
+    "ctx": "ru",
+    "expect": "=UNIQUE(H2:H200)",
+    "style": "modern",
+    "note": "§15.10 unique"
+  },
+  {
+    "id": "ru-199",
+    "text": "Отфильтруй строки, где Категория \"Еда\"",
+    "ctx": "ru",
+    "expect": "=FILTER(A2:M200,B2:B200=\"Еда\",\"\")",
+    "style": "modern",
+    "note": "§15.10 filter whole block"
+  },
+  {
+    "id": "ru-200",
+    "text": "Список товаров, где Категория \"Еда\"",
+    "ctx": "ru",
+    "expect": "=FILTER(A2:A200,B2:B200=\"Еда\",\"\")",
+    "style": "modern",
+    "note": "§15.10 filter one column"
+  },
+  {
+    "id": "ru-201",
+    "text": "Отсортируй Сумму по убыванию",
+    "ctx": "ru",
+    "expect": "=SORT(E2:E200,1,-1)",
+    "style": "modern",
+    "note": "§15.10 sort descending"
+  },
+  {
+    "id": "ru-202",
+    "text": "Отсортируй таблицу по Сумме по убыванию",
+    "ctx": "ru",
+    "expect": "=SORT(A2:M200,5,-1)",
+    "style": "modern",
+    "note": "§15.10 sort block by column 5"
+  },
+  {
+    "id": "ru-203",
+    "text": "Топ-5 сумм",
+    "ctx": "ru",
+    "expect": "=TAKE(SORT(E2:E200,1,-1),5)",
+    "style": "modern",
+    "note": "§15.10 top N"
+  },
+  {
+    "id": "ru-204",
+    "text": "Последовательность чисел от 1 до 10",
+    "ctx": "none",
+    "expect": "=SEQUENCE(10)",
+    "style": "modern",
+    "note": "§15.10 sequence"
+  },
+  {
+    "id": "ru-205",
+    "text": "Отфильтруй строки, где Сумма больше 1000",
+    "ctx": "ru",
+    "expect": "=FILTER(A2:M200,E2:E200>1000,\"\")",
+    "style": "modern",
+    "note": "§15.10 filter number condition"
+  },
+  {
+    "id": "ru-206",
+    "text": "Отсортируй города по алфавиту",
+    "ctx": "ru",
+    "expect": "=SORT(H2:H200,1,1)",
+    "style": "modern",
+    "note": "§15.10 sort ascending"
+  },
+  {
+    "id": "ru-207",
+    "text": "Топ-10 строк по Сумме",
+    "ctx": "ru",
+    "expect": "=TAKE(SORT(A2:M200,5,-1),10)",
+    "style": "modern",
+    "note": "§15.10 top N rows"
+  },
+  {
+    "id": "ru-208",
+    "text": "Убери дубликаты из столбца Категория",
+    "ctx": "ru",
+    "expect": "=UNIQUE(B2:B200)",
+    "style": "modern",
+    "note": "§15.10 remove duplicates → UNIQUE"
+  },
+  {
+    "id": "ru-209",
+    "text": "Раздели E2 на C2, если ошибка — оставь пустым",
+    "ctx": "none",
+    "expect": "=IFERROR(E2/C2,\"\")",
+    "note": "§15.11 IFERROR blank"
+  },
+  {
+    "id": "ru-210",
+    "text": "E2/C2, при ошибке напиши \"Ошибка\"",
+    "ctx": "none",
+    "expect": "=IFERROR(E2/C2,\"Ошибка\")",
+    "note": "§15.11 IFERROR text"
+  },
+  {
+    "id": "ru-211",
+    "text": "Через ВПР найди код товара на листе Товары и верни Цену, при #Н/Д оставь пустым",
+    "ctx": "ru",
+    "expect": "=IFNA(VLOOKUP(A2,Товары!$A$2:$C$50,3,FALSE),\"\")",
+    "note": "§15.11 IFNA only when #Н/Д mentioned"
+  },
+  {
+    "id": "ru-212",
+    "text": "Раздели Сумму на Кол-во, при ошибке 0",
+    "ctx": "ru",
+    "expect": "=IFERROR(E2/C2,0)",
+    "note": "§15.11 IFERROR number"
+  },
+  {
+    "id": "ru-213",
+    "text": "Сумма делить на Кол-во, если ошибка — пусто",
+    "ctx": "ru",
+    "expect": "=IFERROR(E2/C2,\"\")",
+    "note": "§15.11 IFERROR with headers"
+  },
+  {
+    "id": "ru-214",
+    "text": "Кредит 100000 под 24% годовых на 36 месяцев, ежемесячный платёж",
+    "ctx": "none",
+    "expect": "=PMT(24%/12,36,-100000)",
+    "note": "§15.12 PMT monthly"
+  },
+  {
+    "id": "ru-215",
+    "text": "Кредит 200000 под 18% годовых на 5 лет, какой ежемесячный платёж?",
+    "ctx": "none",
+    "expect": [
+      "=PMT(18%/12,5*12,-200000)",
+      "=PMT(18%/12,60,-200000)"
+    ],
+    "note": "§15.12 PMT years*12"
+  },
+  {
+    "id": "ru-216",
+    "text": "Чистая приведённая стоимость потоков B2:B10 при ставке 10%",
+    "ctx": "none",
+    "expect": "=NPV(10%,B2:B10)",
+    "note": "§15.12 NPV"
+  },
+  {
+    "id": "ru-217",
+    "text": "Внутренняя норма доходности для потоков B2:B10",
+    "ctx": "none",
+    "expect": "=IRR(B2:B10)",
+    "note": "§15.12 IRR"
+  },
+  {
+    "id": "ru-218",
+    "text": "Линейная амортизация: стоимость 100000, остаточная стоимость 10000, срок 5 лет",
+    "ctx": "none",
+    "expect": "=SLN(100000,10000,5)",
+    "note": "§15.12 SLN"
+  },
+  {
+    "id": "ru-219",
+    "text": "Сколько накопится через 10 лет, если вносить по 1000 в месяц под 12% годовых?",
+    "ctx": "none",
+    "expect": [
+      "=FV(12%/12,10*12,-1000)",
+      "=FV(12%/12,120,-1000)"
+    ],
+    "note": "§15.12 FV monthly"
+  },
+  {
+    "id": "ru-220",
+    "text": "Ежемесячный платёж по кредиту 50000 под 12% годовых на 24 месяца",
+    "ctx": "none",
+    "expect": "=PMT(12%/12,24,-50000)",
+    "note": "§15.12 PMT variant"
+  },
+  {
+    "id": "ru-221",
+    "text": "Через СУММЕСЛИМН посчитай сумму по Сумма, где Категория \"Еда\"",
+    "ctx": "ru",
+    "expect": "=SUMIFS(E2:E200,B2:B200,\"Еда\")",
+    "note": "explicit СУММЕСЛИМН → SUMIFS with one condition"
+  },
+  {
+    "id": "ru-222",
+    "text": "Через СЧЁТЕСЛИ посчитай, сколько раз Город равен \"Москва\"",
+    "ctx": "ru",
+    "expect": "=COUNTIF(H2:H200,\"Москва\")",
+    "note": "explicit СЧЁТЕСЛИ → COUNTIF"
+  },
+  {
+    "id": "ru-223",
+    "text": "Через СУММПРОИЗВ посчитай сумму произведений Кол-во и Цены",
+    "ctx": "ru",
+    "expect": "=SUMPRODUCT(C2:C200,D2:D200)",
+    "note": "explicit СУММПРОИЗВ → SUMPRODUCT"
+  },
+  {
+    "id": "ru-224",
+    "text": "Через ЕСЛИМН: если Сумма больше 1000, то \"A\", если больше 500, то \"B\", иначе \"C\"",
+    "ctx": "ru",
+    "expect": "=IFS(E2>1000,\"A\",E2>500,\"B\",TRUE,\"C\")",
+    "style": "classic",
+    "note": "explicit ЕСЛИМН → IFS even in classic style"
+  },
+  {
+    "id": "ru-225",
+    "text": "Через ОБЪЕДИНИТЬ собери города через точку с запятой",
+    "ctx": "ru",
+    "expect": "=TEXTJOIN(\"; \",TRUE,H2:H200)",
+    "note": "explicit ОБЪЕДИНИТЬ → TEXTJOIN"
+  },
+  {
+    "id": "ru-226",
+    "text": "С помощью СУММЕСЛИ сложи суммы больше 100",
+    "ctx": "ru",
+    "expect": "=SUMIF(E2:E200,\">100\")",
+    "note": "explicit СУММЕСЛИ → SUMIF"
+  },
+  {
+    "id": "ru-227",
+    "text": "Через СРЗНАЧЕСЛИ средняя сумма для категории \"Еда\"",
+    "ctx": "ru",
+    "expect": "=AVERAGEIF(B2:B200,\"Еда\",E2:E200)",
+    "note": "explicit СРЗНАЧЕСЛИ → AVERAGEIF"
+  },
+  {
+    "id": "ru-228",
+    "text": "Через СЧЁТЕСЛИМН посчитай, сколько продаж в городе \"Москва\"",
+    "ctx": "ru",
+    "expect": "=COUNTIFS(H2:H200,\"Москва\")",
+    "note": "explicit СЧЁТЕСЛИМН → COUNTIFS one condition"
+  },
+  {
+    "id": "ru-229",
+    "text": "Через ЕСЛИОШИБКА: E2/C2, при ошибке пусто",
+    "ctx": "none",
+    "expect": "=IFERROR(E2/C2,\"\")",
+    "note": "explicit ЕСЛИОШИБКА → IFERROR"
+  },
+  {
+    "id": "ru-230",
+    "text": "Через РАЗНДАТ посчитай дни между A2 и B2",
+    "ctx": "none",
+    "expect": "=DATEDIF(A2,B2,\"D\")",
+    "note": "explicit РАЗНДАТ → DATEDIF \"D\""
+  },
+  {
+    "id": "ru-231",
+    "text": "С помощью СЕГОДНЯ посчитай, сколько дней осталось до Даты",
+    "ctx": "ru",
+    "expect": "=F2-TODAY()",
+    "note": "explicit СЕГОДНЯ mention keeps days-until convention"
+  },
+  {
+    "id": "ru-232",
+    "text": "Если Сумма больше 100, то \"Высокий\", иначе \"Низкий\", и запиши в столбец N",
+    "ctx": "ru",
+    "expect": "=IF(E2>100,\"Высокий\",\"Низкий\")",
+    "note": "target column phrase does not change the formula"
+  },
+  {
+    "id": "ru-233",
+    "text": "Умножь Кол-во на Цену и запиши результат в столбец F",
+    "ctx": "ru",
+    "expect": "=C2*D2",
+    "note": "target \"в столбец F\" is not a reference"
+  },
+  {
+    "id": "ru-234",
+    "text": "Посчитай сумму по столбцу Сумма и запиши в ячейку E201",
+    "ctx": "ru",
+    "expect": "=SUM(E2:E200)",
+    "note": "target cell phrase"
+  },
+  {
+    "id": "ru-235",
+    "text": "Найди код товара на листе Товары, верни Цену и запиши в столбец O",
+    "ctx": "ru",
+    "expect": "=XLOOKUP(A2,Товары!$A$2:$A$50,Товары!$C$2:$C$50)",
+    "style": "modern",
+    "note": "lookup + target column"
+  },
+  {
+    "id": "ru-236",
+    "text": "Сумма, где Категория \"Еда\", запиши в N2",
+    "ctx": "ru",
+    "expect": "=SUMIF(B2:B200,\"Еда\",E2:E200)",
+    "note": "SUMIF + target cell"
+  },
+  {
+    "id": "ru-237",
+    "text": "Email строчными буквами в новый столбец",
+    "ctx": "ru",
+    "expect": "=LOWER(L2)",
+    "note": "\"в новый столбец\" target phrase"
+  },
+  {
+    "id": "ru-238",
+    "text": "Скидка 20% на Сумму, результат в столбец P",
+    "ctx": "ru",
+    "expect": "=E2*(1-20%)",
+    "note": "discount + target column"
+  }
+]
