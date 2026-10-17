@@ -4,3 +4,4 @@ tests/output/
 .DS_Store
 Thumbs.db
 *.log
+dist/
