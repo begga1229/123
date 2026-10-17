@@ -25,10 +25,12 @@
     { id: 'compat',      tr: 'Uyumluluk',                ru: 'Совместимость',                        en: 'Compatibility' }
   ];
 
+  var FOLD_MAP = { 'İ': 'i', 'I': 'i', 'ı': 'i', 'Ç': 'c', 'ç': 'c', 'Ğ': 'g', 'ğ': 'g', 'Ö': 'o', 'ö': 'o', 'Ş': 's', 'ş': 's', 'Ü': 'u', 'ü': 'u', 'Ё': 'е', 'ё': 'е', 'Â': 'a', 'â': 'a', 'Î': 'i', 'î': 'i', 'Û': 'u', 'û': 'u' };
+  /** Case/diacritic folding; uses EFS.normalize.fold when available, otherwise a Turkish/Russian-aware fallback. */
   function fold(s) {
     var f = EFS.normalize && EFS.normalize.fold;
     if (f) return f(s);
-    return String(s || '').toLowerCase();
+    return String(s || '').replace(/[İIıÇçĞğÖöŞşÜüЁёÂâÎîÛû]/g, function (ch) { return FOLD_MAP[ch] || ch; }).toLowerCase();
   }
 
   function build() {
