@@ -2115,7 +2115,7 @@
                 ['text', 'format number', 'format date', 'number to text', 'month name'])
   },
   {
-    name: 'TEXTAFTER', tr: 'SONRAKİMETİN', ru: 'ТЕКСТПОСЛЕ', category: 'text', minVersion: '365',
+    name: 'TEXTAFTER', tr: 'METİNSONRASI', ru: 'ТЕКСТПОСЛЕ', category: 'text', minVersion: '365',
     syntax: 'TEXTAFTER(text, delimiter, [instance_num], [match_mode], [match_end], [if_not_found])',
     args: [
       arg('text', 'metin', 'текст', false,
@@ -2143,7 +2143,7 @@
                 ['text after', 'after delimiter', 'domain from email'])
   },
   {
-    name: 'TEXTBEFORE', tr: 'ÖNCEKİMETİN', ru: 'ТЕКСТДО', category: 'text', minVersion: '365',
+    name: 'TEXTBEFORE', tr: 'METİNÖNCESİ', ru: 'ТЕКСТДО', category: 'text', minVersion: '365',
     syntax: 'TEXTBEFORE(text, delimiter, [instance_num], [match_mode], [match_end], [if_not_found])',
     args: [
       arg('text', 'metin', 'текст', false,

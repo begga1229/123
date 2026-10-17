@@ -568,7 +568,7 @@
     minVersion: '2016', uncertain: ['tr', 'ru']
   });
   stat.push({
-    name: 'FORECAST.ETS.CONFINT', tr: 'TAHMİN.ETS.GÜVENARALIĞI', ru: 'ПРЕДСКАЗ.ETS.ДОВИНТЕРВАЛ', category: 'stat',
+    name: 'FORECAST.ETS.CONFINT', tr: 'TAHMİN.ETS.GVNARAL', ru: 'ПРЕДСКАЗ.ETS.ДОВИНТЕРВАЛ', category: 'stat',
     syntax: 'FORECAST.ETS.CONFINT(target_date, values, timeline, [confidence_level], [seasonality], [data_completion], [aggregation])',
     args: [
       arg('target_date', 'hedef_tarih', 'целевая_дата', false, 'Tahmin edilecek tarih veya dönem', 'Дата или период прогноза', 'The date or period to forecast'),
