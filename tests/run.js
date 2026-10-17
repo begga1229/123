@@ -48,6 +48,13 @@ var MODULE_ORDER = [
   'assets/js/engine/explain.js',
   'assets/js/nlp/parser.js',
   'assets/js/nlp/intents.js',
+  'assets/js/nlp/intents-aggregate.js',
+  'assets/js/nlp/intents-logic.js',
+  'assets/js/nlp/intents-lookup.js',
+  'assets/js/nlp/intents-text.js',
+  'assets/js/nlp/intents-date.js',
+  'assets/js/nlp/intents-math.js',
+  'assets/js/nlp/intents-finance-array.js',
   'assets/js/engine/generate.js',
   'assets/js/workbook/workbook.js',
   'assets/js/workbook/evaluator.js'

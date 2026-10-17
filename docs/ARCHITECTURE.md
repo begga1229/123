@@ -55,7 +55,14 @@ assets/js/engine/localize.js               EFS.localize
 assets/js/engine/formula-reader.js         EFS.formulaReader
 assets/js/engine/explain.js                EFS.explain
 assets/js/nlp/parser.js                    EFS.parser
-assets/js/nlp/intents.js                   EFS.intents
+assets/js/nlp/intents.js                   EFS.intents (core: registry, helpers, rank)
+assets/js/nlp/intents-aggregate.js         registers intents via EFS.intents.register([...])
+assets/js/nlp/intents-logic.js             registers intents via EFS.intents.register([...])
+assets/js/nlp/intents-lookup.js            registers intents via EFS.intents.register([...])
+assets/js/nlp/intents-text.js              registers intents via EFS.intents.register([...])
+assets/js/nlp/intents-date.js              registers intents via EFS.intents.register([...])
+assets/js/nlp/intents-math.js              registers intents via EFS.intents.register([...])
+assets/js/nlp/intents-finance-array.js     registers intents via EFS.intents.register([...])
 assets/js/engine/generate.js               EFS.generate
 assets/js/workbook/workbook.js             EFS.workbook
 assets/js/workbook/evaluator.js            EFS.evaluator
