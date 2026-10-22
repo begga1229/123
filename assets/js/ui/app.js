@@ -36,6 +36,10 @@
     fnShown: 40,
     exampleSeed: 0,
     view: 'studio',
+    formatFormula: false,
+    aiBusy: false,
+    aiReq: 0,
+    aiStarted: 0,
     booted: false
   };
   ui.state = state;
@@ -47,7 +51,8 @@
     style: 'efs.style',
     theme: 'efs.theme',
     history: 'efs.history',
-    libTab: 'efs.libTab'
+    libTab: 'efs.libTab',
+    formatFormula: 'efs.formatFormula'
   };
   var DIALECTS = ['en', 'tr', 'ru'];
   var HISTORY_MAX = 20;
@@ -192,6 +197,9 @@
     chevron: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     book: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
     sheet: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 9h16M4 14h16M10 4v16" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".6"/></svg>',
+    format: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M4 6h16M8 10h12M8 14h12M4 18h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 10.5l2 1.5-2 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    stop: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5" fill="currentColor"/></svg>',
+    settings: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
     plus: '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
   };
   function icon(name) {
@@ -337,13 +345,114 @@
   }
   ui.copyText = copyText;
 
+  // ------------------------------------------------------------------
+  // Formula layout: soft wrap points + optional multi-line "format" view (display only)
+  // ------------------------------------------------------------------
+  var FORMAT_MIN_GROUP = 28;   // a (...) group is broken over lines only when its content is at least this long
+  var FORMAT_MAX_DEPTH = 2;    // ... and only for the outer two nesting levels
+
+  function isSepPiece(p) { return p.cls === 'tk-op' && (p.text === ';' || p.text === ','); }
+  function isWsPiece(p) { return !p.cls && /^\s+$/.test(p.text); }
+
+  /** Pieces → lines [{indent, pieces}] : break after '(' and separators at depth ≤ 2, indent by depth. */
+  function formatLines(pieces) {
+    var n = pieces.length, i, match = new Array(n), stack = [];
+    for (i = 0; i < n; i++) {
+      var tx = pieces[i].cls === 'tk-op' ? pieces[i].text : '';
+      if (tx === '(') stack.push(i);
+      else if (tx === ')' && stack.length) match[stack.pop()] = i;
+    }
+    var lines = [], cur = { indent: 0, pieces: [] }, groups = [], brace = 0;
+    var brokenCount = function () { var c = 0; groups.forEach(function (g) { if (g.broken) c++; }); return c; };
+    var newline = function (indent) { lines.push(cur); cur = { indent: indent, pieces: [] }; };
+    for (i = 0; i < n; i++) {
+      var p = pieces[i];
+      if (!cur.pieces.length && lines.length && isWsPiece(p)) continue;
+      var op = p.cls === 'tk-op' ? p.text : '';
+      if (op === '{') brace++;
+      else if (op === '}') brace = Math.max(0, brace - 1);
+      if (op === '(') {
+        cur.pieces.push(p);
+        var len = 0;
+        if (match[i] != null) for (var k = i + 1; k < match[i]; k++) len += pieces[k].text.length;
+        var g = { broken: groups.length < FORMAT_MAX_DEPTH && match[i] != null && len >= FORMAT_MIN_GROUP };
+        groups.push(g);
+        if (g.broken) newline(brokenCount());
+      } else if (op === ')' && groups.length) {
+        var top = groups.pop();
+        if (top.broken) { if (cur.pieces.length) newline(brokenCount()); else cur.indent = brokenCount(); }
+        cur.pieces.push(p);
+      } else if (isSepPiece(p) && !brace && groups.length && groups[groups.length - 1].broken) {
+        cur.pieces.push(p);
+        newline(brokenCount());
+      } else cur.pieces.push(p);
+    }
+    if (cur.pieces.length) lines.push(cur);
+    return lines;
+  }
+  ui.formatLines = formatLines;
+
+  /** Append highlighted pieces to a node; '<wbr>' after separators/'('/operators gives nice soft wraps. */
+  function appendPieces(node, pieces) {
+    pieces.forEach(function (p) {
+      if (p.cls) node.appendChild(el('span', { className: p.cls, text: p.text }));
+      else node.appendChild(doc.createTextNode(p.text));
+      if (p.cls === 'tk-op' && /^[;,(&]$/.test(p.text)) node.appendChild(doc.createElement('wbr'));
+    });
+  }
+
+  /** (Re)paint the formula text of a formula box, flat or formatted, keeping its tools. */
+  function paintFormula(box, formula, dialect) {
+    box.setAttribute('data-formula', formula);
+    box.setAttribute('data-dialect', dialect || '');
+    var text = box.querySelector('.formula-text') || box;
+    if (text === box) { var tools = box.querySelector('.formula-tools'); clear(box); if (tools) box.appendChild(tools); }
+    else clear(text);
+    var pieces = highlightPieces(formula, dialect);
+    var formatted = box.classList.contains('is-formattable') && state.formatFormula;
+    box.classList.toggle('is-formatted', !!formatted);
+    if (!formatted) {
+      if (text === box) { var frag = doc.createDocumentFragment(); appendPieces(frag, pieces); box.insertBefore(frag, box.firstChild); }
+      else appendPieces(text, pieces);
+      return box;
+    }
+    formatLines(pieces).forEach(function (line) {
+      // block lines with a hanging indent: wrapped continuations sit 2ch deeper than the line start
+      var row = el('span', { className: 'fx-line' });
+      row.style.paddingLeft = (line.indent * 2 + 2) + 'ch';
+      appendPieces(row, line.pieces);
+      text.appendChild(row);
+    });
+    return box;
+  }
+
+  function repaintFormattable() {
+    if (!doc) return;
+    var boxes = doc.querySelectorAll('.formula-box.is-formattable');
+    for (var i = 0; i < boxes.length; i++) {
+      paintFormula(boxes[i], boxes[i].getAttribute('data-formula') || '', boxes[i].getAttribute('data-dialect') || state.dialect);
+      var tg = boxes[i].querySelector('.fx-toggle');
+      if (tg) { tg.setAttribute('aria-pressed', state.formatFormula ? 'true' : 'false'); tg.classList.toggle('is-on', state.formatFormula); }
+    }
+  }
+
   /** A formula box with highlighted text and a copy button (plus optional extra tools). */
   function formulaBox(formula, dialect, opts) {
     opts = opts || {};
-    var box = el('div', { className: 'formula-box' + (opts.compact ? ' is-compact' : ''), attrs: { 'data-formula': formula, 'data-testid': opts.compact ? 'formula-compact' : 'formula' } });
-    highlightInto(box, formula, dialect);
+    var big = !opts.compact;
+    var box = el('div', { className: 'formula-box' + (opts.compact ? ' is-compact' : ' has-bar is-formattable'), attrs: { 'data-formula': formula, 'data-testid': opts.compact ? 'formula-compact' : 'formula' } });
+    var textNode = big ? el('div', { className: 'formula-text', attrs: { 'data-testid': 'formula-text' } }) : null;
+    if (textNode) box.appendChild(textNode);
     var tools = el('div', { className: 'formula-tools' });
-    var copyBtn = el('button', { type: 'button', className: 'btn btn-sm' + (opts.compact ? ' btn-ghost' : ''), title: t('result.copy'), attrs: { 'aria-label': t('result.copy') } },
+    box.appendChild(tools);
+    paintFormula(box, formula, dialect);
+    // whatever is selected inside the box, copying yields the single-line formula
+    box.addEventListener('copy', function (e) {
+      try {
+        if (e.clipboardData) { e.clipboardData.setData('text/plain', box.getAttribute('data-formula') || ''); e.preventDefault(); }
+      } catch (ignored) { /* default copy */ }
+    });
+    var copyBtn = el('button', { type: 'button', className: 'btn btn-sm' + (opts.compact ? ' btn-ghost' : ''), title: t('result.copy'), attrs: { 'aria-label': t('result.copy'), 'data-testid': opts.compact ? 'copy-compact' : 'copy' } },
       [icon('copy'), opts.compact ? null : el('span', { text: t('result.copy') })]);
     copyBtn.addEventListener('click', function () {
       copyText(box.getAttribute('data-formula'), function (ok) {
@@ -354,9 +463,18 @@
         root.setTimeout(function () { copyBtn.classList.remove('is-success'); if (label) label.textContent = t('result.copy'); }, 1500);
       });
     });
+    if (big) {
+      var fmtBtn = el('button', { type: 'button', className: 'btn btn-sm btn-ghost fx-toggle' + (state.formatFormula ? ' is-on' : ''), title: t('fmt.formatTitle'),
+        attrs: { 'aria-pressed': state.formatFormula ? 'true' : 'false', 'data-testid': 'format-toggle' } }, [icon('format'), el('span', { text: t('fmt.format') })]);
+      fmtBtn.addEventListener('click', function () {
+        state.formatFormula = !state.formatFormula;
+        store.set(KEYS.formatFormula, state.formatFormula);
+        repaintFormattable();
+      });
+      tools.appendChild(fmtBtn);
+    }
     tools.appendChild(copyBtn);
     if (opts.tools) append(tools, opts.tools);
-    box.appendChild(tools);
     return box;
   }
 
@@ -475,6 +593,7 @@
     var pad1 = before && !/\s$/.test(before) ? ' ' : '';
     var pad2 = after && !/^\s/.test(after) ? ' ' : '';
     ta.value = before + pad1 + text + pad2 + after;
+    autoGrow();
     var pos = (before + pad1 + text).length;
     try { ta.focus(); ta.setSelectionRange(pos, pos); } catch (ignored) { /* ignore */ }
     updateLangChip();
@@ -486,8 +605,30 @@
     var ta = $('prompt');
     if (!ta) return;
     ta.value = String(text == null ? '' : text);
+    autoGrow();
     updateLangChip();
   }
+
+  var PROMPT_MAX_LINES = 12;
+  /** Grow the prompt with its content up to ~12 lines; beyond that it scrolls. */
+  function autoGrow() {
+    var ta = $('prompt');
+    if (!ta || !root.getComputedStyle) return;
+    var cs = quiet(function () { return root.getComputedStyle(ta); }, null);
+    if (!cs) return;
+    var lh = parseFloat(cs.lineHeight) || 22;
+    var pad = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+    var max = Math.round(lh * PROMPT_MAX_LINES + pad);
+    ta.style.height = 'auto';
+    var sh = ta.scrollHeight;
+    if (!ta.value && ta.placeholder) {   // empty: make room for the (long, multi-line) placeholder example
+      ta.value = ta.placeholder; sh = ta.scrollHeight; ta.value = '';
+    }
+    var h = Math.min(sh, max);
+    ta.style.height = Math.max(h, parseFloat(cs.minHeight) || 0) + 'px';
+    ta.style.overflowY = sh > max + 1 ? 'auto' : 'hidden';
+  }
+  ui.autoGrow = autoGrow;
 
   var langChipTimer = null;
   function updateLangChip() {
@@ -502,14 +643,446 @@
   }
 
   // ------------------------------------------------------------------
+  // AI mode (§16) — every EFS.ai call is guarded; without EFS.ai the AI controls stay hidden
+  // ------------------------------------------------------------------
+  var AI_MODES = ['off', 'anthropic', 'ollama', 'openaiCompat'];
+  var AI_DEFAULTS = {
+    mode: 'off',
+    anthropic: { apiKey: '', model: 'claude-opus-5-5', effort: 'medium' },
+    ollama: { url: 'http://localhost:11434', model: '' },
+    openaiCompat: { url: 'http://localhost:1234/v1', model: '', apiKey: '' },
+    sendSamples: false,
+    fallbackToRules: true
+  };
+
+  function aiApi() {
+    var a = EFS.ai;
+    return a && typeof a.generate === 'function' && typeof a.getSettings === 'function' ? a : null;
+  }
+  function aiSettings() {
+    var a = aiApi();
+    var s = a ? quiet(function () { return a.getSettings(); }, null) : null;
+    s = s && typeof s === 'object' ? s : {};
+    var out = {};
+    Object.keys(AI_DEFAULTS).forEach(function (k) {
+      var d = AI_DEFAULTS[k], v = s[k];
+      if (d && typeof d === 'object') {
+        out[k] = {};
+        Object.keys(d).forEach(function (kk) { out[k][kk] = v && v[kk] != null ? v[kk] : d[kk]; });
+      } else out[k] = v != null ? v : d;
+    });
+    if (AI_MODES.indexOf(out.mode) < 0) out.mode = 'off';
+    return out;
+  }
+  function aiActive() {
+    var a = aiApi();
+    if (!a) return false;
+    if (typeof a.isEnabled === 'function') return !!quiet(function () { return a.isEnabled(); }, false);
+    return aiSettings().mode !== 'off';
+  }
+  ui.aiActive = aiActive;
+
+  /** 'claude-opus-5-5' → 'Claude Opus 5.5'; other ids unchanged. */
+  function modelDisplay(id) {
+    var m = /^claude-([a-z]+)-(\d+)-(\d+)/i.exec(String(id || ''));
+    if (!m) return String(id || '');
+    return 'Claude ' + m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase() + ' ' + m[2] + '.' + m[3];
+  }
+  /** Short human name of the configured provider: 'Claude Opus 5.5', 'Ollama · qwen2.5:14b', … */
+  function providerName(settings) {
+    settings = settings || aiSettings();
+    if (settings.mode === 'anthropic') return modelDisplay(settings.anthropic.model);
+    if (settings.mode === 'ollama') return 'Ollama' + (settings.ollama.model ? ' · ' + settings.ollama.model : '');
+    if (settings.mode === 'openaiCompat') return settings.openaiCompat.model || t('ai.status.local');
+    return t('ai.sourceRules');
+  }
+  /** Source badge text for a result produced through EFS.ai.generate (null for the plain rule path). */
+  function sourceLabel(res) {
+    if (!res || !res.source) return null;
+    if (res.source !== 'ai') return t('ai.sourceRules');
+    var model = res.model || '';
+    if (res.provider === 'anthropic') return t('ai.sourceAi', { model: modelDisplay(model || aiSettings().anthropic.model) });
+    return t('ai.sourceLocal', { model: model || t('ai.status.local') });
+  }
+  ui.sourceLabel = sourceLabel;
+
+  /** {tr,ru,en} | string | Error-like → text in the UI language. */
+  function aiMessage(x) {
+    if (x == null) return '';
+    if (typeof x === 'string') return x;
+    if (x.tr || x.ru || x.en) return pick(x);
+    if (x.msg) return aiMessage(x.msg);
+    if (x.message && typeof x.message === 'object') return pick(x.message);
+    if (x.userMessage) return aiMessage(x.userMessage);
+    if (x.i18n) return aiMessage(x.i18n);
+    return String(x.message || x);
+  }
+
+  function refreshAiUi() {
+    if (!doc) return;
+    var a = aiApi();
+    var btn = $('ai-btn');
+    show(btn, !!a);
+    var s = aiSettings();
+    var mode = a ? s.mode : 'off';
+    var pill = $('ai-status');
+    if (pill) {
+      pill.textContent = t(mode === 'off' ? 'ai.status.off' : mode === 'anthropic' ? 'ai.status.anthropic' : 'ai.status.local');
+      pill.setAttribute('data-mode', mode);
+    }
+    if (btn) {
+      btn.classList.toggle('is-on', mode !== 'off');
+      btn.setAttribute('data-mode', mode);
+      var long = a && typeof a.providerLabel === 'function' ? quiet(function () { return a.providerLabel(state.uiLang); }, '') : '';
+      btn.title = t('ai.buttonTitle') + (mode !== 'off' ? ' — ' + (long || providerName(s)) : '');
+    }
+    // online/offline badge: Claude sends the request over the internet, so say so honestly
+    var badge = $('offline-badge');
+    if (badge) {
+      var online = mode === 'anthropic';
+      badge.classList.toggle('badge-offline', !online);
+      badge.classList.toggle('badge-info', online);
+      var span = badge.querySelector('span');
+      if (span) { span.setAttribute('data-i18n', online ? 'app.online' : 'app.offline'); span.textContent = t(online ? 'app.online' : 'app.offline'); }
+      badge.setAttribute('data-i18n-title', online ? 'app.onlineTitle' : 'app.offlineTitle');
+      badge.title = t(online ? 'app.onlineTitle' : 'app.offlineTitle');
+    }
+    updateGenerateButton();
+  }
+  ui.refreshAi = refreshAiUi;
+
+  function updateGenerateButton() {
+    var btn = $('generate-btn');
+    if (!btn) return;
+    var label = btn.querySelector('span');
+    btn.classList.toggle('is-busy', state.aiBusy);
+    btn.disabled = !!state.aiBusy;
+    btn.setAttribute('aria-busy', state.aiBusy ? 'true' : 'false');
+    if (label) {
+      var key = state.aiBusy ? 'ai.generating' : (aiActive() ? 'ai.generateBtn' : 'studio.generate');
+      label.setAttribute('data-i18n', key);
+      label.textContent = t(key);
+    }
+  }
+
+  var aiTick = null;
+  function setAiBusy(busy) {
+    state.aiBusy = !!busy;
+    if (aiTick) { root.clearInterval(aiTick); aiTick = null; }
+    if (busy) {
+      state.aiStarted = Date.now();
+      aiTick = root.setInterval(function () {
+        var n = doc ? doc.querySelector('.thinking-elapsed') : null;
+        if (n) n.textContent = t('ai.elapsed', { n: Math.floor((Date.now() - state.aiStarted) / 1000) });
+      }, 1000);
+    }
+    var prompt = $('prompt');
+    if (prompt) prompt.setAttribute('aria-busy', busy ? 'true' : 'false');
+    updateGenerateButton();
+  }
+
+  function thinkingCard() {
+    var cancel = el('button', { type: 'button', className: 'btn btn-sm', attrs: { 'data-testid': 'ai-cancel' } }, [icon('stop'), el('span', { text: t('ai.cancelRequest') })]);
+    cancel.addEventListener('click', cancelAi);
+    var secs = Math.floor((Date.now() - (state.aiStarted || Date.now())) / 1000);
+    return el('div', { className: 'card thinking', attrs: { 'data-testid': 'ai-thinking', role: 'status' } }, [
+      el('div', { className: 'thinking-head' }, [
+        el('span', { className: 'spinner', attrs: { 'aria-hidden': 'true' } }),
+        el('span', { className: 'thinking-title', text: t('ai.thinking') }),
+        el('span', { className: 'thinking-elapsed', text: t('ai.elapsed', { n: secs }) }),
+        cancel
+      ]),
+      el('p', { className: 'card-message', text: t('ai.thinkingSub', { provider: providerName() }) }),
+      el('div', { className: 'thinking-bar', attrs: { 'aria-hidden': 'true' } }, el('span'))
+    ]);
+  }
+
+  function cancelAi() {
+    if (!state.aiBusy) return;
+    state.aiReq++;               // any late answer of the cancelled request is ignored
+    var a = EFS.ai;
+    if (a && typeof a.abort === 'function') quiet(function () { a.abort(); });
+    setAiBusy(false);
+    renderResult();
+    toast(t('ai.cancelled'), 'info', 2000);
+  }
+  ui.cancelAi = cancelAi;
+
+  function generateAI(text) {
+    var a = aiApi();
+    var req = ++state.aiReq;
+    setAiBusy(true);
+    renderResult();
+    var p;
+    try {
+      p = a.generate(text, state.ctx, { dialect: state.dialect, uiLang: state.uiLang, style: state.style });
+    } catch (e) { p = Promise.reject(e); }
+    return Promise.resolve(p).then(function (res) {
+      if (req !== state.aiReq) return null;
+      setAiBusy(false);
+      if (!res) throw new Error(t('ai.failed'));
+      return showResult(res, text);
+    }, function (e) {
+      if (req !== state.aiReq) return null;
+      setAiBusy(false);
+      state.lastResult = { kind: 'error', text: text, candidates: [], source: 'ai', error: e };
+      renderResult();
+      quiet(function () { if (root.console && root.console.warn) root.console.warn('[Formula Studio] AI', e); });
+      return null;
+    });
+  }
+
+  function aiErrorCard(res) {
+    var open = el('button', { type: 'button', className: 'btn btn-sm' }, [icon('settings'), el('span', { text: t('ai.openSettings') })]);
+    open.addEventListener('click', openAiSettings);
+    var msg = aiMessage(res.error) || t('err.generic');
+    return el('div', { className: 'card', attrs: { 'data-testid': 'ai-error' } }, [
+      el('div', { className: 'card-head' }, el('span', { className: 'card-title' }, [icon('danger'), ' ', t('ai.failed')])),
+      el('div', { className: 'error-box', text: msg }),
+      el('p', { className: 'muted small', text: t('ai.failedHint') }),
+      el('div', { className: 'row-actions' }, open)
+    ]);
+  }
+
+  function callout(kind, title, text, testid, action) {
+    return el('div', { className: 'callout is-' + kind, attrs: { 'data-testid': testid, role: kind === 'warn' ? 'alert' : 'note' } }, [
+      icon(kind === 'warn' ? 'warning' : 'info'),
+      el('div', { className: 'callout-body' }, [el('strong', { text: title + ': ' }), el('span', { text: text }), action ? el('div', { className: 'callout-actions' }, action) : null])
+    ]);
+  }
+  function fallbackCallout(res) {
+    if (!res || !res.fallbackReason) return null;
+    return callout('warn', t('ai.fallbackUsed'), aiMessage(res.fallbackReason), 'ai-fallback');
+  }
+  function questionCallout(res) {
+    var q = res && res.aiNotes && res.aiNotes.question ? aiMessage(res.aiNotes.question) : '';
+    if (!q || !String(q).trim()) return null;
+    var refine = el('button', { type: 'button', className: 'btn btn-xs' }, el('span', { text: t('ai.refine') }));
+    refine.addEventListener('click', function () {
+      var ta = $('prompt');
+      if (!ta) return;
+      if (state.view !== 'studio') setView('studio');
+      ta.focus();
+      try { ta.setSelectionRange(ta.value.length, ta.value.length); } catch (ignored) { /* ignore */ }
+    });
+    return callout('info', t('ai.question'), String(q), 'ai-question', refine);
+  }
+  function sourceBadge(res) {
+    var label = sourceLabel(res);
+    if (!label) return null;
+    var cls = res.source === 'ai' ? 'badge badge-accent source-badge' : 'badge badge-muted source-badge';
+    return el('span', { className: cls, title: t('ai.sourceTitle'), attrs: { 'data-testid': 'source-badge' } }, [res.source === 'ai' ? icon('sparkles') : null, el('span', { text: label })]);
+  }
+
+  // ---- AI settings dialog ----
+  function isDesktop() { return !!(root.efsDesktop && root.efsDesktop.isDesktop); }
+  function val(id) { var n = $(id); return n ? String(n.value || '').trim() : ''; }
+  function setVal(id, v) { var n = $(id); if (n) n.value = v == null ? '' : String(v); }
+  function dialogMode() {
+    var r = doc ? doc.querySelector('input[name="ai-mode"]:checked') : null;
+    return r && AI_MODES.indexOf(r.value) >= 0 ? r.value : 'off';
+  }
+
+  /** Settings object (same shape as EFS.ai.getSettings) built from the dialog fields. */
+  function readAiForm() {
+    return {
+      mode: dialogMode(),
+      anthropic: { apiKey: val('ai-anthropic-key'), model: val('ai-anthropic-model') || 'claude-opus-5-5', effort: val('ai-anthropic-effort') || 'medium' },
+      ollama: { url: val('ai-ollama-url') || AI_DEFAULTS.ollama.url, model: val('ai-ollama-model') },
+      openaiCompat: { url: val('ai-openai-url') || AI_DEFAULTS.openaiCompat.url, model: val('ai-openai-model'), apiKey: val('ai-openai-key') },
+      sendSamples: !!($('ai-send-samples') && $('ai-send-samples').checked),
+      fallbackToRules: !!($('ai-fallback') && $('ai-fallback').checked)
+    };
+  }
+
+  function fillAiForm(s) {
+    var radios = doc.querySelectorAll('input[name="ai-mode"]');
+    for (var i = 0; i < radios.length; i++) radios[i].checked = radios[i].value === s.mode;
+    setVal('ai-anthropic-key', s.anthropic.apiKey);
+    var msel = $('ai-anthropic-model');
+    if (msel) {
+      var known = false;
+      for (var j = 0; j < msel.options.length; j++) if (msel.options[j].value === s.anthropic.model) known = true;
+      if (!known && s.anthropic.model) msel.appendChild(el('option', { value: s.anthropic.model, text: modelDisplay(s.anthropic.model) }));
+    }
+    setVal('ai-anthropic-model', s.anthropic.model || 'claude-opus-5-5');
+    var esel = $('ai-anthropic-effort'), effort = s.anthropic.effort || 'medium';
+    if (esel && !esel.querySelector('option[value="' + effort.replace(/[^a-z]/gi, '') + '"]')) esel.appendChild(el('option', { value: effort, text: effort }));
+    setVal('ai-anthropic-effort', effort);
+    setVal('ai-ollama-url', s.ollama.url);
+    setVal('ai-ollama-model', s.ollama.model);
+    setVal('ai-openai-url', s.openaiCompat.url);
+    setVal('ai-openai-model', s.openaiCompat.model);
+    setVal('ai-openai-key', s.openaiCompat.apiKey);
+    if ($('ai-send-samples')) $('ai-send-samples').checked = !!s.sendSamples;
+    if ($('ai-fallback')) $('ai-fallback').checked = s.fallbackToRules !== false;
+    setKeyVisible(false);
+    setTestStatus('', '');
+    setFormError('');
+    ['ai-ollama-models-status', 'ai-openai-models-status'].forEach(function (id) { var n = $(id); if (n) { n.textContent = t('ai.modelHint'); n.className = 'field-hint'; } });
+    syncAiSections();
+  }
+
+  function syncAiSections() {
+    var mode = dialogMode();
+    var secs = doc.querySelectorAll('[data-ai-section]');
+    for (var i = 0; i < secs.length; i++) secs[i].hidden = secs[i].getAttribute('data-ai-section') !== mode;
+    show($('ai-common'), mode !== 'off');
+    var labels = doc.querySelectorAll('.ai-mode');
+    for (var j = 0; j < labels.length; j++) {
+      var r = labels[j].querySelector('input');
+      labels[j].classList.toggle('is-checked', !!(r && r.checked));
+    }
+    var desk = isDesktop();
+    var b = doc.querySelectorAll('#ai-dialog .ai-env-browser'), d = doc.querySelectorAll('#ai-dialog .ai-env-desktop');
+    for (var k = 0; k < b.length; k++) b[k].hidden = desk;
+    for (var l = 0; l < d.length; l++) d[l].hidden = !desk;
+    setTestStatus('', '');
+    setFormError('');
+  }
+
+  function setKeyVisible(visible) {
+    var input = $('ai-anthropic-key'), btn = $('ai-key-toggle');
+    if (input) input.type = visible ? 'text' : 'password';
+    if (btn) {
+      btn.setAttribute('aria-pressed', visible ? 'true' : 'false');
+      btn.setAttribute('data-i18n', visible ? 'ai.hide' : 'ai.show');
+      btn.textContent = t(visible ? 'ai.hide' : 'ai.show');
+    }
+  }
+  function setTestStatus(kind, text) {
+    var n = $('ai-test-status');
+    if (!n) return;
+    n.className = 'ai-test-status' + (kind ? ' is-' + kind : '');
+    n.textContent = text || '';
+  }
+  function setFormError(text) { var n = $('ai-form-error'); if (n) n.textContent = text || ''; }
+
+  /** Returns an error message when the chosen mode lacks a required field, else ''. */
+  function validateAiForm(s) {
+    if (s.mode === 'anthropic' && !s.anthropic.apiKey) return { msg: t('ai.keyMissing'), focus: 'ai-anthropic-key' };
+    if (s.mode === 'ollama' && !s.ollama.url) return { msg: t('ai.urlMissing'), focus: 'ai-ollama-url' };
+    if (s.mode === 'ollama' && !s.ollama.model) return { msg: t('ai.modelMissing'), focus: 'ai-ollama-model' };
+    if (s.mode === 'openaiCompat' && !s.openaiCompat.url) return { msg: t('ai.urlMissing'), focus: 'ai-openai-url' };
+    if (s.mode === 'openaiCompat' && !s.openaiCompat.model) return { msg: t('ai.modelMissing'), focus: 'ai-openai-model' };
+    return null;
+  }
+
+  function openAiSettings() {
+    var d = $('ai-dialog');
+    if (!d || !aiApi()) return;
+    fillAiForm(aiSettings());
+    try { if (typeof d.showModal === 'function') d.showModal(); else d.setAttribute('open', ''); } catch (e) { d.setAttribute('open', ''); }
+    var checked = doc.querySelector('input[name="ai-mode"]:checked');
+    if (checked) quiet(function () { checked.focus(); });
+  }
+  ui.openAiSettings = openAiSettings;
+
+  function closeAiSettings() {
+    var d = $('ai-dialog');
+    if (!d) return;
+    try { if (typeof d.close === 'function' && d.open) d.close(); else d.removeAttribute('open'); } catch (e) { d.removeAttribute('open'); }
+    var b = $('ai-btn');
+    if (b && !b.hidden) quiet(function () { b.focus(); });
+  }
+
+  function saveAiSettings() {
+    var a = aiApi();
+    if (!a || typeof a.saveSettings !== 'function') { toast(t('ai.saveFailed'), 'danger'); return; }
+    var s = readAiForm();
+    var bad = validateAiForm(s);
+    if (bad) { setFormError(bad.msg); var f = $(bad.focus); if (f) quiet(function () { f.focus(); }); return; }
+    try { a.saveSettings(s); } catch (e) { setFormError(t('ai.saveFailed') + ': ' + aiMessage(e)); return; }
+    closeAiSettings();
+    refreshAiUi();
+    var mode = aiSettings().mode;
+    toast(t('ai.saved', { mode: mode === 'off' ? t('ai.status.off') : providerName() }), 'success', 2400);
+    if (state.lastResult && !state.aiBusy) renderResult();
+  }
+
+  function testAiConnection() {
+    var a = aiApi();
+    if (!a || typeof a.testConnection !== 'function') return;
+    var s = readAiForm();
+    var bad = validateAiForm(s);
+    if (bad && s.mode === 'anthropic') { setTestStatus('error', bad.msg); return; }
+    var btn = $('ai-test');
+    if (btn) btn.disabled = true;
+    setTestStatus('busy', t('ai.testing'));
+    var p;
+    try { p = a.testConnection(s); } catch (e) { p = Promise.reject(e); }
+    Promise.resolve(p).then(function (r) {
+      if (btn) btn.disabled = false;
+      var ok = !!(r && r.ok);
+      var msg = r && r.message ? aiMessage(r.message) : '';
+      // the provider's own message is already specific ("Connection works, 3 models"); fall back to ours
+      setTestStatus(ok ? 'ok' : 'error', ok ? '✓ ' + (msg || t('ai.testOk')) : t('ai.testFailed') + (msg ? ': ' + msg : ''));
+      if (ok && r && Array.isArray(r.models) && r.models.length && s.mode !== 'anthropic') fillModelList(s.mode, r.models);
+    }, function (e) {
+      if (btn) btn.disabled = false;
+      setTestStatus('error', t('ai.testFailed') + ': ' + aiMessage(e));
+    });
+  }
+
+  function fillModelList(mode, models) {
+    var ids = mode === 'ollama' ? ['ai-ollama-models', 'ai-ollama-model', 'ai-ollama-models-status'] : ['ai-openai-models', 'ai-openai-model', 'ai-openai-models-status'];
+    var list = $(ids[0]), input = $(ids[1]), status = $(ids[2]);
+    var names = (models || []).map(function (m) { return typeof m === 'string' ? m : (m && (m.name || m.id || m.model)) || ''; }).filter(Boolean);
+    if (list) { clear(list); names.forEach(function (n) { list.appendChild(el('option', { value: n })); }); }
+    if (input && !input.value && names.length) input.value = names[0];
+    if (status) { status.className = 'field-hint' + (names.length ? ' is-ok' : ' is-error'); status.textContent = names.length ? t('ai.modelsFound', { n: names.length }) + ': ' + names.slice(0, 6).join(', ') + (names.length > 6 ? '…' : '') : t('ai.modelsNone'); }
+  }
+
+  function fetchLocalModels(mode) {
+    var a = aiApi();
+    var status = $(mode === 'ollama' ? 'ai-ollama-models-status' : 'ai-openai-models-status');
+    var btn = $(mode === 'ollama' ? 'ai-ollama-fetch' : 'ai-openai-fetch');
+    if (!a || typeof a.listLocalModels !== 'function') return;
+    if (status) { status.className = 'field-hint'; status.textContent = t('ai.modelsLoading'); }
+    if (btn) btn.disabled = true;
+    var p;
+    // the form's current URL/key travel along so the user does not have to save first
+    try { p = a.listLocalModels(mode, readAiForm()); } catch (e) { p = Promise.reject(e); }
+    Promise.resolve(p).then(function (models) {
+      if (btn) btn.disabled = false;
+      fillModelList(mode, Array.isArray(models) ? models : []);
+    }, function (e) {
+      if (btn) btn.disabled = false;
+      if (status) { status.className = 'field-hint is-error'; status.textContent = t('ai.modelsFailed', { message: aiMessage(e) }); }
+    });
+  }
+
+  function wireAiDialog() {
+    on('ai-btn', 'click', openAiSettings);
+    on('ai-close', 'click', closeAiSettings);
+    on('ai-cancel', 'click', closeAiSettings);
+    on('ai-key-toggle', 'click', function () { var i = $('ai-anthropic-key'); setKeyVisible(!!i && i.type === 'password'); });
+    on('ai-test', 'click', testAiConnection);
+    on('ai-ollama-fetch', 'click', function () { fetchLocalModels('ollama'); });
+    on('ai-openai-fetch', 'click', function () { fetchLocalModels('openaiCompat'); });
+    var form = $('ai-form');
+    if (form) {
+      form.addEventListener('submit', function (e) { e.preventDefault(); saveAiSettings(); });
+      form.addEventListener('change', function (e) { if (e.target && e.target.name === 'ai-mode') syncAiSections(); });
+    }
+    var d = $('ai-dialog');
+    if (d) {
+      d.addEventListener('click', function (e) { if (e.target === d) closeAiSettings(); });
+      d.addEventListener('cancel', function (e) { e.preventDefault(); closeAiSettings(); });
+    }
+  }
+
+  // ------------------------------------------------------------------
   // Generation
   // ------------------------------------------------------------------
   function generate(text) {
     var ta = $('prompt');
     text = String(text != null ? text : (ta ? ta.value : '')).trim();
     if (!text) { toast(t('studio.emptyPrompt'), 'warn'); return null; }
-    if (ta && ta.value.trim() !== text) ta.value = text;
+    if (state.aiBusy) { toast(t('ai.busy'), 'warn', 1800); return null; }
+    if (ta && ta.value.trim() !== text) { ta.value = text; autoGrow(); }
     updateLangChip();
+    if (text.charAt(0) !== '=' && aiActive()) return generateAI(text);
     var btn = $('generate-btn');
     if (btn) btn.disabled = true;
     var res = guard(function () {
@@ -517,14 +1090,20 @@
     }, 'err.generateFailed', null);
     if (btn) btn.disabled = false;
     if (!res) return null;
+    return showResult(res, text);
+  }
+
+  /** Store + render a Result (rule engine or EFS.ai), remember it in the history. */
+  function showResult(res, text) {
     if (!Array.isArray(res.candidates)) res.candidates = [];
     res.candidates.forEach(function (c, i) { if (c && c._uid == null) c._uid = 'c' + Date.now().toString(36) + i; });
+    if (!res.text) res.text = text;
     state.lastResult = res;
     state.activeIndex = 0;
     state.cardDialects = {};
     renderResult();
     var best = res.candidates[0] || null;
-    if (res.kind !== 'empty') pushHistory(text, best ? (best.formulaEN || best.formula || '') : '');
+    if (res.kind !== 'empty') pushHistory(text, best ? (best.formulaEN || best.formula || '') : '', res);
     if (state.view !== 'studio') setView('studio');
     var resultNode = $('result');
     if (resultNode && resultNode.scrollIntoView && root.innerWidth < 800) quiet(function () { resultNode.scrollIntoView({ block: 'start', behavior: 'smooth' }); });
@@ -539,6 +1118,7 @@
     var host = $('result');
     if (!host) return;
     clear(host);
+    if (state.aiBusy) { host.appendChild(thinkingCard()); return; }
     var res = state.lastResult;
     if (!res) {
       host.appendChild(el('div', { className: 'welcome' }, [icon('sparkles'), ' ', t('studio.welcome')]));
@@ -546,18 +1126,22 @@
       return;
     }
     try {
+      if (res.kind === 'error') { host.appendChild(aiErrorCard(res)); return; }
+      var fb = fallbackCallout(res);
+      if (fb) host.appendChild(fb);
+      if (res.kind !== 'formula') { var qc = questionCallout(res); if (qc) host.appendChild(qc); }
       var message = res.message ? pick(res.message) : '';
       var cands = res.candidates || [];
       if (res.kind === 'empty' || (!cands.length && !(res.suggestions && res.suggestions.length))) {
         host.appendChild(el('div', { className: 'card' }, [
-          el('div', { className: 'card-head' }, el('span', { className: 'card-title' }, [icon('info'), ' ', t('studio.result')])),
+          el('div', { className: 'card-head' }, [el('span', { className: 'card-title' }, [icon('info'), ' ', t('studio.result')]), sourceBadge(res)]),
           el('p', { className: 'card-message', text: message || t('studio.noResult') })
         ]));
         return;
       }
       if (res.kind === 'help') {
         host.appendChild(el('div', { className: 'card' }, [
-          el('div', { className: 'card-head' }, el('span', { className: 'card-title' }, [icon('book'), ' ', t('studio.helpKind')])),
+          el('div', { className: 'card-head' }, [el('span', { className: 'card-title' }, [icon('book'), ' ', t('studio.helpKind')]), sourceBadge(res)]),
           message ? el('p', { className: 'card-message', text: message }) : null
         ]));
         if (res.suggestions && res.suggestions.length) {
@@ -578,7 +1162,7 @@
       if (message) host.appendChild(el('p', { className: 'card-message', text: message }));
       var idx = Math.max(0, Math.min(state.activeIndex, cands.length - 1));
       var main = cands[idx];
-      host.appendChild(candidateCard(main, idx, true, {}));
+      host.appendChild(candidateCard(main, idx, true, { result: res }));
       var alts = alternativesFor(res, main);
       if (alts.length) host.appendChild(alternativesCard(alts));
     } catch (e) {
@@ -958,15 +1542,12 @@
     var titleText = opts.isTemplate ? t('lib.insert') : (intentTitle(cand.intent) || t('result.formula'));
     head.appendChild(el('span', { className: 'card-title' }, [icon('sparkles'), ' ', titleText]));
     var meta = el('div', { className: 'card-meta' }, tagBadges(cand));
+    var srcBadge = opts.result ? sourceBadge(opts.result) : null;
+    if (srcBadge) meta.insertBefore(srcBadge, meta.firstChild);
     var box;
     meta.appendChild(dialectPills(dialect, function (d) {
       state.cardDialects[key] = d;
-      var f = formulaFor(cand, d);
-      box.setAttribute('data-formula', f);
-      var tools = box.querySelector('.formula-tools');
-      clear(box);
-      highlightInto(box, f, d);
-      if (tools) box.appendChild(tools);
+      paintFormula(box, formulaFor(cand, d), d);
     }));
     head.appendChild(meta);
     card.appendChild(head);
@@ -976,11 +1557,15 @@
     card.appendChild(box);
 
     if (!opts.hideConfidence && typeof cand.confidence === 'number') card.appendChild(confidenceBlock(cand.confidence));
-    var sentence = pick(cand.explain);
-    if (sentence) card.appendChild(el('p', { className: 'card-message', text: sentence }));
+    var notes = opts.result && opts.result.aiNotes ? opts.result.aiNotes : null;
+    var sentence = notes && notes.explanation ? aiMessage(notes.explanation) : pick(cand.explain);
+    if (sentence) card.appendChild(el('p', { className: 'card-message' + (notes && notes.explanation ? ' is-ai-summary' : ''), text: sentence, attrs: notes && notes.explanation ? { 'data-testid': 'ai-summary' } : null }));
+    var qcall = opts.result ? questionCallout(opts.result) : null;
+    if (qcall) card.appendChild(qcall);
 
-    if (Array.isArray(cand.assumptions) && cand.assumptions.length) {
-      card.appendChild(el('div', { className: 'subsection' }, [el('div', { className: 'subsection-title', text: t('result.assumptions') }), bulletList(cand.assumptions)]));
+    var assumptions = Array.isArray(cand.assumptions) && cand.assumptions.length ? cand.assumptions : (notes && Array.isArray(notes.assumptions) ? notes.assumptions : []);
+    if (assumptions.length) {
+      card.appendChild(el('div', { className: 'subsection' }, [el('div', { className: 'subsection-title', text: t('result.assumptions') }), bulletList(assumptions)]));
     }
     var miss = missingBlock(cand);
     if (miss) card.appendChild(miss);
@@ -1011,9 +1596,15 @@
     var h = store.get(KEYS.history, []);
     state.history = Array.isArray(h) ? h.filter(function (x) { return x && typeof x.text === 'string'; }).slice(0, HISTORY_MAX) : [];
   }
-  function pushHistory(text, formula) {
+  function pushHistory(text, formula, res) {
     state.history = state.history.filter(function (h) { return h.text !== text; });
-    state.history.unshift({ text: text, formula: formula || '', ts: Date.now() });
+    var entry = { text: text, formula: formula || '', ts: Date.now() };
+    if (res && res.source) {
+      entry.source = res.source === 'ai' ? 'ai' : 'rules';
+      if (res.provider) entry.provider = String(res.provider);
+      if (res.model) entry.model = String(res.model);
+    }
+    state.history.unshift(entry);
     state.history = state.history.slice(0, HISTORY_MAX);
     store.set(KEYS.history, state.history);
     renderHistory();
@@ -1044,7 +1635,7 @@
     state.history.forEach(function (h) {
       var btn = el('button', { type: 'button', className: 'history-item', title: h.text }, [
         el('span', { className: 'history-text', text: h.text }),
-        el('span', { className: 'history-time', text: timeLabel(h.ts) }),
+        el('span', { className: 'history-time' }, [h.source === 'ai' ? el('span', { className: 'history-src', text: t('ai.historyBadge'), title: sourceLabel(h) }) : null, timeLabel(h.ts)]),
         h.formula ? el('span', { className: 'history-formula', text: ensureEquals(h.formula) }) : null
       ]);
       btn.addEventListener('click', function () { setPrompt(h.text); generate(h.text); });
@@ -1573,6 +2164,8 @@
     setActive($('ui-lang'), 'lang', lang);
     setActive($('dialect-seg'), 'dialect', state.dialect);
     applyI18n();
+    refreshAiUi();
+    autoGrow();
     if (!opts.silentRender) renderAll();
     if (opts.announce) toast(t('toast.langChanged', { lang: t('lang.' + lang) }), 'info', 1600);
   }
@@ -1730,12 +2323,15 @@
         if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); generate(); }
       });
       prompt.addEventListener('input', function () {
+        autoGrow();
         if (langChipTimer) root.clearTimeout(langChipTimer);
         langChipTimer = root.setTimeout(updateLangChip, 180);
       });
     }
     on('generate-btn', 'click', function () { generate(); });
     on('clear-prompt', 'click', function () { setPrompt(''); if (prompt) prompt.focus(); });
+    root.addEventListener('resize', function () { autoGrow(); });
+    wireAiDialog();
     on('examples-more', 'click', function () { state.exampleSeed++; renderExamples(); });
     on('history-clear', 'click', clearHistory);
 
@@ -1763,6 +2359,9 @@
       if (e.key === 'Escape') {
         var d = $('help-dialog');
         if (d && d.open) { closeHelp(); return; }
+        var ad = $('ai-dialog');
+        if (ad && ad.open) return; // the dialog's own 'cancel' event closes it
+        if (state.aiBusy) { cancelAi(); return; }
         if (doc.body.classList.contains('lib-open')) { toggleLibrary(false); return; }
         return;
       }
@@ -1797,6 +2396,7 @@
     // dark is the default; only an explicit user choice (persisted) switches to light
     var th = store.get(KEYS.theme, 'dark');
     state.theme = th === 'light' ? 'light' : 'dark';
+    state.formatFormula = store.get(KEYS.formatFormula, false) === true;
     var lt = store.get(KEYS.libTab, 'functions');
     state.libTab = ['functions', 'explain', 'recipes'].indexOf(lt) >= 0 ? lt : 'functions';
   }
@@ -1816,7 +2416,9 @@
       setView('studio');
       applyI18n();
       wireEvents();
+      refreshAiUi();
       renderAll();
+      autoGrow();
       var missing = ['generate', 'intents', 'parser', 'workbook'].filter(function (n) { return !EFS[n]; });
       if (missing.length) toast(t('toast.moduleMissing', { module: missing.join(', ') }), 'warn', 7000);
     } catch (e) {

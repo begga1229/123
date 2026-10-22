@@ -5,3 +5,4 @@ tests/output/
 Thumbs.db
 *.log
 dist/
+tools/node_modules/

@@ -54,6 +54,11 @@
           <button type="button" data-style="classic" data-i18n="style.classic">Klasik</button>
         </div>
       </div>
+      <button type="button" class="ai-btn" id="ai-btn" data-testid="ai-settings" hidden data-i18n-title="ai.buttonTitle" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z" fill="currentColor"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" fill="currentColor" opacity=".7"/></svg>
+        <span class="ai-btn-label" data-i18n="ai.button">Yapay zeka</span>
+        <span class="ai-pill" id="ai-status" data-mode="off" data-testid="ai-status">Kapalı</span>
+      </button>
       <button type="button" class="icon-btn" id="theme-btn" data-i18n-title="theme.toggle" data-i18n-aria="theme.toggle">
         <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -256,6 +261,135 @@
     </div>
   </dialog>
 
+  <!-- ===================== AI SETTINGS DIALOG (§16) ===================== -->
+  <dialog class="dialog dialog-ai" id="ai-dialog" aria-labelledby="ai-title" data-testid="ai-dialog">
+    <form class="ai-form" id="ai-form" novalidate>
+      <div class="dialog-head">
+        <h2 id="ai-title">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z" fill="currentColor"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" fill="currentColor" opacity=".7"/></svg>
+          <span data-i18n="ai.title">Yapay zeka ayarları</span>
+        </h2>
+        <button type="button" class="icon-btn icon-btn-sm" id="ai-close" data-i18n-title="help.close" data-i18n-aria="help.close">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="dialog-body ai-body">
+        <p class="muted small" data-i18n="ai.intro"></p>
+
+        <fieldset class="ai-modes">
+          <legend class="field-label" data-i18n="ai.modeLabel">Çalışma modu</legend>
+          <label class="ai-mode"><input type="radio" name="ai-mode" value="off"><span class="ai-mode-text"><span class="ai-mode-title" data-i18n="ai.mode.off">Kapalı</span><span class="ai-mode-desc" data-i18n="ai.mode.offDesc"></span></span></label>
+          <label class="ai-mode"><input type="radio" name="ai-mode" value="anthropic"><span class="ai-mode-text"><span class="ai-mode-title" data-i18n="ai.mode.anthropic">Claude</span><span class="ai-mode-desc" data-i18n="ai.mode.anthropicDesc"></span></span></label>
+          <label class="ai-mode"><input type="radio" name="ai-mode" value="ollama"><span class="ai-mode-text"><span class="ai-mode-title" data-i18n="ai.mode.ollama">Yerel model (Ollama)</span><span class="ai-mode-desc" data-i18n="ai.mode.ollamaDesc"></span></span></label>
+          <label class="ai-mode"><input type="radio" name="ai-mode" value="openaiCompat"><span class="ai-mode-text"><span class="ai-mode-title" data-i18n="ai.mode.openaiCompat">Yerel model (LM Studio / OpenAI uyumlu)</span><span class="ai-mode-desc" data-i18n="ai.mode.openaiCompatDesc"></span></span></label>
+        </fieldset>
+
+        <section class="ai-section" data-ai-section="anthropic" hidden>
+          <div class="field">
+            <label class="field-label" for="ai-anthropic-key" data-i18n="ai.apiKey">API anahtarı</label>
+            <div class="input-group">
+              <input type="password" id="ai-anthropic-key" autocomplete="off" spellcheck="false" placeholder="sk-ant-…">
+              <button type="button" class="btn btn-sm" id="ai-key-toggle" aria-pressed="false" aria-controls="ai-anthropic-key" data-i18n="ai.show">Göster</button>
+            </div>
+            <p class="field-hint" data-i18n="ai.keyStored"></p>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label class="field-label" for="ai-anthropic-model" data-i18n="ai.model">Model</label>
+              <select id="ai-anthropic-model">
+                <option value="claude-opus-5-5" data-i18n="ai.modelOpus">Claude Opus 5.5</option>
+                <option value="claude-sonnet-5-5" data-i18n="ai.modelSonnet">Claude Sonnet 5.5</option>
+                <option value="claude-haiku-5-5" data-i18n="ai.modelHaiku">Claude Haiku 5.5</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="ai-anthropic-effort" data-i18n="ai.effort">Düşünme düzeyi</label>
+              <select id="ai-anthropic-effort">
+                <option value="low" data-i18n="ai.effortLow">Hızlı</option>
+                <option value="medium" data-i18n="ai.effortMedium">Dengeli</option>
+                <option value="high" data-i18n="ai.effortHigh">Derin düşün</option>
+              </select>
+            </div>
+          </div>
+          <div class="ai-note">
+            <p data-i18n="ai.keyHowTo"></p>
+            <p class="muted" data-i18n="ai.billing"></p>
+          </div>
+        </section>
+
+        <section class="ai-section" data-ai-section="ollama" hidden>
+          <div class="field">
+            <label class="field-label" for="ai-ollama-url" data-i18n="ai.url">Sunucu adresi</label>
+            <input type="text" id="ai-ollama-url" spellcheck="false" autocomplete="off" placeholder="http://localhost:11434">
+          </div>
+          <div class="field">
+            <label class="field-label" for="ai-ollama-model" data-i18n="ai.model">Model</label>
+            <div class="input-group">
+              <input type="text" id="ai-ollama-model" list="ai-ollama-models" spellcheck="false" autocomplete="off" data-i18n-placeholder="ai.modelPlaceholder">
+              <button type="button" class="btn btn-sm" id="ai-ollama-fetch" data-testid="ai-fetch-models" data-i18n="ai.fetchModels">Modelleri getir</button>
+            </div>
+            <datalist id="ai-ollama-models"></datalist>
+            <p class="field-hint" id="ai-ollama-models-status" role="status" aria-live="polite" data-i18n="ai.modelHint"></p>
+          </div>
+          <div class="ai-note">
+            <p data-i18n="ai.ollamaHint1"></p>
+            <code class="ai-cmd">ollama pull qwen2.5:14b</code>
+            <p class="muted" data-i18n="ai.ollamaHint2"></p>
+            <p class="ai-env-browser" data-i18n="ai.ollamaBrowser"></p>
+            <p class="ai-env-desktop" hidden data-i18n="ai.desktopNoSetup"></p>
+          </div>
+        </section>
+
+        <section class="ai-section" data-ai-section="openaiCompat" hidden>
+          <div class="field">
+            <label class="field-label" for="ai-openai-url" data-i18n="ai.url">Sunucu adresi</label>
+            <input type="text" id="ai-openai-url" spellcheck="false" autocomplete="off" placeholder="http://localhost:1234/v1">
+          </div>
+          <div class="field">
+            <label class="field-label" for="ai-openai-model" data-i18n="ai.model">Model</label>
+            <div class="input-group">
+              <input type="text" id="ai-openai-model" list="ai-openai-models" spellcheck="false" autocomplete="off" data-i18n-placeholder="ai.modelPlaceholder">
+              <button type="button" class="btn btn-sm" id="ai-openai-fetch" data-i18n="ai.fetchModels">Modelleri getir</button>
+            </div>
+            <datalist id="ai-openai-models"></datalist>
+            <p class="field-hint" id="ai-openai-models-status" role="status" aria-live="polite" data-i18n="ai.modelHint"></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="ai-openai-key" data-i18n="ai.apiKeyOptional">API anahtarı (isteğe bağlı)</label>
+            <input type="password" id="ai-openai-key" spellcheck="false" autocomplete="off">
+          </div>
+          <div class="ai-note">
+            <p data-i18n="ai.openaiHint"></p>
+            <p class="ai-env-browser" data-i18n="ai.openaiBrowser"></p>
+            <p class="ai-env-desktop" hidden data-i18n="ai.desktopNoSetup"></p>
+          </div>
+        </section>
+
+        <section class="ai-common" id="ai-common" hidden>
+          <label class="check">
+            <input type="checkbox" id="ai-send-samples">
+            <span><span class="check-title" data-i18n="ai.sendSamples">Örnek değerleri gönder</span><span class="check-hint" data-i18n="ai.sendSamplesHint"></span></span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="ai-fallback">
+            <span><span class="check-title" data-i18n="ai.fallback">Yapay zeka başarısız olursa yerleşik motoru kullan</span></span>
+          </label>
+          <div class="ai-test-row">
+            <button type="button" class="btn btn-sm" id="ai-test" data-testid="ai-test" data-i18n="ai.test">Bağlantıyı test et</button>
+            <span class="ai-test-status" id="ai-test-status" role="status" aria-live="polite"></span>
+          </div>
+        </section>
+      </div>
+      <div class="dialog-foot">
+        <span class="ai-form-error" id="ai-form-error" role="alert"></span>
+        <div class="dialog-actions">
+          <button type="button" class="btn btn-sm" id="ai-cancel" data-i18n="ai.cancel">İptal</button>
+          <button type="submit" class="btn btn-primary btn-sm" id="ai-save" data-testid="ai-save" data-i18n="ai.save">Kaydet</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
   <!-- ===================== SCRIPTS (exact load order from docs/ARCHITECTURE.md) ===================== -->
   <script src="assets/js/vendor/xlsx.full.min.js"></script>
   <script src="assets/js/vendor/exceljs.min.js"></script>
@@ -284,6 +418,10 @@
   <script src="assets/js/nlp/intents-math.js"></script>
   <script src="assets/js/nlp/intents-finance-array.js"></script>
   <script src="assets/js/engine/generate.js"></script>
+  <script src="assets/js/vendor/anthropic-sdk.min.js"></script>
+  <script src="assets/js/ai/ai.js"></script>
+  <script src="assets/js/ai/provider-anthropic.js"></script>
+  <script src="assets/js/ai/provider-local.js"></script>
   <script src="assets/js/workbook/workbook.js"></script>
   <script src="assets/js/workbook/evaluator.js"></script>
   <script src="assets/js/ui/app.js"></script>

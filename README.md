@@ -12,7 +12,21 @@
 2. `index.html` dosyasına çift tıklayın (Windows'ta `start.bat`, macOS/Linux'ta `start.sh` de kullanılabilir). · Дважды щёлкните `index.html` (или `start.bat` / `start.sh`). · Double-click `index.html` (or run `start.bat` / `start.sh`).
 3. Hepsi bu. Sunucu, kurulum ve internet gerekmez; tüm kütüphaneler `assets/js/vendor/` içinde yerel olarak gelir. · Всё. Сервер, установка и интернет не нужны — все библиотеки лежат локально в `assets/js/vendor/`. · That's it. No server, no install, no internet — every library is vendored locally.
 
-İsteğe bağlı masaüstü penceresi (Electron): `npm i -D electron && npm start`. · Необязательное окно Electron: `npm i -D electron && npm start`. · Optional Electron window: `npm i -D electron && npm start`.
+### Masaüstü uygulaması · Настольное приложение · Desktop app
+
+**TR** · Windows için hazır sürüm: `FormulaStudio-Windows-x64.zip` dosyasını bir klasöre çıkarın ve `FormulaStudio-win32-x64\FormulaStudio.exe` dosyasına çift tıklayın. Kurulum ve internet gerekmez. Uygulama imzasız olduğu için SmartScreen uyarı verebilir: **Ek bilgi → Yine de çalıştır**. Örnek dosyalar `resources\app\samples` içindedir.
+**RU** · Готовая версия для Windows: распакуйте `FormulaStudio-Windows-x64.zip` в любую папку и дважды щёлкните `FormulaStudio-win32-x64\FormulaStudio.exe`. Установка и интернет не нужны. Программа не подписана, поэтому SmartScreen может предупредить: **Подробнее → Выполнить в любом случае**. Примеры файлов — в `resources\app\samples`.
+**EN** · Windows build: extract `FormulaStudio-Windows-x64.zip` anywhere and double-click `FormulaStudio-win32-x64\FormulaStudio.exe`. No install, no internet. The app is unsigned, so SmartScreen may warn: **More info → Run anyway**. Sample workbooks are in `resources\app\samples`.
+
+Yeniden derleme · Пересборка · Rebuild (Node 18+, Python 3):
+
+```bash
+npm i --prefix /path/to/devdeps electron@37.10.3 @electron/packager@20.3.0
+EFS_DEV_NODE_MODULES=/path/to/devdeps/node_modules node tools/build-desktop.js   # → dist/FormulaStudio-win32-x64, dist/FormulaStudio-linux-x64, dist/FormulaStudio-Windows-x64.zip
+/path/to/devdeps/node_modules/.bin/electron .   # geliştirme penceresi · окно для разработки · dev window
+```
+
+Yalnızca `index.html`, `assets/`, `electron/`, `docs/*.md` paketlenir; kök klasördeki kişisel Excel dosyaları, `tests/`, `tools/`, `.git` asla pakete girmez. · В сборку попадают только `index.html`, `assets/`, `electron/`, `docs/*.md`; личные файлы Excel из корня, `tests/`, `tools/`, `.git` не включаются. · Only `index.html`, `assets/`, `electron/`, `docs/*.md` are shipped; personal workbooks in the repo root, `tests/`, `tools/` and `.git` never are.
 
 ## Neler yapar · Что умеет · What it does
 
