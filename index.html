@@ -84,7 +84,7 @@
           <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 3h9l5 5v13H5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 3v5h5M8 12h8M8 16h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           <span data-i18n="wb.title">Çalışma kitabı</span>
         </h2>
-        <button type="button" class="btn btn-sm btn-primary" id="download-btn" disabled data-i18n-title="wb.downloadTitle">
+        <button type="button" class="btn btn-sm btn-primary" id="download-btn" data-testid="download" disabled data-i18n-title="wb.downloadTitle">
           <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span data-i18n="wb.download">İndir</span>
         </button>
@@ -95,7 +95,7 @@
         <p class="dropzone-text" data-i18n="wb.drop">Excel dosyasını buraya sürükleyin</p>
         <p class="dropzone-sub"><span data-i18n="wb.or">veya</span> <button type="button" class="btn btn-sm" id="browse-btn" data-i18n="wb.browse">Yükle</button></p>
         <p class="dropzone-formats" data-i18n="wb.formats">.xlsx .xlsm .xls .csv .ods</p>
-        <input type="file" id="file-input" accept=".xlsx,.xlsm,.xls,.csv,.ods,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv" hidden>
+        <input type="file" id="file-input" data-testid="file-input" accept=".xlsx,.xlsm,.xls,.csv,.ods,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv" hidden>
       </div>
 
       <p class="empty-state" id="wb-empty" data-i18n="wb.empty">Henüz dosya yüklenmedi — formülleri yine de üretebilirsiniz; hücre adreslerini (A2, E2:E200) doğrudan yazın.</p>
@@ -140,12 +140,12 @@
 
       <div class="prompt-box">
         <label class="sr-only" for="prompt" data-i18n="studio.title">Formül Stüdyosu</label>
-        <textarea id="prompt" rows="3" spellcheck="false" autocomplete="off" data-i18n-placeholder="studio.placeholder" placeholder="Ne yapmak istediğinizi yazın…"></textarea>
+        <textarea id="prompt" data-testid="prompt" rows="3" spellcheck="false" autocomplete="off" data-i18n-placeholder="studio.placeholder" placeholder="Ne yapmak istediğinizi yazın…"></textarea>
         <div class="prompt-actions">
           <span class="muted small kbd-hint" data-i18n="studio.hint">Enter = üret, Shift+Enter = yeni satır</span>
           <div class="prompt-buttons">
             <button type="button" class="btn btn-ghost btn-sm" id="clear-prompt" data-i18n="studio.clear">Temizle</button>
-            <button type="button" class="btn btn-primary" id="generate-btn">
+            <button type="button" class="btn btn-primary" id="generate-btn" data-testid="generate">
               <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z" fill="currentColor"/></svg>
               <span data-i18n="studio.generate">Formül üret</span>
             </button>

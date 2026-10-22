@@ -340,7 +340,7 @@
   /** A formula box with highlighted text and a copy button (plus optional extra tools). */
   function formulaBox(formula, dialect, opts) {
     opts = opts || {};
-    var box = el('div', { className: 'formula-box' + (opts.compact ? ' is-compact' : ''), attrs: { 'data-formula': formula } });
+    var box = el('div', { className: 'formula-box' + (opts.compact ? ' is-compact' : ''), attrs: { 'data-formula': formula, 'data-testid': opts.compact ? 'formula-compact' : 'formula' } });
     highlightInto(box, formula, dialect);
     var tools = el('div', { className: 'formula-tools' });
     var copyBtn = el('button', { type: 'button', className: 'btn btn-sm' + (opts.compact ? ' btn-ghost' : ''), title: t('result.copy'), attrs: { 'aria-label': t('result.copy') } },
@@ -828,7 +828,7 @@
       el('label', {}, [rFill, el('span', { text: t('result.targetFill') })]), rangeInput
     ]));
     box.appendChild(el('div', { className: 'target-row' }, [el('span', { className: 'muted small', text: t('result.header') + ':' }), headerInput]));
-    var applyBtn = el('button', { type: 'button', className: 'btn btn-primary btn-sm', title: t('result.applyTitle') }, [icon('check'), el('span', { text: t('result.apply') })]);
+    var applyBtn = el('button', { type: 'button', className: 'btn btn-primary btn-sm', title: t('result.applyTitle'), attrs: { 'data-testid': 'apply' } }, [icon('check'), el('span', { text: t('result.apply') })]);
     var dlBtn = el('button', { type: 'button', className: 'btn btn-sm', disabled: !state.modified, title: t('wb.downloadTitle') }, [icon('download'), el('span', { text: t('wb.download') })]);
     applyBtn.addEventListener('click', function () {
       sync();
