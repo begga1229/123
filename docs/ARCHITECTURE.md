@@ -64,6 +64,10 @@ assets/js/nlp/intents-date.js              registers intents via EFS.intents.reg
 assets/js/nlp/intents-math.js              registers intents via EFS.intents.register([...])
 assets/js/nlp/intents-finance-array.js     registers intents via EFS.intents.register([...])
 assets/js/engine/generate.js               EFS.generate
+assets/js/vendor/anthropic-sdk.min.js      official Anthropic SDK (global AnthropicSDK), see §16
+assets/js/ai/ai.js                         EFS.ai (optional AI mode, §16)
+assets/js/ai/provider-anthropic.js         EFS.ai.providers.anthropic
+assets/js/ai/provider-local.js             EFS.ai.providers.ollama / openaiCompat
 assets/js/workbook/workbook.js             EFS.workbook
 assets/js/workbook/evaluator.js            EFS.evaluator
 assets/js/ui/app.js                        EFS.ui (boot on DOMContentLoaded)
@@ -374,3 +378,84 @@ All generated formulas are first produced in the **EN dialect** (`formulaEN`), t
 12. **Finance.** loan payment → `PMT(rate/12,years*12,-principal)` with monthly periods when the user says monthly (default), negative principal so the result is positive; `FV`, `PV`, `NPV(rate,range)`, `IRR(range)`, `SLN(cost,salvage,life)`.
 13. **Formatting.** EN dialect: `,` separators, `.` decimals, no spaces: `=SUMIFS(E2:E200,B2:B200,"Gıda",H2:H200,"Ankara")`. Strings keep original case from the user's text. Booleans `TRUE/FALSE`.
 14. **Confidence.** ≥0.8 clear single intent, 0.5–0.8 guessed slots (list them in `assumptions`), <0.5 fallback; `missing[]` whenever a placeholder is used.
+
+---
+
+## 16. AI mode (optional) — `EFS.ai`
+
+Purpose: understand ANY Turkish/Russian/English wording and write large, multi-step formulas. The rule engine (§8–§10)
+stays the default and the offline fallback. AI output is never trusted blindly: every formula is parsed, checked and
+localized by the existing engine before it is shown.
+
+Files (load order: after `engine/generate.js`, before `workbook/*` and `ui/app.js`):
+```
+assets/js/vendor/anthropic-sdk.min.js   official @anthropic-ai/sdk bundled to an IIFE (global AnthropicSDK) with esbuild at dev time
+assets/js/ai/ai.js                      EFS.ai — settings, provider registry, prompt builder, validation + repair loop
+assets/js/ai/provider-anthropic.js      EFS.ai.providers.anthropic — Claude via the official SDK (internet)
+assets/js/ai/provider-local.js          EFS.ai.providers.ollama + EFS.ai.providers.openaiCompat — local models (offline)
+```
+
+### Settings (persisted in localStorage key `efs.ai.v1`, every access in try/catch)
+```js
+{ mode: 'off'|'anthropic'|'ollama'|'openaiCompat',
+  anthropic: { apiKey:'', model:'claude-opus-5-5', effort:'medium' },          // models offered: claude-opus-5-5 (default), claude-sonnet-5-5, claude-haiku-5-5
+  ollama:    { url:'http://localhost:11434', model:'' },                         // model chosen from GET /api/tags
+  openaiCompat: { url:'http://localhost:1234/v1', model:'', apiKey:'' },         // LM Studio, llama.cpp server, Jan …
+  sendSamples: false,          // include up to 3 sample values per column in the prompt (default off for anthropic, the UI may suggest on for local)
+  fallbackToRules: true,       // on AI failure use EFS.generate.run and say so
+  maxRepairs: 2 }
+```
+API: `ai.getSettings()`, `ai.saveSettings(partial)`, `ai.isEnabled()`, `ai.providerLabel(lang)`.
+
+### Generation
+```js
+ai.generate(text, ctx, opts) → Promise<Result>     // same Result shape as EFS.generate.run (§10) plus:
+//   result.source = 'ai' | 'rules' ; result.provider = 'anthropic'|'ollama'|'openaiCompat' ; result.model
+//   result.aiNotes = { explanation, assumptions[], question|null }   (in the UI language)
+//   result.fallbackReason = {tr,ru,en} | null     (set when it fell back to rules)
+//   candidates[0] = { intent:'ai', confidence, ast, formula (opts.dialect), formulaEN, explanation (EFS.explain.explainAST),
+//                     assumptions:[{tr,ru,en}], missing:[], target:{kind:'cell'|'fill', cell, fillRange}, tags:[], alternatives:[] }
+ai.testConnection(settings?) → Promise<{ ok, message:{tr,ru,en}, models?:[] }>
+ai.listLocalModels(provider) → Promise<string[]>   // Ollama GET /api/tags ; OpenAI-compatible GET /models
+ai.abort()                                          // cancels the in-flight request (AbortController)
+```
+Flow: build the prompt → provider call (JSON answer) → `formulaReader.parse(formula,'en')` → every function must exist in
+`EFS.catalog` → every referenced column must exist in ctx (or the sheet named) → style check (classic: no dynamic-array
+functions) → if any check fails, send the errors back to the model and retry (≤ `maxRepairs`) → serialize with `ast.serialize`
+to `opts.dialect`, explain with `explain.explainAST`. Network errors, missing key, refusals → fallback to rules when
+`fallbackToRules` (with `fallbackReason`), otherwise reject with a trilingual error.
+
+Model answer schema (JSON Schema, used as `output_config.format` for Claude, `format` for Ollama, `response_format` json_schema for OpenAI-compatible):
+```json
+{ "formula": "=…EN dialect, comma separators…", "mode": "cell|fill", "target_cell": "N2 or empty",
+  "explanation": "1-3 sentences in the user's language", "assumptions": ["…"], "question": "clarifying question or empty" }
+```
+Prompt (system part is constant → cacheable): Excel expert; output ONLY EN-dialect formulas (the app localizes to TR/RU);
+use the given sheet/columns/data ranges (never invent columns); per-row formulas authored for the first data row with
+absolute lookup ranges; aggregate formulas use data ranges; `style:'classic'` → Excel 2016-compatible (no XLOOKUP/FILTER/
+UNIQUE/SORT/LET/LAMBDA/TEXTSPLIT…), `'modern'` → Excel 365 allowed incl. LET for long formulas; quote sheet names when needed;
+strings in the user's language when the user gives none. The user part carries: UI language, style, sheet name, header row,
+first/last data row, columns `[{letter, name, type, dataRange, samples?}]`, other sheets with their columns, the active cell,
+and the request text.
+
+Anthropic provider (official SDK, browser build): `new AnthropicSDK.default({ apiKey, dangerouslyAllowBrowser:true })`;
+`client.beta.messages.create({ model, max_tokens:16000, betas:['server-side-fallback-2026-07-01'], fallbacks:'default',
+output_config:{ effort, format:{ type:'json_schema', schema } }, system:[{type:'text', text:SYSTEM, cache_control:{type:'ephemeral'}}],
+messages:[{role:'user', content:USER}] }, { signal })`; check `stop_reason === 'refusal'` before reading content; read the
+text block and `JSON.parse` it; map SDK typed errors (AuthenticationError → wrong key, RateLimitError, APIConnectionError →
+offline) to trilingual messages. No thinking/temperature parameters (Opus 5.5: thinking always on; effort controls depth).
+
+Local providers: Ollama `POST {url}/api/chat {model, stream:false, format:<schema>, messages:[system,user]}`;
+OpenAI-compatible `POST {url}/chat/completions {model, messages, response_format:{type:'json_schema', json_schema:{name:'formula', schema}}}`
+(retry once without response_format if the server rejects it). In Electron, local HTTP goes through
+`window.efsDesktop.http(request)` (main process, no CORS); in the browser plain `fetch` (Ollama needs `OLLAMA_ORIGINS=*`
+when the page is opened from file:// — the UI explains this).
+
+## 17. Desktop app (Electron) — `electron/`
+
+`electron/main.js` (BrowserWindow loading `index.html`, contextIsolation, sandbox, no nodeIntegration, single-instance lock,
+window state remembered, external links open in the system browser, File/Edit/View/Help menu with TR/RU/EN labels following
+the UI language), `electron/preload.js` (exposes `window.efsDesktop = { isDesktop:true, platform, version, http(req) }` via
+contextBridge — `http` only allows `http://localhost`/`127.0.0.1` targets), `tools/build-desktop.js` (uses @electron/packager
+from the scratch node_modules to produce `dist/FormulaStudio-win32-x64/FormulaStudio.exe` and a Linux build for testing).
+The web version (`index.html` from file://) must keep working unchanged.
