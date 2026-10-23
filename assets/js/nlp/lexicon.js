@@ -68,11 +68,11 @@
     ['average', 'averages', 'averaged', 'avg', 'mean', 'average of', 'on average', 'the average', 'average value', 'arithmetic mean', 'mean of', 'mean value']);
   add('COUNT',
     ['=say', '=sayın', '=sayar', '=saysın', '=sayalım', '=sayarak', '=sayıp', 'sayım', 'sayıs', 'sayısı', 'sayısını', 'sayısını bul', 'sayısını hesapla', 'sayısını ver',
-     'sayısını göster', 'sayısını say', 'sayısı ne', 'sayısı nedir', 'sayısı kaç', 'adet', 'adedi', 'adedini', 'adet say', 'adedini bul', 'adedini hesapla',
+     'sayısını göster', 'sayısını say', 'sayısı ne', 'sayısı nedir', 'sayısı kaç', 'adet say', 'adedini bul', 'adedini hesapla',
      '=kaç', 'kaç tane', 'kaç adet', 'kaç tane var', 'kaç adet var', 'kaçını', 'kaç kayıt', 'kaç satır', 'kaç kişi', 'kaç ürün', 'kaç hücre', 'kaç kere', 'kaç kez', 'kaç defa',
      'kaç tanesi', 'kaç tanesinde', 'tane', 'tanesi', 'kaç kez geçiyor', 'kaç kere geçiyor', 'kaç defa geçiyor', 'kaç kez var', 'kaçar tane', W('sayı', 0.4), 'miktarı', 'kaçta kaçı',
      'say bakalım', 'kaç tane olduğunu', 'kaç adet olduğunu', 'sayısını öğren', 'kaç satır var', 'kaç kayıt var', 'saymak', 'sayma', 'sayılsın', 'sayılır', 'sayan'],
-    ['количество', 'кол-во', 'кол во', 'колво', 'посчитай', 'посчитать', 'посчитайте', 'сосчитай', 'сосчитать', 'подсчитай', 'подсчитать', 'подсчёт', 'подсчет',
+    ['количество', 'посчитай', 'посчитать', 'посчитайте', 'сосчитай', 'сосчитать', 'подсчитай', 'подсчитать', 'подсчёт', 'подсчет',
      'сколько', 'сколько раз', 'сколько штук', 'сколько строк', 'сколько значений', 'сколько ячеек', 'сколько записей', 'сколько человек', 'сколько товаров',
      'сколько раз встречается', 'сколько раз встречаются', 'сколько раз повторяется', 'сколько всего', W('число', 0.4), 'численность', 'количество ячеек',
      'количество строк', 'количество значений', 'количество записей', 'количество раз', 'количество штук', 'количество вхождений', 'число строк', 'число значений',
@@ -1900,9 +1900,9 @@
   /* MATH                                                                */
   /* ================================================================== */
   S('PLUS',
-    'artı|artısı|ile topla|ile toplayarak|ile toplanmış|ile toplamı|=ile@0.4|ekle@0.4|ekleyerek@0.4|ve toplamı@0.6|toplamı@0.4|ikisini topla|ikisinin toplamı|üstüne ekle|üzerine ekle|ile birlikte@0.4|artı olarak|+|toplayarak@0.5|topla@0.4|toplayıp@0.5',
-    'плюс|плюсом|сложи|сложить|сложив|складывая|сложи два|сложение|сумма двух|сумму двух|прибавь@0.6|прибавить@0.6|прибавив@0.6|добавь к@0.5|добавить к@0.5|сумма@0.4|суммируй@0.5|+|и@0.3|вместе с@0.4|в сумме с',
-    'plus|added to|add to|add together|added together|add the two|sum of the two|sum of two|add@0.5|adding@0.5|added@0.5|and@0.2|together with|combined with|+|increased by@0.5|on top of');
+    'artı|artısı|ile topla|ile toplayarak|ile toplanmış|ile toplamı|ekle@0.4|ekleyerek@0.4|ikisini topla|ikisinin toplamı|üstüne ekle|üzerine ekle|artı olarak|+',
+    'плюс|плюсом|сложи|сложить|сложив|складывая|сложи два|сложение|сумма двух|сумму двух|прибавь@0.6|прибавить@0.6|прибавив@0.6|добавь к@0.5|добавить к@0.5|+|вместе с@0.4|в сумме с',
+    'plus|added to|add to|add together|added together|add the two|sum of the two|sum of two|add@0.5|adding@0.5|added@0.5|together with|combined with|+|increased by@0.5|on top of');
   S('MINUS',
     'eksi|eksilt|eksilterek|eksiltilmiş|çıkar|çıkart|çıkarak|çıkararak|çıkarıp|çıkarınca|çıkarılmış|çıkarılsın|çıkarsın|çıkartıp|çıkartarak|den çıkar|dan çıkar|ten çıkar|tan çıkar|=den çıkart|çıkarma|çıkarma işlemi|düş|düşerek|düşülmüş|düşülsün|-|minus|azalt@0.5|ikisinin farkı@0.6|farkını al@0.6',
     'минус|вычти|вычесть|вычитая|вычтя|вычитание|вычтем|вычесть из|отними|отнять|отняв|отнимая|отнимем|отними от|отнять от|убери@0.5|убрать@0.5|убавь|убавить|уменьши на@0.6|уменьшить на@0.6|за вычетом|за минусом|без@0.4|-|разность@0.6|разность двух|разницу между@0.5',
@@ -2370,7 +2370,9 @@
   var PARSER_OWNED = {};
   ('IF THEN ELSE OTHERWISE CONDITION AND OR NOT EQ NEQ GT GTE LT LTE BETWEEN CONTAINS STARTS_WITH ENDS_WITH EMPTY NOT_EMPTY ' +
    'BLANK WRITE TARGET RANGE_FROM RANGE_TO COLUMN ROW SHEET CELL WHOLE_COLUMN WHOLE_ROW EACH_ROW IN FROM TO WITH WITHOUT BY FOR ' +
-   'HEADER DATA ALL NEW_COLUMN RESULT VALUE SHOW HIDE INSTEAD').split(' ').forEach(function (c) { PARSER_OWNED[c] = true; });
+   'HEADER DATA ALL NEW_COLUMN RESULT VALUE SHOW HIDE INSTEAD ' +
+   /* column-like nouns: they collide with header names (Tutar, Сумма, Amount, Fiyat …) and no intent needs them */
+   'AMOUNT PRICE QUANTITY UNIT NAME SURNAME NET GROSS').split(' ').forEach(function (c) { PARSER_OWNED[c] = true; });
   lexicon.PARSER_OWNED = PARSER_OWNED;
   function buildIndex(lang) {
     if (_index[lang]) return _index[lang];
