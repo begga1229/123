@@ -2300,7 +2300,188 @@
     'переведи|переведите|перевести|переведи формулу|переведите формулу|перевести формулу|переведи эту формулу|переведи на|переведи в|перевод|перевода|переводу|переводом|переводе|перевод формулы|перевода формулы|переводчик формул|переводчик|на русский|на русский язык|на русском|по-русски|по русски|в русский excel|в русском excel|в русской версии|для русского excel|для русской версии|русская версия|русская версия формулы|русский вариант|русский вариант формулы|русский аналог|русский аналог формулы|русский эквивалент|русский эквивалент формулы|русское название|русское название функции|русское имя|русское имя функции|как по-русски|как по русски|как будет по-русски|как будет по русски|как называется по-русски|как называется по русски|как в русском|как в русском excel|как в русской версии|что в русском|что в русском excel|что в русской версии|на английский|на английский язык|на английском|по-английски|по английски|в английский excel|в английском excel|в английской версии|для английского excel|для английской версии|английская версия|английская версия формулы|английский вариант|английский вариант формулы|английский аналог|английский аналог формулы|английский эквивалент|английский эквивалент формулы|английское название|английское название функции|английское имя|английское имя функции|как по-английски|как по английски|как будет по-английски|как будет по английски|как называется по-английски|как называется по английски|как в английском|как в английском excel|как в английской версии|что в английском|что в английском excel|что в английской версии|на турецкий|на турецкий язык|на турецком|по-турецки|по турецки|в турецкий excel|в турецком excel|в турецкой версии|для турецкого excel|для турецкой версии|турецкая версия|турецкая версия формулы|турецкий вариант|турецкий вариант формулы|турецкий аналог|турецкий аналог формулы|турецкий эквивалент|турецкий эквивалент формулы|турецкое название|турецкое название функции|как по-турецки|как по турецки|как будет по-турецки|как будет по турецки|как называется по-турецки|как называется по турецки|как в турецком|как в турецком excel|как в турецкой версии|что в турецком|что в турецком excel|что в турецкой версии|на другой язык|на другом языке|в другой язык|в другом языке|в другой версии|в другой локали|в другой локализации|другая версия|другой язык|другая локаль|другая локализация|для другой версии|для другого языка|для другой локали|для другой локализации|в локализованный|в локализованную|в локализованной|локализованный|локализованная|локализованное|локализованные|локализуй|локализовать|локализация|локализации|локализацию|локаль|локали|локалью|региональные настройки|региональных настроек|региональная версия|региональной версии|язык excel|языка excel|язык экселя|языка экселя|версия excel|версии excel|версия экселя|версии экселя|язык формулы|языка формулы|язык функций|языка функций|язык функции|языка функции|название функции на|названия функций на|имя функции на|имена функций на|название функции в|названия функций в|имя функции в|имена функций в|аналог|аналога|аналогу|аналогом|аналоге|аналоги|аналогов|аналог функции|аналог формулы|аналог на|аналог в|эквивалент|эквивалента|эквиваленту|эквивалентом|эквиваленте|эквиваленты|эквивалентов|эквивалент функции|эквивалент формулы|эквивалент на|эквивалент в|соответствие|соответствия|соответствию|соответствием|соответствии|соответствие функции|соответствие формулы|соответствие на|соответствие в|какая функция соответствует|какой функции соответствует|какая функция на|какая функция в|какой функции на|какой функции в|как называется функция|как называется функция на|как называется функция в|как называется эта функция|как называется эта функция на|как называется эта функция в|как называется формула|как называется формула на|как называется формула в|как называется эта формула|как называется эта формула на|как называется эта формула в|как зовут функцию|как зовут эту функцию|какое название у функции|какое название у этой функции|какое имя у функции|какое имя у этой функции|какое название функции|какое имя функции|название этой функции|имя этой функции|название функции|имя функции|переименуй функцию|переименовать функцию|переименуй функции|переименовать функции|переименуй формулу|переименовать формулу|замени название функции|заменить название функции|замени названия функций|заменить названия функций|замени имя функции|заменить имя функции|замени имена функций|заменить имена функций|замени функцию на|заменить функцию на|замени функции на|заменить функции на|поменяй название функции|поменять название функции|поменяй названия функций|поменять названия функций|поменяй имя функции|поменять имя функции|поменяй имена функций|поменять имена функций|поменяй функцию на|поменять функцию на|поменяй функции на|поменять функции на|конвертируй формулу|конвертировать формулу|конвертируй в|конвертировать в|конвертация формулы|конвертация в|преобразуй формулу|преобразовать формулу|преобразуй в|преобразовать в|преобразование формулы|преобразование в|адаптируй формулу|адаптировать формулу|адаптируй под|адаптировать под|адаптируй для|адаптировать для|адаптация формулы|адаптация под|адаптация для|перепиши формулу|переписать формулу|перепиши на|переписать на|перепиши для|переписать для|перепиши под|переписать под|перепиши в|переписать в|перепиши по-русски|переписать по-русски|перепиши по-английски|переписать по-английски|перепиши по-турецки|переписать по-турецки|сделай русскую версию|сделать русскую версию|сделай английскую версию|сделать английскую версию|сделай турецкую версию|сделать турецкую версию|сделай русский вариант|сделать русский вариант|сделай английский вариант|сделать английский вариант|сделай турецкий вариант|сделать турецкий вариант|сделай на русском|сделать на русском|сделай на английском|сделать на английском|сделай на турецком|сделать на турецком|сделай по-русски|сделать по-русски|сделай по-английски|сделать по-английски|сделай по-турецки|сделать по-турецки|напиши на русском|написать на русском|напиши на английском|написать на английском|напиши на турецком|написать на турецком|напиши по-русски|написать по-русски|напиши по-английски|написать по-английски|напиши по-турецки|написать по-турецки|напиши русскую версию|написать русскую версию|напиши английскую версию|написать английскую версию|напиши турецкую версию|написать турецкую версию|напиши русский вариант|написать русский вариант|напиши английский вариант|написать английский вариант|напиши турецкий вариант|написать турецкий вариант|дай русскую версию|дать русскую версию|дай английскую версию|дать английскую версию|дай турецкую версию|дать турецкую версию|дай русский вариант|дать русский вариант|дай английский вариант|дать английский вариант|дай турецкий вариант|дать турецкий вариант|дай на русском|дать на русском|дай на английском|дать на английском|дай на турецком|дать на турецком|дай по-русски|дать по-русски|дай по-английски|дать по-английски|дай по-турецки|дать по-турецки|покажи русскую версию|показать русскую версию|покажи английскую версию|показать английскую версию|покажи турецкую версию|показать турецкую версию|покажи русский вариант|показать русский вариант|покажи английский вариант|показать английский вариант|покажи турецкий вариант|показать турецкий вариант|покажи на русском|показать на русском|покажи на английском|показать на английском|покажи на турецком|показать на турецком|покажи по-русски|показать по-русски|покажи по-английски|показать по-английски|покажи по-турецки|показать по-турецки|выведи на русском|вывести на русском|выведи на английском|вывести на английском|выведи на турецком|вывести на турецком|выведи по-русски|вывести по-русски|выведи по-английски|вывести по-английски|выведи по-турецки|вывести по-турецки|хочу на русском|хочу на английском|хочу на турецком|хочу по-русски|хочу по-английски|хочу по-турецки|хочу русскую версию|хочу английскую версию|хочу турецкую версию|хочу русский вариант|хочу английский вариант|хочу турецкий вариант|нужна русская версия|нужна английская версия|нужна турецкая версия|нужен русский вариант|нужен английский вариант|нужен турецкий вариант|нужно на русском|нужно на английском|нужно на турецком|нужно по-русски|нужно по-английски|нужно по-турецки|точка с запятой вместо запятой|запятая вместо точки с запятой|замени запятые на точки с запятой|заменить запятые на точки с запятой|замени точки с запятой на запятые|заменить точки с запятой на запятые|поменяй запятые на точки с запятой|поменять запятые на точки с запятой|поменяй точки с запятой на запятые|поменять точки с запятой на запятые|разделитель аргументов|разделителя аргументов|разделитель аргументов в формуле|смени разделитель|сменить разделитель|замени разделитель|заменить разделитель|поменяй разделитель|поменять разделитель|другой разделитель|с другим разделителем|разделитель@0.4|разделителя@0.4|разделителем@0.4|с запятыми|с запятой|через запятую@0.4|с точкой с запятой|с точками с запятой|через точку с запятой|не работает в русском excel|не работает в русской версии|не работает в английском excel|не работает в английской версии|не работает в турецком excel|не работает в турецкой версии|не работает на русском|не работает на английском|не работает на турецком|не работает в моём excel|не работает в моем excel|не работает в моей версии|не работает в моём экселе|не работает в моем экселе|не понимает формулу|не понимает функцию|не распознаёт формулу|не распознает формулу|не распознаёт функцию|не распознает функцию|ошибка имя@0.4|ошибка #имя@0.4|#имя?@0.4|#name?@0.4|выдаёт #имя@0.4|выдает #имя@0.4|выдаёт #name@0.4|выдает #name@0.4|пишет #имя@0.4|пишет #name@0.4',
     'translate|translates|translated|translating|translation|translations|translate the formula|translate this formula|translate it|translate to|translate into|translate from|translate the|translate this|convert the formula|convert this formula|convert to|convert into|convert from|to english|into english|in english|english version|the english version|english equivalent|the english equivalent|english name|the english name|english formula|the english formula|english excel|in english excel|to russian|into russian|in russian|russian version|the russian version|russian equivalent|the russian equivalent|russian name|the russian name|russian formula|the russian formula|russian excel|in russian excel|to turkish|into turkish|in turkish|turkish version|the turkish version|turkish equivalent|the turkish equivalent|turkish name|the turkish name|turkish formula|the turkish formula|turkish excel|in turkish excel|other language|another language|different language|in another language|in a different language|to another language|into another language|other version|another version|different version|other locale|another locale|different locale|localize|localise|localized|localised|localization|localisation|locale|locales|the locale|localized version|localised version|localized formula|localised formula|localized excel|localised excel|regional version|regional settings|language version|language of excel|excel language|the excel language|formula language|the formula language|function language|the function language|function name in|function names in|the function name in|the function names in|equivalent|equivalents|the equivalent|equivalent of|equivalent in|equivalent function|equivalent formula|counterpart|counterparts|the counterpart|counterpart of|counterpart in|analog|analogue|the analog|the analogue|analog of|analogue of|analog in|analogue in|what is the function called in|what is this function called in|what is the formula called in|what is this formula called in|what\'s the function called in|what\'s this function called in|what\'s the formula called in|what\'s this formula called in|how is the function called in|how is this function called in|how is the formula called in|how is this formula called in|what is the name of the function in|what is the name of this function in|what\'s the name of the function in|what\'s the name of this function in|what is the name in|what\'s the name in|how do you say in|how do you say it in|how do you say this in|how do you say the function in|how do you say this function in|how do you say the formula in|how do you say this formula in|how to say in|how to say it in|how to say this in|how to say the function in|how to say this function in|how to say the formula in|how to say this formula in|how do i write it in|how do i write this in|how do i write the formula in|how do i write this formula in|how to write it in|how to write this in|how to write the formula in|how to write this formula in|rename the function|rename the functions|rename function|rename functions|rename the formula|rename formula|replace the function name|replace the function names|replace function name|replace function names|replace the function with|replace the functions with|replace function with|replace functions with|change the function name|change the function names|change function name|change function names|change the function to|change the functions to|change function to|change functions to|swap the function name|swap the function names|swap function name|swap function names|swap the function for|swap the functions for|swap function for|swap functions for|rewrite the formula|rewrite this formula|rewrite it|rewrite for|rewrite in|rewrite to|rewrite into|rewrite as|adapt the formula|adapt this formula|adapt it|adapt for|adapt to|adapt into|port the formula|port this formula|port it|port to|port into|make it work in|make this work in|make the formula work in|make this formula work in|get it to work in|get this to work in|get the formula to work in|get this formula to work in|so it works in|so this works in|so the formula works in|so this formula works in|version for|a version for|the version for|version that works in|a version that works in|the version that works in|semicolon instead of comma|semicolons instead of commas|comma instead of semicolon|commas instead of semicolons|replace commas with semicolons|replace comma with semicolon|replace semicolons with commas|replace semicolon with comma|change commas to semicolons|change comma to semicolon|change semicolons to commas|change semicolon to comma|swap commas for semicolons|swap comma for semicolon|swap semicolons for commas|swap semicolon for comma|argument separator|the argument separator|argument separators|the argument separators|list separator|the list separator|list separators|the list separators|parameter separator|the parameter separator|function separator|the function separator|change the separator|change separator|change the separators|change separators|replace the separator|replace separator|replace the separators|replace separators|swap the separator|swap separator|swap the separators|swap separators|different separator|a different separator|different separators|with a different separator|with different separators|separator@0.4|separators@0.4|the separator@0.4|the separators@0.4|with commas@0.4|with a comma@0.4|comma separated@0.3|comma-separated@0.3|with semicolons|with a semicolon|semicolon separated|semicolon-separated|doesn\'t work in my excel|does not work in my excel|doesnt work in my excel|doesn\'t work in my version|does not work in my version|doesnt work in my version|doesn\'t work in russian excel|does not work in russian excel|doesnt work in russian excel|doesn\'t work in turkish excel|does not work in turkish excel|doesnt work in turkish excel|doesn\'t work in english excel|does not work in english excel|doesnt work in english excel|doesn\'t work in the russian version|does not work in the russian version|doesnt work in the russian version|doesn\'t work in the turkish version|does not work in the turkish version|doesnt work in the turkish version|doesn\'t work in the english version|does not work in the english version|doesnt work in the english version|doesn\'t recognize the function|does not recognize the function|doesnt recognize the function|doesn\'t recognise the function|does not recognise the function|doesnt recognise the function|doesn\'t recognize the formula|does not recognize the formula|doesnt recognize the formula|doesn\'t recognise the formula|does not recognise the formula|doesnt recognise the formula|not recognized|not recognised|unrecognized function|unrecognised function|unrecognized formula|unrecognised formula|unknown function|unknown formula|name error@0.4|#name error@0.4|#name?@0.4|#name? error@0.4|gives #name@0.4|gives #name?@0.4|returns #name@0.4|returns #name?@0.4|shows #name@0.4|shows #name?@0.4|i get #name@0.4|i get #name?@0.4|getting #name@0.4|getting #name?@0.4|#имя?@0.4|#ad?@0.4');
 
-  /* __API_PENDING__: lookup / matchPhrases / numberWord / ordinal are not implemented yet (see docs/PROGRESS.md). The parser falls back to its built-in vocabulary. */
+  /* ================================================================== */
+  /* API                                                                 */
+  /* ================================================================== */
+  function F(x) {
+    var n = EFS.normalize;
+    if (n && typeof n.fold === 'function') { try { return n.fold(String(x)); } catch (e) { /* fall through */ } }
+    return String(x == null ? '' : x).toLowerCase();
+  }
+  var NUM_WORDS = {
+    tr: { 'sıfır': 0, 'bir': 1, 'iki': 2, 'üç': 3, 'dört': 4, 'beş': 5, 'altı': 6, 'yedi': 7, 'sekiz': 8, 'dokuz': 9, 'on': 10, 'yirmi': 20, 'otuz': 30, 'kırk': 40, 'elli': 50, 'altmış': 60, 'yetmiş': 70, 'seksen': 80, 'doksan': 90, 'yüz': 100, 'bin': 1000, 'milyon': 1000000, 'yarım': 0.5 },
+    ru: { 'ноль': 0, 'один': 1, 'одна': 1, 'одно': 1, 'два': 2, 'две': 2, 'три': 3, 'четыре': 4, 'пять': 5, 'шесть': 6, 'семь': 7, 'восемь': 8, 'девять': 9, 'десять': 10, 'одиннадцать': 11, 'двенадцать': 12, 'тринадцать': 13, 'четырнадцать': 14, 'пятнадцать': 15, 'шестнадцать': 16, 'семнадцать': 17, 'восемнадцать': 18, 'девятнадцать': 19, 'двадцать': 20, 'тридцать': 30, 'сорок': 40, 'пятьдесят': 50, 'шестьдесят': 60, 'семьдесят': 70, 'восемьдесят': 80, 'девяносто': 90, 'сто': 100, 'двести': 200, 'триста': 300, 'тысяча': 1000, 'тысячи': 1000, 'тысяч': 1000, 'миллион': 1000000, 'половина': 0.5, 'двух': 2, 'трёх': 3, 'пяти': 5, 'десяти': 10 },
+    en: { 'zero': 0, 'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12, 'thirteen': 13, 'fourteen': 14, 'fifteen': 15, 'sixteen': 16, 'seventeen': 17, 'eighteen': 18, 'nineteen': 19, 'twenty': 20, 'thirty': 30, 'forty': 40, 'fifty': 50, 'sixty': 60, 'seventy': 70, 'eighty': 80, 'ninety': 90, 'hundred': 100, 'thousand': 1000, 'million': 1000000, 'half': 0.5 }
+  };
+  var ORD_WORDS = {
+    tr: { 'birinci': 1, 'ilk': 1, 'ikinci': 2, 'üçüncü': 3, 'dördüncü': 4, 'beşinci': 5, 'altıncı': 6, 'yedinci': 7, 'sekizinci': 8, 'dokuzuncu': 9, 'onuncu': 10 },
+    ru: { 'перв': 1, 'втор': 2, 'трет': 3, 'четвёрт': 4, 'четверт': 4, 'пят': 5, 'шест': 6, 'седьм': 7, 'восьм': 8, 'девят': 9, 'десят': 10 },
+    en: { 'first': 1, 'second': 2, 'third': 3, 'fourth': 4, 'fifth': 5, 'sixth': 6, 'seventh': 7, 'eighth': 8, 'ninth': 9, 'tenth': 10 }
+  };
+  var RU_ORD_END = /^(ый|ий|ой|ая|яя|ое|ее|ого|его|ому|ему|ую|юю|ом|ем|ые|ие|ых|их|ым|им|ыми|ими|ья|ье|ьего|ьей|ью|ьи)$/;
+
+  lexicon.numberWord = function (norm, lang) {
+    if (norm == null) return null;
+    var t = String(norm).trim();
+    if (/^-?\d+(?:[.,]\d+)?$/.test(t)) return parseFloat(t.replace(',', '.'));
+    var tbl = NUM_WORDS[lang] || NUM_WORDS.en, f = F(t);
+    for (var k in tbl) if (Object.prototype.hasOwnProperty.call(tbl, k) && F(k) === f) return tbl[k];
+    return null;
+  };
+  lexicon.ordinal = function (norm, lang) {
+    if (norm == null) return null;
+    var t = String(norm).trim().toLowerCase();
+    var m = /^(\d+)(?:\.|['’]?(?:nci|ncı|ncü|ncu|inci|ıncı|üncü|uncu|nd|st|rd|th)|-?(?:й|я|е|ое|ой|ый|ий|ая|го|ого|его|му|ому|ю|ую))$/.exec(t);
+    if (m) return parseInt(m[1], 10);
+    var f = F(t);
+    if (lang === 'ru') {
+      for (var r in ORD_WORDS.ru) { var fr = F(r); if (f.indexOf(fr) === 0 && (f.length === fr.length || RU_ORD_END.test(f.slice(fr.length)))) return ORD_WORDS.ru[r]; }
+      return null;
+    }
+    var tbl = ORD_WORDS[lang] || ORD_WORDS.en;
+    for (var k in tbl) if (Object.prototype.hasOwnProperty.call(tbl, k) && F(k) === f) return tbl[k];
+    return null;
+  };
+
+  /* index: per language, singles (exact map + prefix stems) and multi-token phrases */
+  var _index = {};
+  function parseEntry(e) {
+    var text, w = null, weak = false;
+    if (e && typeof e === 'object') { text = String(e.s || ''); w = typeof e.w === 'number' ? e.w : null; }
+    else text = String(e == null ? '' : e);
+    text = text.trim();
+    if (text.charAt(0) === '~') { weak = true; text = text.slice(1).trim(); }
+    text = text.replace(/['’]/g, ' ').replace(/\s+/g, ' ').trim();
+    if (!text) return null;
+    var parts = text.split(' ');
+    var words = parts.map(function (p) {
+      if (p === '*') return { kind: 'any' };
+      if (p === '%') return { kind: 'num' };
+      if (p === '#') return { kind: 'ord' };
+      var exact = p.charAt(0) === '=' && p.length > 1;
+      var f = F(exact ? p.slice(1) : p);
+      return { kind: 'word', f: f, exact: exact || f.length < 3 };
+    });
+    return { words: words, w: w, weak: weak };
+  }
+  /* Structural words (conditions, comparators, conjunctions, then/else, blank, targets, columns) are handled by the
+   * parser's own carefully ordered vocabulary; the lexicon's long phrase lists for them swallow neighbouring words
+   * ('değilse boş', 'иначе оставь'), so they are kept in the raw table for reference but not served. */
+  var PARSER_OWNED = {};
+  ('IF THEN ELSE OTHERWISE CONDITION AND OR NOT EQ NEQ GT GTE LT LTE BETWEEN CONTAINS STARTS_WITH ENDS_WITH EMPTY NOT_EMPTY ' +
+   'BLANK WRITE TARGET RANGE_FROM RANGE_TO COLUMN ROW SHEET CELL WHOLE_COLUMN WHOLE_ROW EACH_ROW IN FROM TO WITH WITHOUT BY FOR ' +
+   'HEADER DATA ALL NEW_COLUMN RESULT VALUE SHOW HIDE INSTEAD').split(' ').forEach(function (c) { PARSER_OWNED[c] = true; });
+  lexicon.PARSER_OWNED = PARSER_OWNED;
+  function buildIndex(lang) {
+    if (_index[lang]) return _index[lang];
+    var exact = {}, prefix = [], multi = [];
+    for (var i = 0; i < phrases.length; i++) {
+      var row = phrases[i], list = row[lang] || [];
+      if (PARSER_OWNED[row.concept]) continue;
+      for (var j = 0; j < list.length; j++) {
+        var pe = parseEntry(list[j]);
+        if (!pe) continue;
+        if (pe.words.length === 1 && pe.words[0].kind === 'word') {
+          var wd = pe.words[0];
+          var we = pe.w != null ? pe.w : pe.weak ? 0.4 : 0.9;
+          var wp = pe.w != null ? Math.max(0.1, pe.w - 0.2) : pe.weak ? 0.3 : 0.7;
+          (exact[wd.f] || (exact[wd.f] = [])).push({ concept: row.concept, weight: we });
+          if (!wd.exact) prefix.push({ stem: wd.f, concept: row.concept, weight: wp });
+        } else if (pe.words.length > 1) {
+          multi.push({ words: pe.words, concept: row.concept, weight: pe.w != null ? pe.w : pe.weak ? 0.4 : 1 });
+        }
+      }
+    }
+    prefix.sort(function (a, b) { return b.stem.length - a.stem.length; });
+    var buckets = {};
+    for (var p = 0; p < prefix.length; p++) { var key = prefix[p].stem.slice(0, 2); (buckets[key] || (buckets[key] = [])).push(prefix[p]); }
+    multi.sort(function (a, b) { return b.words.length - a.words.length; });
+    var byFirst = {}, wild = [];
+    for (var q = 0; q < multi.length; q++) {
+      var fw = multi[q].words[0];
+      if (fw.kind === 'word') (byFirst[fw.f.slice(0, 2)] || (byFirst[fw.f.slice(0, 2)] = [])).push(multi[q]);
+      else wild.push(multi[q]);
+    }
+    return (_index[lang] = { exact: exact, buckets: buckets, byFirst: byFirst, wild: wild });
+  }
+  function addMax(out, concept, weight) {
+    for (var i = 0; i < out.length; i++) if (out[i].concept === concept) { if (weight > out[i].weight) out[i].weight = weight; return; }
+    out.push({ concept: concept, weight: weight });
+  }
+
+  /** Single token → [{concept, weight}] (exact entries, then the longest matching stems). */
+  lexicon.lookup = function (tokenNorm, lang) {
+    lang = LANGS.indexOf(lang) >= 0 ? lang : 'tr';
+    var f = F(tokenNorm);
+    if (!f) return [];
+    var idx = buildIndex(lang), out = [];
+    var ex = idx.exact[f];
+    if (ex) for (var i = 0; i < ex.length; i++) addMax(out, ex[i].concept, ex[i].weight);
+    // an exact entry is authoritative: 'değilse' (ELSE) must not also inherit 'değil' (NEQ) by prefix
+    if (out.length) { out.sort(function (a, c) { return c.weight - a.weight; }); return out; }
+    var b = idx.buckets[f.slice(0, 2)] || [];
+    var best = 0;
+    for (var j = 0; j < b.length; j++) {
+      var st = b[j].stem;
+      if (st.length < best) break;              // buckets are sorted longest stem first
+      if (st.length < f.length && f.indexOf(st) === 0) { addMax(out, b[j].concept, b[j].weight); best = st.length; }
+    }
+    out.sort(function (a, c) { return c.weight - a.weight; });
+    return out;
+  };
+
+  function tokNorm(t) { return t == null ? '' : typeof t === 'string' ? t : (t.norm != null ? t.norm : t.raw != null ? t.raw : ''); }
+  function tokType(t) { return t && typeof t === 'object' ? t.type || 'word' : 'word'; }
+  function wordMatches(pw, tok, lang) {
+    var ty = tokType(tok), n = tokNorm(tok);
+    if (pw.kind === 'any') return ty !== 'punct';
+    if (pw.kind === 'num') return ty === 'number' || ty === 'percent' || (ty === 'word' && lexicon.numberWord(n, lang) != null);
+    if (pw.kind === 'ord') return ty === 'ordinal' || lexicon.ordinal(n, lang) != null;
+    if (ty !== 'word' && ty !== 'function' && ty !== 'ordinal') return false;
+    var f = F(n);
+    return pw.exact ? f === pw.f : f.indexOf(pw.f) === 0;
+  }
+  /** Multi-token phrases over a token array → [{concept, weight, start, end}] (end exclusive), longest first, non-overlapping. */
+  lexicon.matchPhrases = function (tokens, lang) {
+    lang = LANGS.indexOf(lang) >= 0 ? lang : 'tr';
+    if (!Array.isArray(tokens) || !tokens.length) return [];
+    var idx = buildIndex(lang), out = [], s = 0;
+    while (s < tokens.length) {
+      var cands = (idx.byFirst[F(tokNorm(tokens[s])).slice(0, 2)] || []).concat(idx.wild);
+      var bestLen = 0, hits = [];
+      for (var c = 0; c < cands.length; c++) {
+        var ph = cands[c], L = ph.words.length;
+        if (L < bestLen || s + L > tokens.length) continue;
+        var ok = true;
+        for (var w = 0; w < L; w++) if (!wordMatches(ph.words[w], tokens[s + w], lang)) { ok = false; break; }
+        if (!ok) continue;
+        if (L > bestLen) { bestLen = L; hits = []; }
+        hits.push(ph);
+      }
+      if (bestLen) {
+        var seen = {};
+        for (var h = 0; h < hits.length; h++) {
+          if (seen[hits[h].concept] != null) { if (hits[h].weight > out[seen[hits[h].concept]].weight) out[seen[hits[h].concept]].weight = hits[h].weight; continue; }
+          seen[hits[h].concept] = out.length;
+          out.push({ concept: hits[h].concept, weight: hits[h].weight, start: s, end: s + bestLen });
+        }
+        s += bestLen;
+      } else s++;
+    }
+    return out;
+  };
+  lexicon.has = function (concept) { return !!CONCEPT_SET[concept]; };
+  lexicon.comparator = function () { return null; };
+  /** Debug helper: every concept found in a text (single tokens + phrases). */
+  lexicon.conceptsFor = function (text, lang) {
+    var n = EFS.normalize, toks = n && n.tokenize ? n.tokenize(String(text || ''), lang) : String(text || '').split(/\s+/);
+    var out = [];
+    for (var i = 0; i < toks.length; i++) { var r = lexicon.lookup(tokNorm(toks[i]), lang); for (var j = 0; j < r.length; j++) addMax(out, r[j].concept, r[j].weight); }
+    var ph = lexicon.matchPhrases(toks, lang);
+    for (var k = 0; k < ph.length; k++) addMax(out, ph[k].concept, ph[k].weight);
+    return out;
+  };
+
   lexicon.CONCEPTS = CONCEPTS;
   lexicon.phrases = phrases;
   EFS.lexicon = lexicon;
