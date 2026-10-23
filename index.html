@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Formula Studio — offline Excel formula assistant for Turkish and Russian speakers.">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0f1216">
+  <title>Formula Studio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2321a366'/%3E%3Ctext x='16' y='22' font-family='Segoe UI,Arial,sans-serif' font-size='18' font-weight='700' fill='white' text-anchor='middle'%3Efx%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <a class="skip-link" href="#prompt" data-i18n="studio.title">Formül Stüdyosu</a>
+
+  <!-- ===================== TOP BAR ===================== -->
+  <header class="topbar" id="topbar">
+    <div class="brand">
+      <span class="brand-logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 9h16M4 14h16M9 4v16" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".55"/><path d="M12.2 17.5l2.1-5h-1.4l.3-1.2h1.5l.5-1.3c.4-1 1.1-1.5 2.1-1.5.3 0 .6 0 .9.1l-.3 1.2c-.2-.1-.4-.1-.6-.1-.4 0-.7.2-.9.7l-.4 1h1.6l-.3 1.2h-1.7l-2.1 5z" fill="currentColor"/></svg>
+      </span>
+      <div class="brand-text">
+        <h1 class="brand-title" data-i18n="app.title">Formula Studio</h1>
+        <p class="brand-tagline" id="tagline" data-i18n="app.tagline">Excel formüllerini Türkçe veya Rusça anlatın, formülü alın</p>
+      </div>
+      <span class="badge badge-offline" id="offline-badge" data-i18n-title="app.offlineTitle">
+        <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 12l3 3 5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span data-i18n="app.offline">Çevrimdışı</span>
+      </span>
+    </div>
+
+    <div class="controls" id="controls">
+      <div class="control">
+        <span class="control-label" data-i18n="lang.ui">Arayüz dili</span>
+        <div class="segmented" id="ui-lang" role="group" data-i18n-aria="lang.ui">
+          <button type="button" data-lang="tr" data-i18n-title="lang.tr">TR</button>
+          <button type="button" data-lang="ru" data-i18n-title="lang.ru">RU</button>
+          <button type="button" data-lang="en" data-i18n-title="lang.en">EN</button>
+        </div>
+      </div>
+      <div class="control">
+        <span class="control-label" data-i18n="dialect.label" data-i18n-title="dialect.title">Excel dili</span>
+        <div class="segmented" id="dialect-seg" role="group" data-i18n-aria="dialect.label">
+          <button type="button" data-dialect="en" data-i18n-title="dialect.enLong">EN</button>
+          <button type="button" data-dialect="tr" data-i18n-title="dialect.trLong">TR</button>
+          <button type="button" data-dialect="ru" data-i18n-title="dialect.ruLong">RU</button>
+        </div>
+      </div>
+      <div class="control">
+        <span class="control-label" data-i18n="style.label" data-i18n-title="style.title">Stil</span>
+        <div class="segmented" id="style-seg" role="group" data-i18n-aria="style.label">
+          <button type="button" data-style="modern" data-i18n="style.modern">Modern (365)</button>
+          <button type="button" data-style="classic" data-i18n="style.classic">Klasik</button>
+        </div>
+      </div>
+      <button type="button" class="ai-btn" id="ai-btn" data-testid="ai-settings" hidden data-i18n-title="ai.buttonTitle" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z" fill="currentColor"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" fill="currentColor" opacity=".7"/></svg>
+        <span class="ai-btn-label" data-i18n="ai.button">Yapay zeka</span>
+        <span class="ai-pill" id="ai-status" data-mode="off" data-testid="ai-status">Kapalı</span>
+      </button>
+      <button type="button" class="icon-btn" id="theme-btn" data-i18n-title="theme.toggle" data-i18n-aria="theme.toggle">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" class="icon-btn" id="help-btn" data-i18n-title="app.help" data-i18n-aria="app.help">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5v.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17" r="1.1" fill="currentColor"/></svg>
+      </button>
+      <button type="button" class="icon-btn lib-toggle" id="lib-toggle" data-i18n-title="nav.openLibrary" data-i18n-aria="nav.openLibrary">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== MOBILE TABS ===================== -->
+  <nav class="mobile-tabs" id="mobile-tabs" aria-label="Panels">
+    <button type="button" data-view="workbook" data-i18n="nav.workbook">Dosya</button>
+    <button type="button" data-view="studio" class="is-active" data-i18n="nav.studio">Stüdyo</button>
+    <button type="button" data-view="library" data-i18n="nav.library">Kütüphane</button>
+  </nav>
+
+  <!-- ===================== LAYOUT ===================== -->
+  <main class="layout" id="layout" data-view="studio">
+
+    <!-- ---------- LEFT: WORKBOOK ---------- -->
+    <aside class="panel panel-workbook" id="panel-workbook" aria-labelledby="wb-title">
+      <div class="panel-head">
+        <h2 class="panel-title" id="wb-title">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 3h9l5 5v13H5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 3v5h5M8 12h8M8 16h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span data-i18n="wb.title">Çalışma kitabı</span>
+        </h2>
+        <button type="button" class="btn btn-sm btn-primary" id="download-btn" data-testid="download" disabled data-i18n-title="wb.downloadTitle">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-i18n="wb.download">İndir</span>
+        </button>
+      </div>
+
+      <div class="dropzone" id="dropzone" tabindex="0" role="button">
+        <svg class="dropzone-icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M12 16V5M7 10l5-5 5 5M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p class="dropzone-text" data-i18n="wb.drop">Excel dosyasını buraya sürükleyin</p>
+        <p class="dropzone-sub"><span data-i18n="wb.or">veya</span> <button type="button" class="btn btn-sm" id="browse-btn" data-i18n="wb.browse">Yükle</button></p>
+        <p class="dropzone-formats" data-i18n="wb.formats">.xlsx .xlsm .xls .csv .ods</p>
+        <input type="file" id="file-input" data-testid="file-input" accept=".xlsx,.xlsm,.xls,.csv,.ods,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv" hidden>
+      </div>
+
+      <p class="empty-state" id="wb-empty" data-i18n="wb.empty">Henüz dosya yüklenmedi — formülleri yine de üretebilirsiniz; hücre adreslerini (A2, E2:E200) doğrudan yazın.</p>
+
+      <div class="file-info" id="file-info" hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 9h16M4 14h16M10 4v16" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".6"/></svg>
+        <span class="file-name" id="file-name"></span>
+        <span class="badge badge-muted" id="file-engine"></span>
+        <span class="badge badge-warn" id="file-modified" hidden data-i18n="wb.modified">Değiştirildi</span>
+        <button type="button" class="icon-btn icon-btn-sm" id="file-clear" data-i18n-title="wb.remove" data-i18n-aria="wb.remove">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <div class="sheet-tabs" id="sheet-tabs" role="tablist" hidden></div>
+
+      <div class="wb-toolbar" id="wb-toolbar" hidden>
+        <label class="field-inline" for="header-row-select">
+          <span data-i18n="wb.headerRow" data-i18n-title="wb.headerRowTitle">Başlık satırı</span>
+          <select id="header-row-select"></select>
+        </label>
+        <span class="muted small" id="wb-dims"></span>
+      </div>
+
+      <div class="grid-wrap" id="grid-wrap" hidden>
+        <table class="grid" id="grid"></table>
+      </div>
+      <p class="muted small" id="grid-hint" hidden data-i18n="wb.clickHint">Bir başlığa tıklayınca adı, sütun harfine tıklayınca aralığı isteğe eklenir.</p>
+
+      <ul class="warnings" id="wb-warnings" hidden></ul>
+    </aside>
+
+    <!-- ---------- CENTER: STUDIO ---------- -->
+    <section class="panel panel-studio" id="panel-studio" aria-labelledby="studio-title">
+      <div class="panel-head">
+        <h2 class="panel-title" id="studio-title">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8zM5 15l.6 1.6L7.2 17l-1.6.6L5 19.2l-.6-1.6L2.8 17l1.6-.4z" fill="currentColor"/></svg>
+          <span data-i18n="studio.title">Formül Stüdyosu</span>
+        </h2>
+        <span class="chip chip-lang" id="lang-chip" hidden></span>
+      </div>
+
+      <div class="prompt-box">
+        <label class="sr-only" for="prompt" data-i18n="studio.title">Formül Stüdyosu</label>
+        <textarea id="prompt" data-testid="prompt" rows="3" spellcheck="false" autocomplete="off" data-i18n-placeholder="studio.placeholder" placeholder="Ne yapmak istediğinizi yazın…"></textarea>
+        <div class="prompt-actions">
+          <span class="muted small kbd-hint" data-i18n="studio.hint">Enter = üret, Shift+Enter = yeni satır</span>
+          <div class="prompt-buttons">
+            <button type="button" class="btn btn-ghost btn-sm" id="clear-prompt" data-i18n="studio.clear">Temizle</button>
+            <button type="button" class="btn btn-primary" id="generate-btn" data-testid="generate">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z" fill="currentColor"/></svg>
+              <span data-i18n="studio.generate">Formül üret</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="examples" id="examples-wrap">
+        <div class="section-head">
+          <span class="section-title" data-i18n="studio.examples">Örnekler</span>
+          <button type="button" class="btn btn-ghost btn-xs" id="examples-more" data-i18n="studio.moreExamples">Başka örnekler</button>
+        </div>
+        <div class="chips" id="examples"></div>
+      </div>
+
+      <div class="result" id="result" aria-live="polite"></div>
+
+      <section class="history" id="history" aria-labelledby="history-title">
+        <div class="section-head">
+          <span class="section-title" id="history-title">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span data-i18n="history.title">Geçmiş</span>
+          </span>
+          <button type="button" class="btn btn-ghost btn-xs" id="history-clear" data-i18n="history.clear">Geçmişi temizle</button>
+        </div>
+        <ul class="history-list" id="history-list"></ul>
+      </section>
+    </section>
+
+    <!-- ---------- RIGHT: LIBRARY ---------- -->
+    <aside class="panel panel-library" id="panel-library" aria-labelledby="lib-title">
+      <div class="panel-head">
+        <h2 class="panel-title" id="lib-title">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <span data-i18n="lib.title">Kütüphane</span>
+        </h2>
+        <button type="button" class="icon-btn icon-btn-sm lib-close" id="lib-close" data-i18n-title="nav.closeLibrary" data-i18n-aria="nav.closeLibrary">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <div class="tabs" id="lib-tabs" role="tablist">
+        <button type="button" role="tab" data-tab="functions" class="is-active" aria-selected="true" data-i18n="lib.functions">Fonksiyonlar</button>
+        <button type="button" role="tab" data-tab="explain" aria-selected="false" data-i18n="lib.explain">Açıkla</button>
+        <button type="button" role="tab" data-tab="recipes" aria-selected="false" data-i18n="lib.recipes">Tarifler</button>
+      </div>
+
+      <div class="tab-panel" id="lib-functions" role="tabpanel">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input type="search" id="fn-search" autocomplete="off" spellcheck="false" data-i18n-placeholder="lib.searchPlaceholder" data-i18n-aria="lib.search" placeholder="Ara…">
+        </div>
+        <div class="chips chips-scroll" id="fn-cats"></div>
+        <p class="muted small" id="fn-count"></p>
+        <div class="fn-list" id="fn-list"></div>
+        <button type="button" class="btn btn-ghost btn-sm btn-block" id="fn-more" hidden></button>
+      </div>
+
+      <div class="tab-panel" id="lib-explain" role="tabpanel" hidden>
+        <p class="muted small" data-i18n="explain.title">Formül açıkla / çevir</p>
+        <textarea id="ex-input" rows="3" spellcheck="false" autocomplete="off" class="mono" data-i18n-placeholder="explain.placeholder" placeholder="=…"></textarea>
+        <div class="row-actions">
+          <button type="button" class="btn btn-primary btn-sm" id="ex-explain-btn" data-i18n="explain.explainBtn">Açıkla</button>
+          <button type="button" class="btn btn-sm" id="ex-translate-btn" data-i18n="explain.translateBtn">Çevir</button>
+        </div>
+        <div id="ex-output"></div>
+      </div>
+
+      <div class="tab-panel" id="lib-recipes" role="tabpanel" hidden>
+        <p class="muted small" data-i18n="recipes.hint">Bir örneğe tıklayın; istek stüdyoya yazılır ve çalıştırılır.</p>
+        <div id="recipes-list"></div>
+      </div>
+    </aside>
+  </main>
+
+  <div class="lib-backdrop" id="lib-backdrop" hidden></div>
+
+  <!-- ===================== TOASTS ===================== -->
+  <div class="toasts" id="toasts" aria-live="assertive" aria-atomic="false"></div>
+
+  <!-- ===================== HELP DIALOG ===================== -->
+  <dialog class="dialog" id="help-dialog" aria-labelledby="help-title">
+    <div class="dialog-head">
+      <h2 id="help-title" data-i18n="help.title">Nasıl kullanılır?</h2>
+      <button type="button" class="icon-btn icon-btn-sm" id="help-close" data-i18n-title="help.close" data-i18n-aria="help.close">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="dialog-body">
+      <p data-i18n="help.intro"></p>
+      <ul class="help-tips">
+        <li data-i18n="help.tip1"></li>
+        <li data-i18n="help.tip2"></li>
+        <li data-i18n="help.tip3"></li>
+      </ul>
+      <h3 data-i18n="help.shortcuts">Klavye kısayolları</h3>
+      <table class="kbd-table">
+        <tr><td><kbd>Enter</kbd></td><td data-i18n="help.enter"></td></tr>
+        <tr><td><kbd>Shift</kbd> + <kbd>Enter</kbd></td><td data-i18n="help.shiftEnter"></td></tr>
+        <tr><td><kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>Enter</kbd></td><td data-i18n="help.ctrlEnter"></td></tr>
+        <tr><td><kbd>Esc</kbd></td><td data-i18n="help.escape"></td></tr>
+      </table>
+      <p class="muted small" data-i18n="help.privacy"></p>
+    </div>
+    <div class="dialog-foot">
+      <span class="muted small" id="help-version"></span>
+      <button type="button" class="btn btn-primary btn-sm" id="help-ok" data-i18n="help.close">Kapat</button>
+    </div>
+  </dialog>
+
+  <!-- ===================== AI SETTINGS DIALOG (§16) ===================== -->
+  <dialog class="dialog dialog-ai" id="ai-dialog" aria-labelledby="ai-title" data-testid="ai-dialog">
+    <form class="ai-form" id="ai-form" novalidate>
+      <div class="dialog-head">
+        <h2 id="ai-title">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z" fill="currentColor"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" fill="currentColor" opacity=".7"/></svg>
+          <span data-i18n="ai.title">Yapay zeka ayarları</span>
+        </h2>
+        <button type="button" class="icon-btn icon-btn-sm" id="ai-close" data-i18n-title="help.close" data-i18n-aria="help.close">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="dialog-body ai-body">
+        <p class="muted small" data-i18n="ai.intro"></p>
+
+        <fieldset class="ai-modes">
+          <legend class="field-label" data-i18n="ai.modeLabel">Çalışma modu</legend>
+          <label class="ai-mode"><input type="radio" name="ai-mode" value="off"><span class="ai-mode-text"><span class="ai-mode-title" data-i18n="ai.mode.off">Kapalı</span><span class="ai-mode-desc" data-i18n="ai.mode.offDesc"></span></span></label>
+          <label class="ai-mode"><input type="radio" name="ai-mode" value="anthropic"><span class="ai-mode-text"><span class="ai-mode-title" data-i18n="ai.mode.anthropic">Claude</span><span class="ai-mode-desc" data-i18n="ai.mode.anthropicDesc"></span></span></label>
+          <label class="ai-mode"><input type="radio" name="ai-mode" value="ollama"><span class="ai-mode-text"><span class="ai-mode-title" data-i18n="ai.mode.ollama">Yerel model (Ollama)</span><span class="ai-mode-desc" data-i18n="ai.mode.ollamaDesc"></span></span></label>
+          <label class="ai-mode"><input type="radio" name="ai-mode" value="openaiCompat"><span class="ai-mode-text"><span class="ai-mode-title" data-i18n="ai.mode.openaiCompat">Yerel model (LM Studio / OpenAI uyumlu)</span><span class="ai-mode-desc" data-i18n="ai.mode.openaiCompatDesc"></span></span></label>
+        </fieldset>
+
+        <section class="ai-section" data-ai-section="anthropic" hidden>
+          <div class="field">
+            <label class="field-label" for="ai-anthropic-key" data-i18n="ai.apiKey">API anahtarı</label>
+            <div class="input-group">
+              <input type="password" id="ai-anthropic-key" autocomplete="off" spellcheck="false" placeholder="sk-ant-…">
+              <button type="button" class="btn btn-sm" id="ai-key-toggle" aria-pressed="false" aria-controls="ai-anthropic-key" data-i18n="ai.show">Göster</button>
+            </div>
+            <p class="field-hint" data-i18n="ai.keyStored"></p>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label class="field-label" for="ai-anthropic-model" data-i18n="ai.model">Model</label>
+              <select id="ai-anthropic-model">
+                <option value="claude-opus-5-5" data-i18n="ai.modelOpus">Claude Opus 5.5</option>
+                <option value="claude-sonnet-5-5" data-i18n="ai.modelSonnet">Claude Sonnet 5.5</option>
+                <option value="claude-haiku-5-5" data-i18n="ai.modelHaiku">Claude Haiku 5.5</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="ai-anthropic-effort" data-i18n="ai.effort">Düşünme düzeyi</label>
+              <select id="ai-anthropic-effort">
+                <option value="low" data-i18n="ai.effortLow">Hızlı</option>
+                <option value="medium" data-i18n="ai.effortMedium">Dengeli</option>
+                <option value="high" data-i18n="ai.effortHigh">Derin düşün</option>
+              </select>
+            </div>
+          </div>
+          <div class="ai-note">
+            <p data-i18n="ai.keyHowTo"></p>
+            <p class="muted" data-i18n="ai.billing"></p>
+          </div>
+        </section>
+
+        <section class="ai-section" data-ai-section="ollama" hidden>
+          <div class="field">
+            <label class="field-label" for="ai-ollama-url" data-i18n="ai.url">Sunucu adresi</label>
+            <input type="text" id="ai-ollama-url" spellcheck="false" autocomplete="off" placeholder="http://localhost:11434">
+          </div>
+          <div class="field">
+            <label class="field-label" for="ai-ollama-model" data-i18n="ai.model">Model</label>
+            <div class="input-group">
+              <input type="text" id="ai-ollama-model" list="ai-ollama-models" spellcheck="false" autocomplete="off" data-i18n-placeholder="ai.modelPlaceholder">
+              <button type="button" class="btn btn-sm" id="ai-ollama-fetch" data-testid="ai-fetch-models" data-i18n="ai.fetchModels">Modelleri getir</button>
+            </div>
+            <datalist id="ai-ollama-models"></datalist>
+            <p class="field-hint" id="ai-ollama-models-status" role="status" aria-live="polite" data-i18n="ai.modelHint"></p>
+          </div>
+          <div class="ai-note">
+            <p data-i18n="ai.ollamaHint1"></p>
+            <code class="ai-cmd">ollama pull qwen2.5:14b</code>
+            <p class="muted" data-i18n="ai.ollamaHint2"></p>
+            <p class="ai-env-browser" data-i18n="ai.ollamaBrowser"></p>
+            <p class="ai-env-desktop" hidden data-i18n="ai.desktopNoSetup"></p>
+          </div>
+        </section>
+
+        <section class="ai-section" data-ai-section="openaiCompat" hidden>
+          <div class="field">
+            <label class="field-label" for="ai-openai-url" data-i18n="ai.url">Sunucu adresi</label>
+            <input type="text" id="ai-openai-url" spellcheck="false" autocomplete="off" placeholder="http://localhost:1234/v1">
+          </div>
+          <div class="field">
+            <label class="field-label" for="ai-openai-model" data-i18n="ai.model">Model</label>
+            <div class="input-group">
+              <input type="text" id="ai-openai-model" list="ai-openai-models" spellcheck="false" autocomplete="off" data-i18n-placeholder="ai.modelPlaceholder">
+              <button type="button" class="btn btn-sm" id="ai-openai-fetch" data-i18n="ai.fetchModels">Modelleri getir</button>
+            </div>
+            <datalist id="ai-openai-models"></datalist>
+            <p class="field-hint" id="ai-openai-models-status" role="status" aria-live="polite" data-i18n="ai.modelHint"></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="ai-openai-key" data-i18n="ai.apiKeyOptional">API anahtarı (isteğe bağlı)</label>
+            <input type="password" id="ai-openai-key" spellcheck="false" autocomplete="off">
+          </div>
+          <div class="ai-note">
+            <p data-i18n="ai.openaiHint"></p>
+            <p class="ai-env-browser" data-i18n="ai.openaiBrowser"></p>
+            <p class="ai-env-desktop" hidden data-i18n="ai.desktopNoSetup"></p>
+          </div>
+        </section>
+
+        <section class="ai-common" id="ai-common" hidden>
+          <label class="check">
+            <input type="checkbox" id="ai-send-samples">
+            <span><span class="check-title" data-i18n="ai.sendSamples">Örnek değerleri gönder</span><span class="check-hint" data-i18n="ai.sendSamplesHint"></span></span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="ai-fallback">
+            <span><span class="check-title" data-i18n="ai.fallback">Yapay zeka başarısız olursa yerleşik motoru kullan</span></span>
+          </label>
+          <div class="ai-test-row">
+            <button type="button" class="btn btn-sm" id="ai-test" data-testid="ai-test" data-i18n="ai.test">Bağlantıyı test et</button>
+            <span class="ai-test-status" id="ai-test-status" role="status" aria-live="polite"></span>
+          </div>
+        </section>
+      </div>
+      <div class="dialog-foot">
+        <span class="ai-form-error" id="ai-form-error" role="alert"></span>
+        <div class="dialog-actions">
+          <button type="button" class="btn btn-sm" id="ai-cancel" data-i18n="ai.cancel">İptal</button>
+          <button type="submit" class="btn btn-primary btn-sm" id="ai-save" data-testid="ai-save" data-i18n="ai.save">Kaydet</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ===================== SCRIPTS (exact load order from docs/ARCHITECTURE.md) ===================== -->
+  <script src="assets/js/vendor/xlsx.full.min.js"></script>
+  <script src="assets/js/vendor/exceljs.min.js"></script>
+  <script src="assets/js/vendor/formula-parser.min.js"></script>
+  <script src="assets/js/core/namespace.js"></script>
+  <script src="assets/js/i18n/strings.js"></script>
+  <script src="assets/js/catalog/part-math.js"></script>
+  <script src="assets/js/catalog/part-stat.js"></script>
+  <script src="assets/js/catalog/part-logic-lookup-text.js"></script>
+  <script src="assets/js/catalog/part-date-fin-info-db.js"></script>
+  <script src="assets/js/catalog/part-eng-web-cube-compat.js"></script>
+  <script src="assets/js/catalog/catalog.js"></script>
+  <script src="assets/js/nlp/normalize.js"></script>
+  <script src="assets/js/nlp/lexicon.js"></script>
+  <script src="assets/js/engine/ast.js"></script>
+  <script src="assets/js/engine/localize.js"></script>
+  <script src="assets/js/engine/formula-reader.js"></script>
+  <script src="assets/js/engine/explain.js"></script>
+  <script src="assets/js/nlp/parser.js"></script>
+  <script src="assets/js/nlp/intents.js"></script>
+  <script src="assets/js/nlp/intents-aggregate.js"></script>
+  <script src="assets/js/nlp/intents-logic.js"></script>
+  <script src="assets/js/nlp/intents-lookup.js"></script>
+  <script src="assets/js/nlp/intents-text.js"></script>
+  <script src="assets/js/nlp/intents-date.js"></script>
+  <script src="assets/js/nlp/intents-math.js"></script>
+  <script src="assets/js/nlp/intents-finance-array.js"></script>
+  <script src="assets/js/engine/generate.js"></script>
+  <script src="assets/js/vendor/anthropic-sdk.min.js"></script>
+  <script src="assets/js/ai/ai.js"></script>
+  <script src="assets/js/ai/provider-anthropic.js"></script>
+  <script src="assets/js/ai/provider-local.js"></script>
+  <script src="assets/js/workbook/workbook.js"></script>
+  <script src="assets/js/workbook/evaluator.js"></script>
+  <script src="assets/js/ui/app.js"></script>
+</body>
+</html>

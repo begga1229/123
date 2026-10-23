@@ -1,0 +1,681 @@
+[
+  {
+    "id": "en-001",
+    "text": "Sum the Amount column",
+    "ctx": "en",
+    "expect": "=SUM(E2:E200)",
+    "note": "§15.1 header → data range"
+  },
+  {
+    "id": "en-002",
+    "text": "Total of A2:A100",
+    "ctx": "none",
+    "expect": "=SUM(A2:A100)",
+    "note": "§15.1 explicit ref"
+  },
+  {
+    "id": "en-003",
+    "text": "Average of the Amount column",
+    "ctx": "en",
+    "expect": "=AVERAGE(E2:E200)",
+    "note": "§15.1 AVERAGE"
+  },
+  {
+    "id": "en-004",
+    "text": "What is the highest Amount?",
+    "ctx": "en",
+    "expect": "=MAX(E2:E200)",
+    "note": "§15.1 MAX question"
+  },
+  {
+    "id": "en-005",
+    "text": "Sum the whole column E",
+    "ctx": "en",
+    "expect": "=SUM(E:E)",
+    "note": "§15.1 explicit whole column"
+  },
+  {
+    "id": "en-006",
+    "text": "Count the non-empty cells in the Product column",
+    "ctx": "en",
+    "expect": "=COUNTA(A2:A200)",
+    "note": "§15.1 COUNTA"
+  },
+  {
+    "id": "en-007",
+    "text": "Sum column E",
+    "ctx": "none",
+    "expect": "=SUM(E:E)",
+    "note": "§15.1 column letter without ctx"
+  },
+  {
+    "id": "en-008",
+    "text": "Median of Amount",
+    "ctx": "en",
+    "expect": "=MEDIAN(E2:E200)",
+    "note": "§15.9 median"
+  },
+  {
+    "id": "en-009",
+    "text": "Sum Amount where Category is \"Food\"",
+    "ctx": "en",
+    "expect": "=SUMIF(B2:B200,\"Food\",E2:E200)",
+    "note": "§15.4 SUMIF text"
+  },
+  {
+    "id": "en-010",
+    "text": "Count sales where City is \"London\"",
+    "ctx": "en",
+    "expect": "=COUNTIF(H2:H200,\"London\")",
+    "note": "§15.4 COUNTIF text"
+  },
+  {
+    "id": "en-011",
+    "text": "Sum the Amounts greater than 100",
+    "ctx": "en",
+    "expect": "=SUMIF(E2:E200,\">100\")",
+    "note": "§15.4 SUMIF number"
+  },
+  {
+    "id": "en-012",
+    "text": "Sum Amount where Category is \"Food\" and City is \"London\"",
+    "ctx": "en",
+    "expect": "=SUMIFS(E2:E200,B2:B200,\"Food\",H2:H200,\"London\")",
+    "note": "§15.4 SUMIFS two conditions"
+  },
+  {
+    "id": "en-013",
+    "text": "Count rows where Status is \"Paid\" and Amount is greater than 1000",
+    "ctx": "en",
+    "expect": "=COUNTIFS(I2:I200,\"Paid\",E2:E200,\">1000\")",
+    "note": "§15.4 COUNTIFS"
+  },
+  {
+    "id": "en-014",
+    "text": "Average Amount where Category is \"Food\"",
+    "ctx": "en",
+    "expect": "=AVERAGEIF(B2:B200,\"Food\",E2:E200)",
+    "note": "§15.4 AVERAGEIF"
+  },
+  {
+    "id": "en-015",
+    "text": "Max Amount where Category is \"Food\"",
+    "ctx": "en",
+    "expect": "=MAXIFS(E2:E200,B2:B200,\"Food\")",
+    "style": "modern",
+    "note": "§15.4 MAXIFS modern"
+  },
+  {
+    "id": "en-016",
+    "text": "Max Amount where Category is \"Food\"",
+    "ctx": "en",
+    "expect": "=MAX(IF(B2:B200=\"Food\",E2:E200))",
+    "style": "classic",
+    "note": "§15.4 classic MAX(IF())"
+  },
+  {
+    "id": "en-017",
+    "text": "Count Products that contain \"pen\"",
+    "ctx": "en",
+    "expect": "=COUNTIF(A2:A200,\"*pen*\")",
+    "note": "§15.4 contains"
+  },
+  {
+    "id": "en-018",
+    "text": "Sum Amount where Status is not \"Paid\"",
+    "ctx": "en",
+    "expect": "=SUMIF(I2:I200,\"<>Paid\",E2:E200)",
+    "note": "§15.4 not equal text"
+  },
+  {
+    "id": "en-019",
+    "text": "Count empty cells in Status",
+    "ctx": "en",
+    "expect": "=COUNTIF(I2:I200,\"\")",
+    "note": "§15.4 empty criteria"
+  },
+  {
+    "id": "en-020",
+    "text": "Sum Amount where Date is after 01/01/2024",
+    "ctx": "en",
+    "expect": "=SUMIF(F2:F200,\">\"&DATE(2024,1,1),E2:E200)",
+    "note": "§15.4 date literal"
+  },
+  {
+    "id": "en-021",
+    "text": "Sum Amount between 100 and 500",
+    "ctx": "en",
+    "expect": "=SUMIFS(E2:E200,E2:E200,\">=100\",E2:E200,\"<=500\")",
+    "note": "§15.4 between → two criteria"
+  },
+  {
+    "id": "en-022",
+    "text": "If Amount is greater than 100 then \"High\" else \"Low\"",
+    "ctx": "en",
+    "expect": "=IF(E2>100,\"High\",\"Low\")",
+    "note": "§15.5 IF"
+  },
+  {
+    "id": "en-023",
+    "text": "Is Quantity greater than 0?",
+    "ctx": "en",
+    "expect": "=IF(C2>0,\"Yes\",\"No\")",
+    "note": "§15.5 defaults \"Yes\"/\"No\""
+  },
+  {
+    "id": "en-024",
+    "text": "If Amount > 1000 then \"Large\", if > 500 then \"Medium\", otherwise \"Small\"",
+    "ctx": "en",
+    "expect": "=IFS(E2>1000,\"Large\",E2>500,\"Medium\",TRUE,\"Small\")",
+    "style": "modern",
+    "note": "§15.5 IFS modern"
+  },
+  {
+    "id": "en-025",
+    "text": "If Amount > 1000 then \"Large\", if > 500 then \"Medium\", otherwise \"Small\"",
+    "ctx": "en",
+    "expect": "=IF(E2>1000,\"Large\",IF(E2>500,\"Medium\",\"Small\"))",
+    "style": "classic",
+    "note": "§15.5 nested IF classic"
+  },
+  {
+    "id": "en-026",
+    "text": "If Category is \"Food\" and Amount is greater than 100 then \"Check\", otherwise leave blank",
+    "ctx": "en",
+    "expect": "=IF(AND(B2=\"Food\",E2>100),\"Check\",\"\")",
+    "note": "§15.5 AND + blank"
+  },
+  {
+    "id": "en-027",
+    "text": "If City is \"London\" or \"Paris\" then \"Major\" else \"Other\"",
+    "ctx": "en",
+    "expect": "=IF(OR(H2=\"London\",H2=\"Paris\"),\"Major\",\"Other\")",
+    "note": "§15.5 OR"
+  },
+  {
+    "id": "en-028",
+    "text": "If Amount is between 100 and 500 then \"Mid\" else \"Other\"",
+    "ctx": "en",
+    "expect": "=IF(AND(E2>=100,E2<=500),\"Mid\",\"Other\")",
+    "note": "§15.5 between"
+  },
+  {
+    "id": "en-029",
+    "text": "If E2 is greater than 100 then \"High\" else \"Low\"",
+    "ctx": "none",
+    "expect": "=IF(E2>100,\"High\",\"Low\")",
+    "note": "§15.5 explicit cell"
+  },
+  {
+    "id": "en-030",
+    "text": "If Status is empty then \"Missing\" else \"OK\"",
+    "ctx": "en",
+    "expect": "=IF(I2=\"\",\"Missing\",\"OK\")",
+    "note": "§15.5 empty check"
+  },
+  {
+    "id": "en-031",
+    "text": "Look up the Product code in the Products sheet and return the Price",
+    "ctx": "en",
+    "expect": "=XLOOKUP(A2,Products!$A$2:$A$50,Products!$C$2:$C$50)",
+    "style": "modern",
+    "note": "§15.6 XLOOKUP modern"
+  },
+  {
+    "id": "en-032",
+    "text": "Look up the Product code in the Products sheet and return the Price",
+    "ctx": "en",
+    "expect": "=VLOOKUP(A2,Products!$A$2:$C$50,3,FALSE)",
+    "style": "classic",
+    "note": "§15.6 VLOOKUP classic"
+  },
+  {
+    "id": "en-033",
+    "text": "Look up Product in Products and return Price, if not found show \"Not found\"",
+    "ctx": "en",
+    "expect": "=XLOOKUP(A2,Products!$A$2:$A$50,Products!$C$2:$C$50,\"Not found\")",
+    "style": "modern",
+    "note": "§15.6 not-found text"
+  },
+  {
+    "id": "en-034",
+    "text": "Use INDEX and MATCH to get the Price from Products by Product code",
+    "ctx": "en",
+    "expect": "=INDEX(Products!$C$2:$C$50,MATCH(A2,Products!$A$2:$A$50,0))",
+    "note": "§15.6 INDEX/MATCH when asked"
+  },
+  {
+    "id": "en-035",
+    "text": "Use VLOOKUP to get the Price from the Products sheet by Product code",
+    "ctx": "en",
+    "expect": "=VLOOKUP(A2,Products!$A$2:$C$50,3,FALSE)",
+    "style": "modern",
+    "note": "§15.6 explicit VLOOKUP wins over modern"
+  },
+  {
+    "id": "en-036",
+    "text": "Get the Product Name from the Products sheet by Product code",
+    "ctx": "en",
+    "expect": "=XLOOKUP(A2,Products!$A$2:$A$50,Products!$B$2:$B$50)",
+    "style": "modern",
+    "note": "§15.6 return column B"
+  },
+  {
+    "id": "en-037",
+    "text": "First 3 characters of Product",
+    "ctx": "en",
+    "expect": "=LEFT(A2,3)",
+    "note": "§15.7 LEFT"
+  },
+  {
+    "id": "en-038",
+    "text": "Length of Full Name",
+    "ctx": "en",
+    "expect": "=LEN(M2)",
+    "note": "§15.7 LEN"
+  },
+  {
+    "id": "en-039",
+    "text": "Join Product and Category with a space",
+    "ctx": "en",
+    "expect": "=A2&\" \"&B2",
+    "note": "§15.7 join with &"
+  },
+  {
+    "id": "en-040",
+    "text": "Join all cities with a comma in one cell",
+    "ctx": "en",
+    "expect": "=TEXTJOIN(\", \",TRUE,H2:H200)",
+    "note": "§15.7 TEXTJOIN"
+  },
+  {
+    "id": "en-041",
+    "text": "Get the part of Email before @",
+    "ctx": "en",
+    "expect": "=LEFT(L2,FIND(\"@\",L2)-1)",
+    "style": "classic",
+    "note": "§15.7 before @ classic"
+  },
+  {
+    "id": "en-042",
+    "text": "Get the part of Email before @",
+    "ctx": "en",
+    "expect": "=TEXTBEFORE(L2,\"@\")",
+    "style": "modern",
+    "note": "§15.7 before @ modern"
+  },
+  {
+    "id": "en-043",
+    "text": "Get the domain after @ from Email",
+    "ctx": "en",
+    "expect": "=MID(L2,FIND(\"@\",L2)+1,255)",
+    "style": "classic",
+    "note": "§15.7 after @ classic"
+  },
+  {
+    "id": "en-044",
+    "text": "Get the domain after @ from Email",
+    "ctx": "en",
+    "expect": "=TEXTAFTER(L2,\"@\")",
+    "style": "modern",
+    "note": "§15.7 after @ modern"
+  },
+  {
+    "id": "en-045",
+    "text": "Last word of Full Name",
+    "ctx": "en",
+    "expect": "=TRIM(RIGHT(SUBSTITUTE(M2,\" \",REPT(\" \",100)),100))",
+    "note": "§15.7 last word"
+  },
+  {
+    "id": "en-046",
+    "text": "First word of Full Name",
+    "ctx": "en",
+    "expect": "=LEFT(M2,FIND(\" \",M2&\" \")-1)",
+    "note": "§15.7 first word"
+  },
+  {
+    "id": "en-047",
+    "text": "Convert City to upper case",
+    "ctx": "en",
+    "expect": "=UPPER(H2)",
+    "note": "§15.7 UPPER"
+  },
+  {
+    "id": "en-048",
+    "text": "Trim extra spaces in Full Name",
+    "ctx": "en",
+    "expect": "=TRIM(M2)",
+    "note": "§15.7 TRIM"
+  },
+  {
+    "id": "en-049",
+    "text": "Replace \"Pen\" with \"Pencil\" in Product",
+    "ctx": "en",
+    "expect": "=SUBSTITUTE(A2,\"Pen\",\"Pencil\")",
+    "note": "§15.7 SUBSTITUTE"
+  },
+  {
+    "id": "en-050",
+    "text": "Check whether Product contains \"pen\"",
+    "ctx": "en",
+    "expect": "=ISNUMBER(SEARCH(\"pen\",A2))",
+    "note": "§15.7 contains check"
+  },
+  {
+    "id": "en-051",
+    "text": "Calculate age from Birth Date",
+    "ctx": "en",
+    "expect": "=DATEDIF(K2,TODAY(),\"Y\")",
+    "note": "§15.8 age"
+  },
+  {
+    "id": "en-052",
+    "text": "Days until Date",
+    "ctx": "en",
+    "expect": "=F2-TODAY()",
+    "note": "§15.8 days until"
+  },
+  {
+    "id": "en-053",
+    "text": "Days since Date",
+    "ctx": "en",
+    "expect": "=TODAY()-F2",
+    "note": "§15.8 days since"
+  },
+  {
+    "id": "en-054",
+    "text": "Add 3 months to Date",
+    "ctx": "en",
+    "expect": "=EDATE(F2,3)",
+    "note": "§15.8 add months"
+  },
+  {
+    "id": "en-055",
+    "text": "End of month of Date",
+    "ctx": "en",
+    "expect": "=EOMONTH(F2,0)",
+    "note": "§15.8 end of month"
+  },
+  {
+    "id": "en-056",
+    "text": "Quarter of Date",
+    "ctx": "en",
+    "expect": "=ROUNDUP(MONTH(F2)/3,0)",
+    "note": "§15.8 quarter"
+  },
+  {
+    "id": "en-057",
+    "text": "Working days between A2 and B2",
+    "ctx": "none",
+    "expect": "=NETWORKDAYS(A2,B2)",
+    "note": "§15.8 NETWORKDAYS"
+  },
+  {
+    "id": "en-058",
+    "text": "Weekday name of Date",
+    "ctx": "en",
+    "expect": "=TEXT(F2,\"dddd\")",
+    "note": "§15.8 weekday name"
+  },
+  {
+    "id": "en-059",
+    "text": "Days between A2 (start) and B2 (end)",
+    "ctx": "none",
+    "expect": "=B2-A2",
+    "note": "§15.8 days between"
+  },
+  {
+    "id": "en-060",
+    "text": "Add 10 working days to Date",
+    "ctx": "en",
+    "expect": "=WORKDAY(F2,10)",
+    "note": "§15.8 WORKDAY"
+  },
+  {
+    "id": "en-061",
+    "text": "Today's date",
+    "ctx": "none",
+    "expect": "=TODAY()",
+    "note": "§15.8 today"
+  },
+  {
+    "id": "en-062",
+    "text": "If Date is before today write \"Overdue\", otherwise leave blank",
+    "ctx": "en",
+    "expect": "=IF(F2<TODAY(),\"Overdue\",\"\")",
+    "note": "§15.8 overdue flag"
+  },
+  {
+    "id": "en-063",
+    "text": "10% of Amount",
+    "ctx": "en",
+    "expect": "=E2*10%",
+    "note": "§15.9 percent of"
+  },
+  {
+    "id": "en-064",
+    "text": "Increase Amount by 15%",
+    "ctx": "en",
+    "expect": "=E2*(1+15%)",
+    "note": "§15.9 increase"
+  },
+  {
+    "id": "en-065",
+    "text": "Apply a 20% discount to Amount",
+    "ctx": "en",
+    "expect": "=E2*(1-20%)",
+    "note": "§15.9 discount"
+  },
+  {
+    "id": "en-066",
+    "text": "Share of Amount in the total",
+    "ctx": "en",
+    "expect": "=E2/SUM($E$2:$E$200)",
+    "note": "§15.9 share of total"
+  },
+  {
+    "id": "en-067",
+    "text": "Round Amount to 2 decimals",
+    "ctx": "en",
+    "expect": "=ROUND(E2,2)",
+    "note": "§15.9 round"
+  },
+  {
+    "id": "en-068",
+    "text": "Round Amount to a whole number",
+    "ctx": "en",
+    "expect": "=ROUND(E2,0)",
+    "note": "§15.9 round to integer"
+  },
+  {
+    "id": "en-069",
+    "text": "Running total of Amount",
+    "ctx": "en",
+    "expect": "=SUM($E$2:E2)",
+    "note": "§15.9 running total"
+  },
+  {
+    "id": "en-070",
+    "text": "Rank by Amount, largest first",
+    "ctx": "en",
+    "expect": "=RANK.EQ(E2,$E$2:$E$200,0)",
+    "note": "§15.9 rank"
+  },
+  {
+    "id": "en-071",
+    "text": "Count unique Products",
+    "ctx": "en",
+    "expect": "=ROWS(UNIQUE(A2:A200))",
+    "style": "modern",
+    "note": "§15.9 count unique modern"
+  },
+  {
+    "id": "en-072",
+    "text": "Count unique Products",
+    "ctx": "en",
+    "expect": "=SUMPRODUCT(1/COUNTIF(A2:A200,A2:A200))",
+    "style": "classic",
+    "note": "§15.9 count unique classic"
+  },
+  {
+    "id": "en-073",
+    "text": "Flag duplicates in Product with \"Duplicate\", otherwise blank",
+    "ctx": "en",
+    "expect": "=IF(COUNTIF($A$2:$A$200,A2)>1,\"Duplicate\",\"\")",
+    "note": "§15.9 duplicate flag"
+  },
+  {
+    "id": "en-074",
+    "text": "Multiply Quantity by Unit Price",
+    "ctx": "en",
+    "expect": "=C2*D2",
+    "note": "§15.9 multiply columns"
+  },
+  {
+    "id": "en-075",
+    "text": "Percent change from D2 to E2",
+    "ctx": "none",
+    "expect": "=(E2-D2)/D2",
+    "note": "§15.9 percent change"
+  },
+  {
+    "id": "en-076",
+    "text": "Add 20% VAT to Amount",
+    "ctx": "en",
+    "expect": "=E2*1.2",
+    "note": "§15.9 VAT add"
+  },
+  {
+    "id": "en-077",
+    "text": "Third largest Amount",
+    "ctx": "en",
+    "expect": "=LARGE(E2:E200,3)",
+    "note": "§15.9 nth largest"
+  },
+  {
+    "id": "en-078",
+    "text": "Remainder of Quantity divided by 3",
+    "ctx": "en",
+    "expect": "=MOD(C2,3)",
+    "note": "§15.9 MOD"
+  },
+  {
+    "id": "en-079",
+    "text": "Square root of Amount",
+    "ctx": "en",
+    "expect": "=SQRT(E2)",
+    "note": "§15.9 SQRT"
+  },
+  {
+    "id": "en-080",
+    "text": "Absolute value of Discount",
+    "ctx": "en",
+    "expect": "=ABS(J2)",
+    "note": "§15.9 ABS"
+  },
+  {
+    "id": "en-081",
+    "text": "Unique list of cities",
+    "ctx": "en",
+    "expect": "=UNIQUE(H2:H200)",
+    "style": "modern",
+    "note": "§15.10 unique"
+  },
+  {
+    "id": "en-082",
+    "text": "Filter rows where Category is \"Food\"",
+    "ctx": "en",
+    "expect": "=FILTER(A2:M200,B2:B200=\"Food\",\"\")",
+    "style": "modern",
+    "note": "§15.10 filter block"
+  },
+  {
+    "id": "en-083",
+    "text": "Top 5 Amounts",
+    "ctx": "en",
+    "expect": "=TAKE(SORT(E2:E200,1,-1),5)",
+    "style": "modern",
+    "note": "§15.10 top N"
+  },
+  {
+    "id": "en-084",
+    "text": "Sort Amount descending",
+    "ctx": "en",
+    "expect": "=SORT(E2:E200,1,-1)",
+    "style": "modern",
+    "note": "§15.10 sort"
+  },
+  {
+    "id": "en-085",
+    "text": "Divide E2 by C2, if error leave blank",
+    "ctx": "none",
+    "expect": "=IFERROR(E2/C2,\"\")",
+    "note": "§15.11 IFERROR blank"
+  },
+  {
+    "id": "en-086",
+    "text": "Divide Amount by Quantity, if error show \"Error\"",
+    "ctx": "en",
+    "expect": "=IFERROR(E2/C2,\"Error\")",
+    "note": "§15.11 IFERROR text"
+  },
+  {
+    "id": "en-087",
+    "text": "Monthly payment for a 100000 loan at 24% annual interest over 36 months",
+    "ctx": "none",
+    "expect": "=PMT(24%/12,36,-100000)",
+    "note": "§15.12 PMT"
+  },
+  {
+    "id": "en-088",
+    "text": "Net present value of cash flows B2:B10 at a 10% rate",
+    "ctx": "none",
+    "expect": "=NPV(10%,B2:B10)",
+    "note": "§15.12 NPV"
+  },
+  {
+    "id": "en-089",
+    "text": "Use SUMIFS to sum Amount where Category is \"Food\"",
+    "ctx": "en",
+    "expect": "=SUMIFS(E2:E200,B2:B200,\"Food\")",
+    "note": "explicit SUMIFS with one condition"
+  },
+  {
+    "id": "en-090",
+    "text": "Use COUNTIF to count cities equal to \"London\"",
+    "ctx": "en",
+    "expect": "=COUNTIF(H2:H200,\"London\")",
+    "note": "explicit COUNTIF"
+  },
+  {
+    "id": "en-091",
+    "text": "If Amount > 100 then \"High\" else \"Low\", and write it to column N",
+    "ctx": "en",
+    "expect": "=IF(E2>100,\"High\",\"Low\")",
+    "note": "target column phrase does not change formula"
+  },
+  {
+    "id": "en-092",
+    "text": "Sum the Amount column and put the result in E201",
+    "ctx": "en",
+    "expect": "=SUM(E2:E200)",
+    "note": "target cell phrase"
+  },
+  {
+    "id": "en-093",
+    "text": "Use XLOOKUP to get the Price from Products by Product code",
+    "ctx": "en",
+    "expect": "=XLOOKUP(A2,Products!$A$2:$A$50,Products!$C$2:$C$50)",
+    "style": "classic",
+    "note": "explicit XLOOKUP wins over classic style"
+  },
+  {
+    "id": "en-094",
+    "text": "Use IFS: if Amount > 1000 then \"A\", if > 500 then \"B\", otherwise \"C\"",
+    "ctx": "en",
+    "expect": "=IFS(E2>1000,\"A\",E2>500,\"B\",TRUE,\"C\")",
+    "style": "classic",
+    "note": "explicit IFS wins over classic style"
+  }
+]

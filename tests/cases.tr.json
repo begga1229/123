@@ -1,0 +1,1731 @@
+[
+  {
+    "id": "tr-001",
+    "text": "Tutar sütununu topla",
+    "ctx": "tr",
+    "expect": "=SUM(E2:E200)",
+    "note": "§15.1 header → data range, aggregate relative"
+  },
+  {
+    "id": "tr-002",
+    "text": "A2:A100 toplamı",
+    "ctx": "none",
+    "expect": "=SUM(A2:A100)",
+    "note": "§15.1 explicit ref verbatim, no ctx"
+  },
+  {
+    "id": "tr-003",
+    "text": "Tutar sütununun ortalamasını al",
+    "ctx": "tr",
+    "expect": "=AVERAGE(E2:E200)",
+    "note": "§15.1 AVERAGE over header range"
+  },
+  {
+    "id": "tr-004",
+    "text": "En yüksek tutarı bul",
+    "ctx": "tr",
+    "expect": "=MAX(E2:E200)",
+    "note": "§15.1 MAX over header range"
+  },
+  {
+    "id": "tr-005",
+    "text": "En düşük Birim Fiyat nedir?",
+    "ctx": "tr",
+    "expect": "=MIN(D2:D200)",
+    "note": "§15.1 MIN, two-word header, question form"
+  },
+  {
+    "id": "tr-006",
+    "text": "Ürün sütunundaki dolu hücreleri say",
+    "ctx": "tr",
+    "expect": "=COUNTA(A2:A200)",
+    "note": "§15.1 COUNTA on text column"
+  },
+  {
+    "id": "tr-007",
+    "text": "Adet sütunundaki sayıları say",
+    "ctx": "tr",
+    "expect": "=COUNT(C2:C200)",
+    "note": "§15.1 COUNT numeric column"
+  },
+  {
+    "id": "tr-008",
+    "text": "Şehir sütununda boş hücre sayısı",
+    "ctx": "tr",
+    "expect": "=COUNTBLANK(H2:H200)",
+    "note": "§15.1 COUNTBLANK"
+  },
+  {
+    "id": "tr-009",
+    "text": "E sütununu topla",
+    "ctx": "tr",
+    "expect": "=SUM(E2:E200)",
+    "note": "§15.1 column letter with ctx → data range"
+  },
+  {
+    "id": "tr-010",
+    "text": "Tüm E sütununu topla",
+    "ctx": "tr",
+    "expect": "=SUM(E:E)",
+    "note": "§15.1 explicit whole column with ctx"
+  },
+  {
+    "id": "tr-011",
+    "text": "E sütununu topla",
+    "ctx": "none",
+    "expect": "=SUM(E:E)",
+    "note": "§15.1 column letter without ctx → E:E"
+  },
+  {
+    "id": "tr-012",
+    "text": "B2:B50 aralığının ortalaması",
+    "ctx": "none",
+    "expect": "=AVERAGE(B2:B50)",
+    "note": "§15.1 explicit range verbatim"
+  },
+  {
+    "id": "tr-013",
+    "text": "C3:C40 içindeki en büyük değer",
+    "ctx": "none",
+    "expect": "=MAX(C3:C40)",
+    "note": "§15.1 explicit range MAX"
+  },
+  {
+    "id": "tr-014",
+    "text": "D2:D20 arasındaki en küçük sayı",
+    "ctx": "none",
+    "expect": "=MIN(D2:D20)",
+    "note": "§15.1 explicit range MIN"
+  },
+  {
+    "id": "tr-015",
+    "text": "Tutar sütununun medyanı",
+    "ctx": "tr",
+    "expect": "=MEDIAN(E2:E200)",
+    "note": "§15.9 median"
+  },
+  {
+    "id": "tr-016",
+    "text": "Adet sütununda en çok tekrar eden değer",
+    "ctx": "tr",
+    "expect": "=MODE.SNGL(C2:C200)",
+    "note": "§15.9 mode"
+  },
+  {
+    "id": "tr-017",
+    "text": "Tutar sütununun standart sapması",
+    "ctx": "tr",
+    "expect": "=STDEV.S(E2:E200)",
+    "note": "§15.9 stdev"
+  },
+  {
+    "id": "tr-018",
+    "text": "Lütfen Adet sütununun toplamını hesaplar mısın?",
+    "ctx": "tr",
+    "expect": "=SUM(C2:C200)",
+    "note": "§15.1 polite question form"
+  },
+  {
+    "id": "tr-019",
+    "text": "İndirim sütununun ortalaması",
+    "ctx": "tr",
+    "expect": "=AVERAGE(J2:J200)",
+    "note": "§15.1 header with Turkish capital İ"
+  },
+  {
+    "id": "tr-020",
+    "text": "Bütün H sütunundaki dolu hücreleri say",
+    "ctx": "tr",
+    "expect": "=COUNTA(H:H)",
+    "note": "§15.1 \"bütün\" → whole column"
+  },
+  {
+    "id": "tr-021",
+    "text": "Kategori Gıda olanların Tutarını topla",
+    "ctx": "tr",
+    "expect": "=SUMIF(B2:B200,\"Gıda\",E2:E200)",
+    "note": "§15.4 one text condition → SUMIF(crit_range,crit,sum_range)"
+  },
+  {
+    "id": "tr-022",
+    "text": "Tutarı 100'den büyük olanları topla",
+    "ctx": "tr",
+    "expect": "=SUMIF(E2:E200,\">100\")",
+    "note": "§15.4 number criteria \">100\", sum range = criteria range"
+  },
+  {
+    "id": "tr-023",
+    "text": "Şehir \"Ankara\" olan satışları say",
+    "ctx": "tr",
+    "expect": "=COUNTIF(H2:H200,\"Ankara\")",
+    "note": "§15.4 COUNTIF text equality"
+  },
+  {
+    "id": "tr-024",
+    "text": "Tutarı 500'den büyük olan satış sayısı",
+    "ctx": "tr",
+    "expect": "=COUNTIF(E2:E200,\">500\")",
+    "note": "§15.4 COUNTIF number"
+  },
+  {
+    "id": "tr-025",
+    "text": "Kategori \"Gıda\" olanların ortalama tutarı",
+    "ctx": "tr",
+    "expect": "=AVERAGEIF(B2:B200,\"Gıda\",E2:E200)",
+    "note": "§15.4 AVERAGEIF"
+  },
+  {
+    "id": "tr-026",
+    "text": "Durumu \"Ödendi\" olmayanların tutarını topla",
+    "ctx": "tr",
+    "expect": "=SUMIF(I2:I200,\"<>Ödendi\",E2:E200)",
+    "note": "§15.4 not equal text → \"<>Ödendi\""
+  },
+  {
+    "id": "tr-027",
+    "text": "Ürün adı \"Kalem\" içerenlerin Tutar toplamı",
+    "ctx": "tr",
+    "expect": "=SUMIF(A2:A200,\"*Kalem*\",E2:E200)",
+    "note": "§15.4 contains → \"*Kalem*\""
+  },
+  {
+    "id": "tr-028",
+    "text": "Ürün adı \"Def\" ile başlayanları say",
+    "ctx": "tr",
+    "expect": "=COUNTIF(A2:A200,\"Def*\")",
+    "note": "§15.4 starts with → \"Def*\""
+  },
+  {
+    "id": "tr-029",
+    "text": "Ürün adı \"lik\" ile bitenleri say",
+    "ctx": "tr",
+    "expect": "=COUNTIF(A2:A200,\"*lik\")",
+    "note": "§15.4 ends with → \"*lik\""
+  },
+  {
+    "id": "tr-030",
+    "text": "Durumu boş olanları say",
+    "ctx": "tr",
+    "expect": "=COUNTIF(I2:I200,\"\")",
+    "note": "§15.4 empty → \"\""
+  },
+  {
+    "id": "tr-031",
+    "text": "Durumu dolu olanların tutarını topla",
+    "ctx": "tr",
+    "expect": "=SUMIF(I2:I200,\"<>\",E2:E200)",
+    "note": "§15.4 not empty → \"<>\""
+  },
+  {
+    "id": "tr-032",
+    "text": "Adet 10'dan küçük veya eşit olanların sayısı",
+    "ctx": "tr",
+    "expect": "=COUNTIF(C2:C200,\"<=10\")",
+    "note": "§15.4 \"<=\" criteria"
+  },
+  {
+    "id": "tr-033",
+    "text": "Tutarı P1 hücresinden büyük olanları topla",
+    "ctx": "tr",
+    "expect": "=SUMIF(E2:E200,\">\"&P1)",
+    "note": "§15.4 comparison with a cell → \">\"&P1"
+  },
+  {
+    "id": "tr-034",
+    "text": "Tarihi 01.01.2024'ten sonra olan satışların tutarını topla",
+    "ctx": "tr",
+    "expect": "=SUMIF(F2:F200,\">\"&DATE(2024,1,1),E2:E200)",
+    "note": "§15.4 date literal → \">\"&DATE(2024,1,1)"
+  },
+  {
+    "id": "tr-035",
+    "text": "Kategori \"Gıda\" olanların en yüksek tutarı",
+    "ctx": "tr",
+    "expect": "=MAXIFS(E2:E200,B2:B200,\"Gıda\")",
+    "style": "modern",
+    "note": "§15.4 MAXIFS modern"
+  },
+  {
+    "id": "tr-036",
+    "text": "Kategori \"Gıda\" olanların en yüksek tutarı",
+    "ctx": "tr",
+    "expect": "=MAX(IF(B2:B200=\"Gıda\",E2:E200))",
+    "style": "classic",
+    "note": "§15.4 classic MAX(IF())"
+  },
+  {
+    "id": "tr-037",
+    "text": "Şehir \"İstanbul\" olan satışların en düşük tutarı",
+    "ctx": "tr",
+    "expect": "=MINIFS(E2:E200,H2:H200,\"İstanbul\")",
+    "style": "modern",
+    "note": "§15.4 MINIFS modern"
+  },
+  {
+    "id": "tr-038",
+    "text": "İndirimi 0 olmayan satışları say",
+    "ctx": "tr",
+    "expect": "=COUNTIF(J2:J200,\"<>0\")",
+    "note": "§15.4 not equal number → \"<>0\""
+  },
+  {
+    "id": "tr-039",
+    "text": "A2:A100 içinde 50'den büyük olanları topla",
+    "ctx": "none",
+    "expect": "=SUMIF(A2:A100,\">50\")",
+    "note": "§15.4 explicit refs, no ctx"
+  },
+  {
+    "id": "tr-040",
+    "text": "B2:B100'de \"Evet\" yazanları say",
+    "ctx": "none",
+    "expect": "=COUNTIF(B2:B100,\"Evet\")",
+    "note": "§15.4 COUNTIF explicit range"
+  },
+  {
+    "id": "tr-041",
+    "text": "Satış Temsilcisi \"Ayşe\" olanların Adet toplamı",
+    "ctx": "tr",
+    "expect": "=SUMIF(G2:G200,\"Ayşe\",C2:C200)",
+    "note": "§15.4 two-word header criteria column"
+  },
+  {
+    "id": "tr-042",
+    "text": "Tutarı 1000'e eşit veya büyük olanları say",
+    "ctx": "tr",
+    "expect": "=COUNTIF(E2:E200,\">=1000\")",
+    "note": "§15.4 \">=\" criteria"
+  },
+  {
+    "id": "tr-043",
+    "text": "Tarihi F2 hücresindeki tarihten sonra olanların tutarını topla",
+    "ctx": "tr",
+    "expect": "=SUMIF(F2:F200,\">\"&F2,E2:E200)",
+    "note": "§15.4 date compared with a cell → \">\"&F2"
+  },
+  {
+    "id": "tr-044",
+    "text": "Kategori \"Gıda\" olan satır sayısı",
+    "ctx": "tr",
+    "expect": "=COUNTIF(B2:B200,\"Gıda\")",
+    "note": "§15.4 COUNTIF text"
+  },
+  {
+    "id": "tr-045",
+    "text": "Şehir \"İzmir\" olmayanları say",
+    "ctx": "tr",
+    "expect": "=COUNTIF(H2:H200,\"<>İzmir\")",
+    "note": "§15.4 COUNTIF not equal text"
+  },
+  {
+    "id": "tr-046",
+    "text": "Kategori \"Gıda\" ve Şehir \"Ankara\" olanların tutarını topla",
+    "ctx": "tr",
+    "expect": "=SUMIFS(E2:E200,B2:B200,\"Gıda\",H2:H200,\"Ankara\")",
+    "note": "§15.4 two conditions → SUMIFS(sum,crit1..) in text order"
+  },
+  {
+    "id": "tr-047",
+    "text": "Şehir \"İstanbul\" ve Durum \"Ödendi\" olan satışları say",
+    "ctx": "tr",
+    "expect": "=COUNTIFS(H2:H200,\"İstanbul\",I2:I200,\"Ödendi\")",
+    "note": "§15.4 COUNTIFS"
+  },
+  {
+    "id": "tr-048",
+    "text": "Kategori \"Kırtasiye\" ve Tutarı 100'den büyük olanların ortalama tutarı",
+    "ctx": "tr",
+    "expect": "=AVERAGEIFS(E2:E200,B2:B200,\"Kırtasiye\",E2:E200,\">100\")",
+    "note": "§15.4 AVERAGEIFS text + number"
+  },
+  {
+    "id": "tr-049",
+    "text": "Tutarı 100 ile 500 arasında olanları topla",
+    "ctx": "tr",
+    "expect": "=SUMIFS(E2:E200,E2:E200,\">=100\",E2:E200,\"<=500\")",
+    "note": "§15.4+§15.5 between → two criteria >= and <="
+  },
+  {
+    "id": "tr-050",
+    "text": "Satış Temsilcisi \"Mehmet\", Kategori \"Gıda\" ve Şehir \"Ankara\" olanların adetini topla",
+    "ctx": "tr",
+    "expect": "=SUMIFS(C2:C200,G2:G200,\"Mehmet\",B2:B200,\"Gıda\",H2:H200,\"Ankara\")",
+    "note": "§15.4 three conditions, text order"
+  },
+  {
+    "id": "tr-051",
+    "text": "Durumu \"Bekliyor\" ve Tutarı 1000'den büyük olan satış sayısı",
+    "ctx": "tr",
+    "expect": "=COUNTIFS(I2:I200,\"Bekliyor\",E2:E200,\">1000\")",
+    "note": "§15.4 COUNTIFS text + number"
+  },
+  {
+    "id": "tr-052",
+    "text": "Kategori \"Gıda\" ve Şehir \"Ankara\" olanların en yüksek tutarı",
+    "ctx": "tr",
+    "expect": "=MAXIFS(E2:E200,B2:B200,\"Gıda\",H2:H200,\"Ankara\")",
+    "style": "modern",
+    "note": "§15.4 MAXIFS two conditions"
+  },
+  {
+    "id": "tr-053",
+    "text": "Tarihi 01.01.2024 ile 31.12.2024 arasında olan satışların tutarını topla",
+    "ctx": "tr",
+    "expect": "=SUMIFS(E2:E200,F2:F200,\">=\"&DATE(2024,1,1),F2:F200,\"<=\"&DATE(2024,12,31))",
+    "note": "§15.4 date between with DATE()"
+  },
+  {
+    "id": "tr-054",
+    "text": "Kategori \"Gıda\" olmayan ve Tutarı 0'dan büyük olanları say",
+    "ctx": "tr",
+    "expect": "=COUNTIFS(B2:B200,\"<>Gıda\",E2:E200,\">0\")",
+    "note": "§15.4 \"<>text\" + number"
+  },
+  {
+    "id": "tr-055",
+    "text": "A2:A100'de \"X\" ve B2:B100'de 5'ten büyük olanların C2:C100 toplamı",
+    "ctx": "none",
+    "expect": "=SUMIFS(C2:C100,A2:A100,\"X\",B2:B100,\">5\")",
+    "note": "§15.4 SUMIFS with explicit refs"
+  },
+  {
+    "id": "tr-056",
+    "text": "Şehir \"Ankara\" ve Kategori \"Kırtasiye\" olanların Adet ortalaması",
+    "ctx": "tr",
+    "expect": "=AVERAGEIFS(C2:C200,H2:H200,\"Ankara\",B2:B200,\"Kırtasiye\")",
+    "note": "§15.4 AVERAGEIFS order of conditions as in text"
+  },
+  {
+    "id": "tr-057",
+    "text": "Kategori \"Gıda\" ve Durumu boş olanları say",
+    "ctx": "tr",
+    "expect": "=COUNTIFS(B2:B200,\"Gıda\",I2:I200,\"\")",
+    "note": "§15.4 COUNTIFS with empty criteria"
+  },
+  {
+    "id": "tr-058",
+    "text": "Tutar 100'den büyükse \"Yüksek\" değilse \"Düşük\" yaz",
+    "ctx": "tr",
+    "expect": "=IF(E2>100,\"Yüksek\",\"Düşük\")",
+    "note": "§15.5 IF with then/else, fill row 2"
+  },
+  {
+    "id": "tr-059",
+    "text": "E2 100'den büyükse \"Yüksek\" yaz değilse \"Düşük\"",
+    "ctx": "none",
+    "expect": "=IF(E2>100,\"Yüksek\",\"Düşük\")",
+    "note": "§15.5 IF with explicit cell, no ctx"
+  },
+  {
+    "id": "tr-060",
+    "text": "Durum \"Ödendi\" ise \"Tamam\" yaz, değilse boş bırak",
+    "ctx": "tr",
+    "expect": "=IF(I2=\"Ödendi\",\"Tamam\",\"\")",
+    "note": "§15.5 \"boş bırak\" → \"\""
+  },
+  {
+    "id": "tr-061",
+    "text": "Adet 0'dan büyük mü?",
+    "ctx": "tr",
+    "expect": "=IF(C2>0,\"Evet\",\"Hayır\")",
+    "note": "§15.5 missing then/else → \"Evet\"/\"Hayır\""
+  },
+  {
+    "id": "tr-062",
+    "text": "Tutar 1000'den büyükse \"Büyük\", 500'den büyükse \"Orta\", değilse \"Küçük\"",
+    "ctx": "tr",
+    "expect": "=IFS(E2>1000,\"Büyük\",E2>500,\"Orta\",TRUE,\"Küçük\")",
+    "style": "modern",
+    "note": "§15.5 ordered conditions → IFS (modern)"
+  },
+  {
+    "id": "tr-063",
+    "text": "Tutar 1000'den büyükse \"Büyük\", 500'den büyükse \"Orta\", değilse \"Küçük\"",
+    "ctx": "tr",
+    "expect": "=IF(E2>1000,\"Büyük\",IF(E2>500,\"Orta\",\"Küçük\"))",
+    "style": "classic",
+    "note": "§15.5 ordered conditions → nested IF (classic)"
+  },
+  {
+    "id": "tr-064",
+    "text": "Kategori \"Gıda\" ve Tutar 100'den büyükse \"Kontrol\" yaz, değilse boş bırak",
+    "ctx": "tr",
+    "expect": "=IF(AND(B2=\"Gıda\",E2>100),\"Kontrol\",\"\")",
+    "note": "§15.5 \"ve\" → AND"
+  },
+  {
+    "id": "tr-065",
+    "text": "Şehir \"İstanbul\" veya \"Ankara\" ise \"Büyükşehir\" değilse \"Diğer\" yaz",
+    "ctx": "tr",
+    "expect": "=IF(OR(H2=\"İstanbul\",H2=\"Ankara\"),\"Büyükşehir\",\"Diğer\")",
+    "note": "§15.5 \"veya\" → OR"
+  },
+  {
+    "id": "tr-066",
+    "text": "Tutar 100 ile 500 arasındaysa \"Orta\" yaz, değilse \"Diğer\"",
+    "ctx": "tr",
+    "expect": "=IF(AND(E2>=100,E2<=500),\"Orta\",\"Diğer\")",
+    "note": "§15.5 between → AND(>=,<=)"
+  },
+  {
+    "id": "tr-067",
+    "text": "Durum boşsa \"Eksik\" yaz, değilse \"Tamam\"",
+    "ctx": "tr",
+    "expect": "=IF(I2=\"\",\"Eksik\",\"Tamam\")",
+    "note": "§15.5 empty check I2=\"\""
+  },
+  {
+    "id": "tr-068",
+    "text": "Tutar Birim Fiyat'tan küçükse \"Hata\" değilse \"OK\" yaz",
+    "ctx": "tr",
+    "expect": "=IF(E2<D2,\"Hata\",\"OK\")",
+    "note": "§15.5 cell-to-cell comparison"
+  },
+  {
+    "id": "tr-069",
+    "text": "İndirim 0'dan büyükse Tutar çarpı İndirim, değilse 0",
+    "ctx": "tr",
+    "expect": "=IF(J2>0,E2*J2,0)",
+    "note": "§15.5 then = expression, else = number"
+  },
+  {
+    "id": "tr-070",
+    "text": "Adet 5'e eşit değilse \"Farklı\" değilse \"Aynı\" yaz",
+    "ctx": "tr",
+    "expect": "=IF(C2<>5,\"Farklı\",\"Aynı\")",
+    "note": "§15.5 not equal number"
+  },
+  {
+    "id": "tr-071",
+    "text": "Durumu \"Ödendi\" ise Tutarı yaz, değilse 0",
+    "ctx": "tr",
+    "expect": "=IF(I2=\"Ödendi\",E2,0)",
+    "note": "§15.5 then = cell ref"
+  },
+  {
+    "id": "tr-072",
+    "text": "Kategori \"Gıda\" ise \"G\", \"Kırtasiye\" ise \"K\", değilse \"D\" yaz",
+    "ctx": "tr",
+    "expect": "=IFS(B2=\"Gıda\",\"G\",B2=\"Kırtasiye\",\"K\",TRUE,\"D\")",
+    "style": "modern",
+    "note": "§15.5 text conditions → IFS modern"
+  },
+  {
+    "id": "tr-073",
+    "text": "Kategori \"Gıda\" ise \"G\", \"Kırtasiye\" ise \"K\", değilse \"D\" yaz",
+    "ctx": "tr",
+    "expect": "=IF(B2=\"Gıda\",\"G\",IF(B2=\"Kırtasiye\",\"K\",\"D\"))",
+    "style": "classic",
+    "note": "§15.5 text conditions → nested IF classic"
+  },
+  {
+    "id": "tr-074",
+    "text": "A2 boş değilse \"Dolu\" değilse \"Boş\" yaz",
+    "ctx": "none",
+    "expect": "=IF(A2<>\"\",\"Dolu\",\"Boş\")",
+    "note": "§15.5 not empty → A2<>\"\""
+  },
+  {
+    "id": "tr-075",
+    "text": "Tutar 1000'den büyük ve Durum \"Ödendi\" ise \"VIP\" değilse boş bırak",
+    "ctx": "tr",
+    "expect": "=IF(AND(E2>1000,I2=\"Ödendi\"),\"VIP\",\"\")",
+    "note": "§15.5 AND with number + text"
+  },
+  {
+    "id": "tr-076",
+    "text": "Adet 0'a eşitse \"Stok yok\" yaz, değilse \"Stokta\"",
+    "ctx": "tr",
+    "expect": "=IF(C2=0,\"Stok yok\",\"Stokta\")",
+    "note": "§15.5 equality with number"
+  },
+  {
+    "id": "tr-077",
+    "text": "E2 100'den büyük mü?",
+    "ctx": "none",
+    "expect": "=IF(E2>100,\"Evet\",\"Hayır\")",
+    "note": "§15.5 defaults with explicit cell"
+  },
+  {
+    "id": "tr-078",
+    "text": "Şehir \"Ankara\" ise \"Başkent\" yaz, değilse boş bırak",
+    "ctx": "tr",
+    "expect": "=IF(H2=\"Ankara\",\"Başkent\",\"\")",
+    "note": "§15.5 text equality + blank else"
+  },
+  {
+    "id": "tr-079",
+    "text": "Tutar 50'den küçükse \"Düşük\", 200'den küçükse \"Orta\", 1000'den küçükse \"Yüksek\", değilse \"Çok yüksek\"",
+    "ctx": "tr",
+    "expect": "=IFS(E2<50,\"Düşük\",E2<200,\"Orta\",E2<1000,\"Yüksek\",TRUE,\"Çok yüksek\")",
+    "style": "modern",
+    "note": "§15.5 four ordered conditions → IFS"
+  },
+  {
+    "id": "tr-080",
+    "text": "Tutar 50'den küçükse \"Düşük\", 200'den küçükse \"Orta\", 1000'den küçükse \"Yüksek\", değilse \"Çok yüksek\"",
+    "ctx": "tr",
+    "expect": "=IF(E2<50,\"Düşük\",IF(E2<200,\"Orta\",IF(E2<1000,\"Yüksek\",\"Çok yüksek\")))",
+    "style": "classic",
+    "note": "§15.5 four ordered conditions → nested IF"
+  },
+  {
+    "id": "tr-081",
+    "text": "Ürün kodunu Ürünler sayfasında ara ve Fiyat getir",
+    "ctx": "tr",
+    "expect": "=XLOOKUP(A2,Ürünler!$A$2:$A$50,Ürünler!$C$2:$C$50)",
+    "style": "modern",
+    "note": "§15.6 modern XLOOKUP, absolute lookup ranges"
+  },
+  {
+    "id": "tr-082",
+    "text": "Ürün kodunu Ürünler sayfasında ara ve Fiyat getir",
+    "ctx": "tr",
+    "expect": "=VLOOKUP(A2,Ürünler!$A$2:$C$50,3,FALSE)",
+    "style": "classic",
+    "note": "§15.6 classic VLOOKUP, col index 3 = Fiyat"
+  },
+  {
+    "id": "tr-083",
+    "text": "Ürün kodunu Ürünler sayfasında ara, Fiyatı getir, bulunamazsa \"Bulunamadı\" yaz",
+    "ctx": "tr",
+    "expect": "=XLOOKUP(A2,Ürünler!$A$2:$A$50,Ürünler!$C$2:$C$50,\"Bulunamadı\")",
+    "style": "modern",
+    "note": "§15.6 not-found text only when asked"
+  },
+  {
+    "id": "tr-084",
+    "text": "Ürün koduna göre Ürünler sayfasından Ürün Adı getir",
+    "ctx": "tr",
+    "expect": "=XLOOKUP(A2,Ürünler!$A$2:$A$50,Ürünler!$B$2:$B$50)",
+    "style": "modern",
+    "note": "§15.6 return column B (Ürün Adı)"
+  },
+  {
+    "id": "tr-085",
+    "text": "Ürün koduna göre Ürünler sayfasından Ürün Adı getir",
+    "ctx": "tr",
+    "expect": [
+      "=VLOOKUP(A2,Ürünler!$A$2:$C$50,2,FALSE)",
+      "=VLOOKUP(A2,Ürünler!$A$2:$B$50,2,FALSE)"
+    ],
+    "style": "classic",
+    "note": "§15.6 classic, return index 2 (table may be full sheet or key..return)"
+  },
+  {
+    "id": "tr-086",
+    "text": "DÜŞEYARA ile Ürün kodunu Ürünler sayfasında bul ve Fiyat getir",
+    "ctx": "tr",
+    "expect": "=VLOOKUP(A2,Ürünler!$A$2:$C$50,3,FALSE)",
+    "style": "modern",
+    "note": "§15.6 explicit DÜŞEYARA wins over modern style"
+  },
+  {
+    "id": "tr-087",
+    "text": "İNDİS ve KAÇINCI ile Ürün kodunu Ürünler sayfasında arayıp Fiyat getir",
+    "ctx": "tr",
+    "expect": "=INDEX(Ürünler!$C$2:$C$50,MATCH(A2,Ürünler!$A$2:$A$50,0))",
+    "note": "§15.6 INDEX/MATCH when the user says so"
+  },
+  {
+    "id": "tr-088",
+    "text": "Ürün kodunu Ürünler sayfasında ara, Fiyat getir, hata olursa boş bırak",
+    "ctx": "tr",
+    "expect": "=IFERROR(VLOOKUP(A2,Ürünler!$A$2:$C$50,3,FALSE),\"\")",
+    "style": "classic",
+    "note": "§15.6+§15.11 classic lookup wrapped in IFERROR"
+  },
+  {
+    "id": "tr-089",
+    "text": "A2 değerini Liste sayfasında A:B aralığında ara ve 2. sütunu getir",
+    "ctx": "none",
+    "expect": [
+      "=VLOOKUP(A2,Liste!A:B,2,FALSE)",
+      "=VLOOKUP(A2,Liste!$A:$B,2,FALSE)"
+    ],
+    "style": "classic",
+    "note": "§15.6 explicit table ref without ctx (verbatim or absolute)"
+  },
+  {
+    "id": "tr-090",
+    "text": "ÇAPRAZARA ile Ürün kodunu Ürünler sayfasında bul ve Fiyat getir",
+    "ctx": "tr",
+    "expect": "=XLOOKUP(A2,Ürünler!$A$2:$A$50,Ürünler!$C$2:$C$50)",
+    "style": "classic",
+    "note": "§15.6 explicit ÇAPRAZARA wins over classic style"
+  },
+  {
+    "id": "tr-091",
+    "text": "Ürün Kodu'na göre Ürünler sayfasından Fiyat çek",
+    "ctx": "tr",
+    "expect": "=XLOOKUP(A2,Ürünler!$A$2:$A$50,Ürünler!$C$2:$C$50)",
+    "style": "modern",
+    "note": "§15.6 alternative phrasing \"çek\""
+  },
+  {
+    "id": "tr-092",
+    "text": "Ürün kodunu Ürünler sayfasında ara, Fiyat getir, bulunamazsa \"Yok\" yaz",
+    "ctx": "tr",
+    "expect": "=IFERROR(VLOOKUP(A2,Ürünler!$A$2:$C$50,3,FALSE),\"Yok\")",
+    "style": "classic",
+    "note": "§15.6+§15.11 classic not-found → IFERROR text"
+  },
+  {
+    "id": "tr-093",
+    "text": "Ürün kodunu Ürünler sayfasında bul ve Fiyat getir, bulunamazsa boş bırak",
+    "ctx": "tr",
+    "expect": "=XLOOKUP(A2,Ürünler!$A$2:$A$50,Ürünler!$C$2:$C$50,\"\")",
+    "style": "modern",
+    "note": "§15.6 modern not-found blank"
+  },
+  {
+    "id": "tr-094",
+    "text": "A2 değerini Fiyatlar sayfasında A2:C100 aralığında ara ve 3. sütunu getir",
+    "ctx": "none",
+    "expect": [
+      "=VLOOKUP(A2,Fiyatlar!A2:C100,3,FALSE)",
+      "=VLOOKUP(A2,Fiyatlar!$A$2:$C$100,3,FALSE)"
+    ],
+    "style": "classic",
+    "note": "§15.6 explicit table on another sheet"
+  },
+  {
+    "id": "tr-095",
+    "text": "Ürün adının ilk 3 karakterini al",
+    "ctx": "tr",
+    "expect": "=LEFT(A2,3)",
+    "note": "§15.7 first N chars → LEFT"
+  },
+  {
+    "id": "tr-096",
+    "text": "E-postanın son 4 karakteri",
+    "ctx": "tr",
+    "expect": "=RIGHT(L2,4)",
+    "note": "§15.7 last N chars → RIGHT"
+  },
+  {
+    "id": "tr-097",
+    "text": "Ürün adının 2. karakterinden itibaren 3 karakter al",
+    "ctx": "tr",
+    "expect": "=MID(A2,2,3)",
+    "note": "§15.7 from position p take n → MID"
+  },
+  {
+    "id": "tr-098",
+    "text": "Ad Soyad kaç karakter?",
+    "ctx": "tr",
+    "expect": "=LEN(M2)",
+    "note": "§15.7 length → LEN"
+  },
+  {
+    "id": "tr-099",
+    "text": "Ad Soyad'daki fazla boşlukları temizle",
+    "ctx": "tr",
+    "expect": "=TRIM(M2)",
+    "note": "§15.7 trim"
+  },
+  {
+    "id": "tr-100",
+    "text": "Şehir sütununu büyük harfe çevir",
+    "ctx": "tr",
+    "expect": "=UPPER(H2)",
+    "note": "§15.7 upper"
+  },
+  {
+    "id": "tr-101",
+    "text": "E-postayı küçük harfe çevir",
+    "ctx": "tr",
+    "expect": "=LOWER(L2)",
+    "note": "§15.7 lower"
+  },
+  {
+    "id": "tr-102",
+    "text": "Ad Soyad'ı baş harfleri büyük yap",
+    "ctx": "tr",
+    "expect": "=PROPER(M2)",
+    "note": "§15.7 proper"
+  },
+  {
+    "id": "tr-103",
+    "text": "Ürün ve Kategori'yi aralarında boşluk olacak şekilde birleştir",
+    "ctx": "tr",
+    "expect": "=A2&\" \"&B2",
+    "note": "§15.7 join two cells with space → &"
+  },
+  {
+    "id": "tr-104",
+    "text": "A2 ve B2'yi boşlukla birleştir",
+    "ctx": "none",
+    "expect": "=A2&\" \"&B2",
+    "note": "§15.7 join explicit cells"
+  },
+  {
+    "id": "tr-105",
+    "text": "Şehir sütunundaki değerleri virgülle tek hücrede birleştir",
+    "ctx": "tr",
+    "expect": "=TEXTJOIN(\", \",TRUE,H2:H200)",
+    "note": "§15.7 join range with separator → TEXTJOIN"
+  },
+  {
+    "id": "tr-106",
+    "text": "Ürün adındaki \"Kalem\" kelimesini \"Pen\" ile değiştir",
+    "ctx": "tr",
+    "expect": "=SUBSTITUTE(A2,\"Kalem\",\"Pen\")",
+    "note": "§15.7 replace X with Y → SUBSTITUTE"
+  },
+  {
+    "id": "tr-107",
+    "text": "Ad Soyad'dan ilk kelimeyi al",
+    "ctx": "tr",
+    "expect": "=LEFT(M2,FIND(\" \",M2&\" \")-1)",
+    "note": "§15.7 first word"
+  },
+  {
+    "id": "tr-108",
+    "text": "Ad Soyad'dan son kelimeyi al",
+    "ctx": "tr",
+    "expect": "=TRIM(RIGHT(SUBSTITUTE(M2,\" \",REPT(\" \",100)),100))",
+    "note": "§15.7 last word"
+  },
+  {
+    "id": "tr-109",
+    "text": "E-postadan @ öncesini al",
+    "ctx": "tr",
+    "expect": "=LEFT(L2,FIND(\"@\",L2)-1)",
+    "style": "classic",
+    "note": "§15.7 text before @ (classic)"
+  },
+  {
+    "id": "tr-110",
+    "text": "E-postadan @ öncesini al",
+    "ctx": "tr",
+    "expect": "=TEXTBEFORE(L2,\"@\")",
+    "style": "modern",
+    "note": "§15.7 text before @ (modern TEXTBEFORE)"
+  },
+  {
+    "id": "tr-111",
+    "text": "E-postanın @ sonrasını (alan adını) al",
+    "ctx": "tr",
+    "expect": "=MID(L2,FIND(\"@\",L2)+1,255)",
+    "style": "classic",
+    "note": "§15.7 domain after @ (classic)"
+  },
+  {
+    "id": "tr-112",
+    "text": "E-postanın @ sonrasını (alan adını) al",
+    "ctx": "tr",
+    "expect": "=TEXTAFTER(L2,\"@\")",
+    "style": "modern",
+    "note": "§15.7 domain after @ (modern TEXTAFTER)"
+  },
+  {
+    "id": "tr-113",
+    "text": "Ürün adında \"kalem\" geçiyor mu kontrol et",
+    "ctx": "tr",
+    "expect": "=ISNUMBER(SEARCH(\"kalem\",A2))",
+    "note": "§15.7 contains check"
+  },
+  {
+    "id": "tr-114",
+    "text": "Adet sütunundaki metni sayıya çevir",
+    "ctx": "tr",
+    "expect": "=VALUE(C2)",
+    "note": "§15.7 number from text → VALUE"
+  },
+  {
+    "id": "tr-115",
+    "text": "Tutarı iki ondalıklı metne çevir",
+    "ctx": "tr",
+    "expect": "=TEXT(E2,\"0.00\")",
+    "note": "§15.7 number to text with format"
+  },
+  {
+    "id": "tr-116",
+    "text": "Ürün adındaki tüm boşlukları kaldır",
+    "ctx": "tr",
+    "expect": "=SUBSTITUTE(A2,\" \",\"\")",
+    "note": "§15.7 remove spaces entirely"
+  },
+  {
+    "id": "tr-117",
+    "text": "A2 ve B2'yi tire ile birleştir",
+    "ctx": "none",
+    "expect": "=A2&\"-\"&B2",
+    "note": "§15.7 join with another separator via &"
+  },
+  {
+    "id": "tr-118",
+    "text": "Ürün adının sağdan 2 karakterini al",
+    "ctx": "tr",
+    "expect": "=RIGHT(A2,2)",
+    "note": "§15.7 RIGHT phrasing variant"
+  },
+  {
+    "id": "tr-119",
+    "text": "Ad Soyad kaç karakter? Sonucu N sütununa yaz",
+    "ctx": "tr",
+    "expect": "=LEN(M2)",
+    "note": "§15.7 + target phrase does not change the formula"
+  },
+  {
+    "id": "tr-120",
+    "text": "Şehir ve Ürün'ü virgül ve boşlukla birleştir",
+    "ctx": "tr",
+    "expect": "=H2&\", \"&A2",
+    "note": "§15.7 join two cells with \", \""
+  },
+  {
+    "id": "tr-121",
+    "text": "M2'nin ilk 5 karakterini al",
+    "ctx": "none",
+    "expect": "=LEFT(M2,5)",
+    "note": "§15.7 LEFT with explicit cell"
+  },
+  {
+    "id": "tr-122",
+    "text": "E-postada \"@\" karakteri kaçıncı sırada?",
+    "ctx": "tr",
+    "expect": "=FIND(\"@\",L2)",
+    "note": "§15.7 position of text → FIND"
+  },
+  {
+    "id": "tr-123",
+    "text": "Bugünün tarihi",
+    "ctx": "none",
+    "expect": "=TODAY()",
+    "note": "§15.8 today"
+  },
+  {
+    "id": "tr-124",
+    "text": "Şu anki tarih ve saat",
+    "ctx": "none",
+    "expect": "=NOW()",
+    "note": "§15.8 now"
+  },
+  {
+    "id": "tr-125",
+    "text": "Doğum tarihinden yaş hesapla",
+    "ctx": "tr",
+    "expect": "=DATEDIF(K2,TODAY(),\"Y\")",
+    "note": "§15.8 age"
+  },
+  {
+    "id": "tr-126",
+    "text": "A2 (başlangıç) ile B2 (bitiş) arasındaki gün sayısı",
+    "ctx": "none",
+    "expect": "=B2-A2",
+    "note": "§15.8 days between → later minus earlier"
+  },
+  {
+    "id": "tr-127",
+    "text": "A2 ile B2 arasındaki ay sayısı",
+    "ctx": "none",
+    "expect": "=DATEDIF(A2,B2,\"M\")",
+    "note": "§15.8 months between"
+  },
+  {
+    "id": "tr-128",
+    "text": "A2 ile B2 arasında kaç yıl var?",
+    "ctx": "none",
+    "expect": "=DATEDIF(A2,B2,\"Y\")",
+    "note": "§15.8 years between"
+  },
+  {
+    "id": "tr-129",
+    "text": "Tarihe kaç gün kaldı?",
+    "ctx": "tr",
+    "expect": "=F2-TODAY()",
+    "note": "§15.8 days until"
+  },
+  {
+    "id": "tr-130",
+    "text": "Tarihten bu yana kaç gün geçti?",
+    "ctx": "tr",
+    "expect": "=TODAY()-F2",
+    "note": "§15.8 days since"
+  },
+  {
+    "id": "tr-131",
+    "text": "Tarihe 30 gün ekle",
+    "ctx": "tr",
+    "expect": "=F2+30",
+    "note": "§15.8 add N days"
+  },
+  {
+    "id": "tr-132",
+    "text": "Tarihe 3 ay ekle",
+    "ctx": "tr",
+    "expect": "=EDATE(F2,3)",
+    "note": "§15.8 add N months"
+  },
+  {
+    "id": "tr-133",
+    "text": "Tarihe 2 yıl ekle",
+    "ctx": "tr",
+    "expect": [
+      "=EDATE(F2,12*2)",
+      "=EDATE(F2,24)"
+    ],
+    "note": "§15.8 add N years → EDATE(F2,12*N) (constant folding accepted)"
+  },
+  {
+    "id": "tr-134",
+    "text": "Tarihin ay sonunu bul",
+    "ctx": "tr",
+    "expect": "=EOMONTH(F2,0)",
+    "note": "§15.8 end of month"
+  },
+  {
+    "id": "tr-135",
+    "text": "Tarihin ay başını bul",
+    "ctx": "tr",
+    "expect": "=EOMONTH(F2,-1)+1",
+    "note": "§15.8 start of month"
+  },
+  {
+    "id": "tr-136",
+    "text": "Tarihten yılı al",
+    "ctx": "tr",
+    "expect": "=YEAR(F2)",
+    "note": "§15.8 year"
+  },
+  {
+    "id": "tr-137",
+    "text": "Tarihten ayı al",
+    "ctx": "tr",
+    "expect": "=MONTH(F2)",
+    "note": "§15.8 month"
+  },
+  {
+    "id": "tr-138",
+    "text": "Tarihten günü al",
+    "ctx": "tr",
+    "expect": "=DAY(F2)",
+    "note": "§15.8 day"
+  },
+  {
+    "id": "tr-139",
+    "text": "Tarihin çeyreğini hesapla",
+    "ctx": "tr",
+    "expect": "=ROUNDUP(MONTH(F2)/3,0)",
+    "note": "§15.8 quarter"
+  },
+  {
+    "id": "tr-140",
+    "text": "Tarihin haftanın günü adını yaz",
+    "ctx": "tr",
+    "expect": "=TEXT(F2,\"dddd\")",
+    "note": "§15.8 weekday name"
+  },
+  {
+    "id": "tr-141",
+    "text": "Tarihin ay adını yaz",
+    "ctx": "tr",
+    "expect": "=TEXT(F2,\"mmmm\")",
+    "note": "§15.8 month name"
+  },
+  {
+    "id": "tr-142",
+    "text": "A2 ile B2 arasındaki iş günü sayısı",
+    "ctx": "none",
+    "expect": "=NETWORKDAYS(A2,B2)",
+    "note": "§15.8 working days between"
+  },
+  {
+    "id": "tr-143",
+    "text": "Tarihe 10 iş günü ekle",
+    "ctx": "tr",
+    "expect": "=WORKDAY(F2,10)",
+    "note": "§15.8 add N workdays"
+  },
+  {
+    "id": "tr-144",
+    "text": "Tarihin hafta numarası",
+    "ctx": "tr",
+    "expect": "=WEEKNUM(F2)",
+    "note": "§15.8 week number"
+  },
+  {
+    "id": "tr-145",
+    "text": "Tarih hafta sonuna denk geliyor mu?",
+    "ctx": "tr",
+    "expect": "=WEEKDAY(F2,2)>5",
+    "note": "§15.8 is weekend"
+  },
+  {
+    "id": "tr-146",
+    "text": "2024 yılı 5. ay 15. günden tarih oluştur",
+    "ctx": "none",
+    "expect": "=DATE(2024,5,15)",
+    "note": "§15.8 date from parts"
+  },
+  {
+    "id": "tr-147",
+    "text": "Tarih bugünden önceyse \"Gecikti\" yaz, değilse boş bırak",
+    "ctx": "tr",
+    "expect": "=IF(F2<TODAY(),\"Gecikti\",\"\")",
+    "note": "§15.8 overdue flag (explicit text)"
+  },
+  {
+    "id": "tr-148",
+    "text": "Tarihi geçmiş olanları \"Gecikti\" olarak işaretle",
+    "ctx": "tr",
+    "expect": "=IF(F2<TODAY(),\"Gecikti\",\"\")",
+    "note": "§15.8 overdue flag default text"
+  },
+  {
+    "id": "tr-149",
+    "text": "Doğum tarihinden yaşı yıl olarak hesapla ve N sütununa yaz",
+    "ctx": "tr",
+    "expect": "=DATEDIF(K2,TODAY(),\"Y\")",
+    "note": "§15.8 age + target phrase"
+  },
+  {
+    "id": "tr-150",
+    "text": "Doğum Tarihi'ne 18 yıl ekle",
+    "ctx": "tr",
+    "expect": [
+      "=EDATE(K2,12*18)",
+      "=EDATE(K2,216)"
+    ],
+    "note": "§15.8 add years to another date column"
+  },
+  {
+    "id": "tr-151",
+    "text": "Doğum tarihinden bugüne kaç gün geçti?",
+    "ctx": "tr",
+    "expect": "=TODAY()-K2",
+    "note": "§15.8 days since (K column)"
+  },
+  {
+    "id": "tr-152",
+    "text": "Tarihten 7 gün çıkar",
+    "ctx": "tr",
+    "expect": "=F2-7",
+    "note": "§15.8 subtract N days"
+  },
+  {
+    "id": "tr-153",
+    "text": "Tarihten 1 ay öncesi",
+    "ctx": "tr",
+    "expect": "=EDATE(F2,-1)",
+    "note": "§15.8 subtract months → EDATE negative"
+  },
+  {
+    "id": "tr-154",
+    "text": "A2 tarihi ile B2 tarihi arasındaki iş günü sayısı, sonucu C2'ye yaz",
+    "ctx": "none",
+    "expect": "=NETWORKDAYS(A2,B2)",
+    "note": "§15.8 + target cell"
+  },
+  {
+    "id": "tr-155",
+    "text": "Tutarın %10'unu hesapla",
+    "ctx": "tr",
+    "expect": "=E2*10%",
+    "note": "§15.9 percent of value"
+  },
+  {
+    "id": "tr-156",
+    "text": "Tutarı %15 artır",
+    "ctx": "tr",
+    "expect": "=E2*(1+15%)",
+    "note": "§15.9 percent increase"
+  },
+  {
+    "id": "tr-157",
+    "text": "Tutara %20 indirim uygula",
+    "ctx": "tr",
+    "expect": "=E2*(1-20%)",
+    "note": "§15.9 discount"
+  },
+  {
+    "id": "tr-158",
+    "text": "Tutarın toplam içindeki payı",
+    "ctx": "tr",
+    "expect": "=E2/SUM($E$2:$E$200)",
+    "note": "§15.9 share of total, absolute total range"
+  },
+  {
+    "id": "tr-159",
+    "text": "D2'den E2'ye yüzde değişim",
+    "ctx": "none",
+    "expect": "=(E2-D2)/D2",
+    "note": "§15.9 percent change (new-old)/old"
+  },
+  {
+    "id": "tr-160",
+    "text": "Tutara KDV ekle",
+    "ctx": "tr",
+    "expect": "=E2*1.2",
+    "note": "§15.9 VAT add, TR default %20"
+  },
+  {
+    "id": "tr-161",
+    "text": "Tutarın KDV'sini hesapla",
+    "ctx": "tr",
+    "expect": "=E2*20%",
+    "note": "§15.9 VAT amount"
+  },
+  {
+    "id": "tr-162",
+    "text": "Tutara %18 KDV ekle",
+    "ctx": "tr",
+    "expect": "=E2*1.18",
+    "note": "§15.9 VAT add with explicit rate"
+  },
+  {
+    "id": "tr-163",
+    "text": "Tutarı 2 ondalığa yuvarla",
+    "ctx": "tr",
+    "expect": "=ROUND(E2,2)",
+    "note": "§15.9 round N decimals"
+  },
+  {
+    "id": "tr-164",
+    "text": "Tutarı yuvarla",
+    "ctx": "tr",
+    "expect": "=ROUND(E2,2)",
+    "note": "§15.9 round default 2 decimals"
+  },
+  {
+    "id": "tr-165",
+    "text": "Tutarı tam sayıya yuvarla",
+    "ctx": "tr",
+    "expect": "=ROUND(E2,0)",
+    "note": "§15.9 \"tam sayıya\" → 0"
+  },
+  {
+    "id": "tr-166",
+    "text": "Tutarı tam sayıya yukarı yuvarla",
+    "ctx": "tr",
+    "expect": "=ROUNDUP(E2,0)",
+    "note": "§15.9 round up"
+  },
+  {
+    "id": "tr-167",
+    "text": "Tutarı 1 ondalığa aşağı yuvarla",
+    "ctx": "tr",
+    "expect": "=ROUNDDOWN(E2,1)",
+    "note": "§15.9 round down"
+  },
+  {
+    "id": "tr-168",
+    "text": "Tutarın mutlak değeri",
+    "ctx": "tr",
+    "expect": "=ABS(E2)",
+    "note": "§15.9 abs"
+  },
+  {
+    "id": "tr-169",
+    "text": "Adet'in 3'e bölümünden kalan",
+    "ctx": "tr",
+    "expect": "=MOD(C2,3)",
+    "note": "§15.9 remainder → MOD"
+  },
+  {
+    "id": "tr-170",
+    "text": "Adet'in karesi",
+    "ctx": "tr",
+    "expect": "=C2^2",
+    "note": "§15.9 power → ^"
+  },
+  {
+    "id": "tr-171",
+    "text": "KUVVET fonksiyonu ile Adet'in küpünü al",
+    "ctx": "tr",
+    "expect": "=POWER(C2,3)",
+    "note": "§15.9 POWER when asked"
+  },
+  {
+    "id": "tr-172",
+    "text": "Tutarın karekökü",
+    "ctx": "tr",
+    "expect": "=SQRT(E2)",
+    "note": "§15.9 sqrt"
+  },
+  {
+    "id": "tr-173",
+    "text": "A2 ve B2'nin ortalaması",
+    "ctx": "none",
+    "expect": "=AVERAGE(A2,B2)",
+    "note": "§15.9 average of two cells"
+  },
+  {
+    "id": "tr-174",
+    "text": "B2 ile A2 arasındaki fark",
+    "ctx": "none",
+    "expect": "=B2-A2",
+    "note": "§15.9 difference"
+  },
+  {
+    "id": "tr-175",
+    "text": "Adet ile Birim Fiyat'ı çarp",
+    "ctx": "tr",
+    "expect": "=C2*D2",
+    "note": "§15.9 multiply columns"
+  },
+  {
+    "id": "tr-176",
+    "text": "Tutar için kümülatif toplam",
+    "ctx": "tr",
+    "expect": "=SUM($E$2:E2)",
+    "note": "§15.9 running total"
+  },
+  {
+    "id": "tr-177",
+    "text": "Tutara göre sıralama numarası ver (en büyük 1 olsun)",
+    "ctx": "tr",
+    "expect": "=RANK.EQ(E2,$E$2:$E$200,0)",
+    "note": "§15.9 rank descending"
+  },
+  {
+    "id": "tr-178",
+    "text": "Tutara göre artan sıra numarası ver",
+    "ctx": "tr",
+    "expect": "=RANK.EQ(E2,$E$2:$E$200,1)",
+    "note": "§15.9 rank ascending → ,1"
+  },
+  {
+    "id": "tr-179",
+    "text": "En yüksek 3. tutar",
+    "ctx": "tr",
+    "expect": "=LARGE(E2:E200,3)",
+    "note": "§15.9 nth largest"
+  },
+  {
+    "id": "tr-180",
+    "text": "En düşük 2. tutar",
+    "ctx": "tr",
+    "expect": "=SMALL(E2:E200,2)",
+    "note": "§15.9 nth smallest"
+  },
+  {
+    "id": "tr-181",
+    "text": "Kaç farklı Ürün var?",
+    "ctx": "tr",
+    "expect": "=ROWS(UNIQUE(A2:A200))",
+    "style": "modern",
+    "note": "§15.9 count unique modern"
+  },
+  {
+    "id": "tr-182",
+    "text": "Kaç farklı Ürün var?",
+    "ctx": "tr",
+    "expect": "=SUMPRODUCT(1/COUNTIF(A2:A200,A2:A200))",
+    "style": "classic",
+    "note": "§15.9 count unique classic"
+  },
+  {
+    "id": "tr-183",
+    "text": "Ürün tekrar ediyorsa \"Tekrar\" yaz, değilse boş bırak",
+    "ctx": "tr",
+    "expect": "=IF(COUNTIF($A$2:$A$200,A2)>1,\"Tekrar\",\"\")",
+    "note": "§15.9 duplicate flag explicit text"
+  },
+  {
+    "id": "tr-184",
+    "text": "Tekrar eden ürünleri işaretle",
+    "ctx": "tr",
+    "expect": "=IF(COUNTIF($A$2:$A$200,A2)>1,\"Tekrar\",\"\")",
+    "note": "§15.9 duplicate flag default text"
+  },
+  {
+    "id": "tr-185",
+    "text": "Tutarı Adet'e böl",
+    "ctx": "tr",
+    "expect": "=E2/C2",
+    "note": "§15.9 divide"
+  },
+  {
+    "id": "tr-186",
+    "text": "A2 artı B2",
+    "ctx": "none",
+    "expect": "=A2+B2",
+    "note": "§15.9 plus"
+  },
+  {
+    "id": "tr-187",
+    "text": "Adet ile Birim Fiyat çarpımlarının toplamı",
+    "ctx": "tr",
+    "expect": "=SUMPRODUCT(C2:C200,D2:D200)",
+    "note": "§15.9 sum of products"
+  },
+  {
+    "id": "tr-188",
+    "text": "Tutarın tam sayı kısmı",
+    "ctx": "tr",
+    "expect": "=INT(E2)",
+    "note": "§15.9 integer part"
+  },
+  {
+    "id": "tr-189",
+    "text": "Tutarın %10 fazlası",
+    "ctx": "tr",
+    "expect": "=E2*(1+10%)",
+    "note": "§15.9 increase phrasing variant"
+  },
+  {
+    "id": "tr-190",
+    "text": "Birim Fiyat'ın %5 eksiği",
+    "ctx": "tr",
+    "expect": "=D2*(1-5%)",
+    "note": "§15.9 decrease phrasing variant"
+  },
+  {
+    "id": "tr-191",
+    "text": "A2 bölü B2",
+    "ctx": "none",
+    "expect": "=A2/B2",
+    "note": "§15.9 divide explicit cells"
+  },
+  {
+    "id": "tr-192",
+    "text": "Tutardan İndirim tutarını çıkar",
+    "ctx": "tr",
+    "expect": "=E2-J2",
+    "note": "§15.9 subtract columns"
+  },
+  {
+    "id": "tr-193",
+    "text": "C2 ile D2'nin çarpımı",
+    "ctx": "none",
+    "expect": "=C2*D2",
+    "note": "§15.9 multiply explicit cells"
+  },
+  {
+    "id": "tr-194",
+    "text": "Tutarın tüm tutarlar içindeki yüzdesi",
+    "ctx": "tr",
+    "expect": "=E2/SUM($E$2:$E$200)",
+    "note": "§15.9 share of total phrasing variant"
+  },
+  {
+    "id": "tr-195",
+    "text": "Tutar sütununu yüzde 10 azalt",
+    "ctx": "tr",
+    "expect": "=E2*(1-10%)",
+    "note": "§15.9 decrease"
+  },
+  {
+    "id": "tr-196",
+    "text": "B2'nin A2'ye göre yüzde değişimi",
+    "ctx": "none",
+    "expect": "=(B2-A2)/A2",
+    "note": "§15.9 percent change explicit cells"
+  },
+  {
+    "id": "tr-197",
+    "text": "Tutara göre en büyük 5. değer",
+    "ctx": "tr",
+    "expect": "=LARGE(E2:E200,5)",
+    "note": "§15.9 nth largest (5)"
+  },
+  {
+    "id": "tr-198",
+    "text": "Şehir sütunundaki benzersiz değerleri listele",
+    "ctx": "tr",
+    "expect": "=UNIQUE(H2:H200)",
+    "style": "modern",
+    "note": "§15.10 unique list"
+  },
+  {
+    "id": "tr-199",
+    "text": "Kategori \"Gıda\" olan satırları filtrele",
+    "ctx": "tr",
+    "expect": "=FILTER(A2:M200,B2:B200=\"Gıda\",\"\")",
+    "style": "modern",
+    "note": "§15.10 filter whole data block"
+  },
+  {
+    "id": "tr-200",
+    "text": "Kategori \"Gıda\" olan Ürünleri listele",
+    "ctx": "tr",
+    "expect": "=FILTER(A2:A200,B2:B200=\"Gıda\",\"\")",
+    "style": "modern",
+    "note": "§15.10 filter one column"
+  },
+  {
+    "id": "tr-201",
+    "text": "Tutarı büyükten küçüğe sırala",
+    "ctx": "tr",
+    "expect": "=SORT(E2:E200,1,-1)",
+    "style": "modern",
+    "note": "§15.10 sort descending"
+  },
+  {
+    "id": "tr-202",
+    "text": "Tabloyu Tutar'a göre azalan sırala",
+    "ctx": "tr",
+    "expect": "=SORT(A2:M200,5,-1)",
+    "style": "modern",
+    "note": "§15.10 sort data block by column 5"
+  },
+  {
+    "id": "tr-203",
+    "text": "En yüksek 5 tutarı listele",
+    "ctx": "tr",
+    "expect": "=TAKE(SORT(E2:E200,1,-1),5)",
+    "style": "modern",
+    "note": "§15.10 top N"
+  },
+  {
+    "id": "tr-204",
+    "text": "1'den 10'a kadar sayı dizisi oluştur",
+    "ctx": "none",
+    "expect": "=SEQUENCE(10)",
+    "style": "modern",
+    "note": "§15.10 sequence"
+  },
+  {
+    "id": "tr-205",
+    "text": "Tutarı 1000'den büyük olan satırları filtrele",
+    "ctx": "tr",
+    "expect": "=FILTER(A2:M200,E2:E200>1000,\"\")",
+    "style": "modern",
+    "note": "§15.10 filter with number condition"
+  },
+  {
+    "id": "tr-206",
+    "text": "Şehirleri alfabetik sırala",
+    "ctx": "tr",
+    "expect": "=SORT(H2:H200,1,1)",
+    "style": "modern",
+    "note": "§15.10 sort ascending"
+  },
+  {
+    "id": "tr-207",
+    "text": "Tutara göre en yüksek 10 satırı listele",
+    "ctx": "tr",
+    "expect": "=TAKE(SORT(A2:M200,5,-1),10)",
+    "style": "modern",
+    "note": "§15.10 top N rows of the block"
+  },
+  {
+    "id": "tr-208",
+    "text": "Kategori sütunundaki tekrarları kaldırıp listele",
+    "ctx": "tr",
+    "expect": "=UNIQUE(B2:B200)",
+    "style": "modern",
+    "note": "§15.10 remove duplicates → UNIQUE"
+  },
+  {
+    "id": "tr-209",
+    "text": "E2'yi C2'ye böl, hata olursa boş bırak",
+    "ctx": "none",
+    "expect": "=IFERROR(E2/C2,\"\")",
+    "note": "§15.11 IFERROR blank"
+  },
+  {
+    "id": "tr-210",
+    "text": "E2/C2 hata verirse \"Hata\" yaz",
+    "ctx": "none",
+    "expect": "=IFERROR(E2/C2,\"Hata\")",
+    "note": "§15.11 IFERROR with text"
+  },
+  {
+    "id": "tr-211",
+    "text": "DÜŞEYARA ile Ürün kodunu Ürünler sayfasında ara ve Fiyat getir, #YOK hatası olursa boş bırak",
+    "ctx": "tr",
+    "expect": "=IFNA(VLOOKUP(A2,Ürünler!$A$2:$C$50,3,FALSE),\"\")",
+    "note": "§15.11 IFNA only when #YOK is mentioned"
+  },
+  {
+    "id": "tr-212",
+    "text": "Tutarı Adet'e böl, hata olursa 0 yaz",
+    "ctx": "tr",
+    "expect": "=IFERROR(E2/C2,0)",
+    "note": "§15.11 IFERROR with number"
+  },
+  {
+    "id": "tr-213",
+    "text": "Tutar bölü Adet, hata olursa boş",
+    "ctx": "tr",
+    "expect": "=IFERROR(E2/C2,\"\")",
+    "note": "§15.11 IFERROR with header columns"
+  },
+  {
+    "id": "tr-214",
+    "text": "yıllık %24 faizle 100000 TL krediyi 36 ay taksitle öde",
+    "ctx": "none",
+    "expect": "=PMT(24%/12,36,-100000)",
+    "note": "§15.12 PMT monthly, negative principal"
+  },
+  {
+    "id": "tr-215",
+    "text": "200000 TL kredi, yıllık %18 faiz, 5 yıl vade, aylık taksit ne kadar?",
+    "ctx": "none",
+    "expect": [
+      "=PMT(18%/12,5*12,-200000)",
+      "=PMT(18%/12,60,-200000)"
+    ],
+    "note": "§15.12 PMT with years*12"
+  },
+  {
+    "id": "tr-216",
+    "text": "%10 iskonto oranıyla B2:B10 nakit akışlarının net bugünkü değeri",
+    "ctx": "none",
+    "expect": "=NPV(10%,B2:B10)",
+    "note": "§15.12 NPV(rate,range)"
+  },
+  {
+    "id": "tr-217",
+    "text": "B2:B10 nakit akışlarının iç verim oranı",
+    "ctx": "none",
+    "expect": "=IRR(B2:B10)",
+    "note": "§15.12 IRR(range)"
+  },
+  {
+    "id": "tr-218",
+    "text": "Maliyeti 100000, hurda değeri 10000, ömrü 5 yıl olan varlığın doğrusal amortismanı",
+    "ctx": "none",
+    "expect": "=SLN(100000,10000,5)",
+    "note": "§15.12 SLN(cost,salvage,life)"
+  },
+  {
+    "id": "tr-219",
+    "text": "Aylık 1000 TL yatırarak yıllık %12 faizle 10 yıl sonra ne birikir?",
+    "ctx": "none",
+    "expect": [
+      "=FV(12%/12,10*12,-1000)",
+      "=FV(12%/12,120,-1000)"
+    ],
+    "note": "§15.12 FV monthly"
+  },
+  {
+    "id": "tr-220",
+    "text": "Yıllık %12 faizle 50000 TL krediyi 24 ay taksitle ödersem aylık taksit?",
+    "ctx": "none",
+    "expect": "=PMT(12%/12,24,-50000)",
+    "note": "§15.12 PMT question form"
+  },
+  {
+    "id": "tr-221",
+    "text": "ÇOKETOPLA ile Kategori \"Gıda\" olanların Tutarını topla",
+    "ctx": "tr",
+    "expect": "=SUMIFS(E2:E200,B2:B200,\"Gıda\")",
+    "note": "explicit ÇOKETOPLA → SUMIFS even with one condition"
+  },
+  {
+    "id": "tr-222",
+    "text": "EĞERSAY ile Şehir \"Ankara\" olanları say",
+    "ctx": "tr",
+    "expect": "=COUNTIF(H2:H200,\"Ankara\")",
+    "note": "explicit EĞERSAY → COUNTIF"
+  },
+  {
+    "id": "tr-223",
+    "text": "TOPLA.ÇARPIM ile Adet ve Birim Fiyat çarpımlarının toplamını al",
+    "ctx": "tr",
+    "expect": "=SUMPRODUCT(C2:C200,D2:D200)",
+    "note": "explicit TOPLA.ÇARPIM → SUMPRODUCT"
+  },
+  {
+    "id": "tr-224",
+    "text": "ÇOKEĞER ile Tutar 1000'den büyükse \"A\", 500'den büyükse \"B\", değilse \"C\"",
+    "ctx": "tr",
+    "expect": "=IFS(E2>1000,\"A\",E2>500,\"B\",TRUE,\"C\")",
+    "style": "classic",
+    "note": "explicit ÇOKEĞER → IFS even in classic style"
+  },
+  {
+    "id": "tr-225",
+    "text": "METİNBİRLEŞTİR ile Şehirleri noktalı virgülle birleştir",
+    "ctx": "tr",
+    "expect": "=TEXTJOIN(\"; \",TRUE,H2:H200)",
+    "note": "explicit METİNBİRLEŞTİR → TEXTJOIN"
+  },
+  {
+    "id": "tr-226",
+    "text": "ETOPLA kullanarak Tutarı 100'den büyük olanları topla",
+    "ctx": "tr",
+    "expect": "=SUMIF(E2:E200,\">100\")",
+    "note": "explicit ETOPLA → SUMIF"
+  },
+  {
+    "id": "tr-227",
+    "text": "EĞERORTALAMA ile Kategori \"Gıda\" olanların Tutar ortalaması",
+    "ctx": "tr",
+    "expect": "=AVERAGEIF(B2:B200,\"Gıda\",E2:E200)",
+    "note": "explicit EĞERORTALAMA → AVERAGEIF"
+  },
+  {
+    "id": "tr-228",
+    "text": "ÇOKEĞERSAY ile Şehir \"Ankara\" olanları say",
+    "ctx": "tr",
+    "expect": "=COUNTIFS(H2:H200,\"Ankara\")",
+    "note": "explicit ÇOKEĞERSAY → COUNTIFS with one condition"
+  },
+  {
+    "id": "tr-229",
+    "text": "EĞERHATA ile E2/C2, hata olursa boş",
+    "ctx": "none",
+    "expect": "=IFERROR(E2/C2,\"\")",
+    "note": "explicit EĞERHATA → IFERROR"
+  },
+  {
+    "id": "tr-230",
+    "text": "ETARİHLİ ile A2 ve B2 arasındaki gün sayısı",
+    "ctx": "none",
+    "expect": "=DATEDIF(A2,B2,\"D\")",
+    "note": "explicit ETARİHLİ → DATEDIF with \"D\""
+  },
+  {
+    "id": "tr-231",
+    "text": "BUGÜN fonksiyonuyla Tarihe kaç gün kaldığını hesapla",
+    "ctx": "tr",
+    "expect": "=F2-TODAY()",
+    "note": "explicit BUGÜN mention keeps the days-until convention"
+  },
+  {
+    "id": "tr-232",
+    "text": "Tutar 100'den büyükse \"Yüksek\" değilse \"Düşük\" yaz ve N sütununa yaz",
+    "ctx": "tr",
+    "expect": "=IF(E2>100,\"Yüksek\",\"Düşük\")",
+    "note": "target column phrase must not change the formula"
+  },
+  {
+    "id": "tr-233",
+    "text": "Adet ile Birim Fiyat'ı çarp, sonucu F sütununa yaz",
+    "ctx": "tr",
+    "expect": "=C2*D2",
+    "note": "target \"F sütununa\" is not a reference"
+  },
+  {
+    "id": "tr-234",
+    "text": "Tutar sütununu topla ve sonucu E201 hücresine yaz",
+    "ctx": "tr",
+    "expect": "=SUM(E2:E200)",
+    "note": "target cell phrase"
+  },
+  {
+    "id": "tr-235",
+    "text": "Ürün kodunu Ürünler sayfasında ara ve Fiyat getir, sonucu O sütununa yaz",
+    "ctx": "tr",
+    "expect": "=XLOOKUP(A2,Ürünler!$A$2:$A$50,Ürünler!$C$2:$C$50)",
+    "style": "modern",
+    "note": "lookup + target column"
+  },
+  {
+    "id": "tr-236",
+    "text": "Kategori \"Gıda\" olanların Tutarını topla, N2'ye yaz",
+    "ctx": "tr",
+    "expect": "=SUMIF(B2:B200,\"Gıda\",E2:E200)",
+    "note": "SUMIF + target cell"
+  },
+  {
+    "id": "tr-237",
+    "text": "E-postayı küçük harfe çevir ve yeni sütuna yaz",
+    "ctx": "tr",
+    "expect": "=LOWER(L2)",
+    "note": "\"yeni sütuna\" target phrase"
+  },
+  {
+    "id": "tr-238",
+    "text": "Tutara %20 indirim uygula, sonucu P sütununa yaz",
+    "ctx": "tr",
+    "expect": "=E2*(1-20%)",
+    "note": "discount + target column"
+  }
+]
