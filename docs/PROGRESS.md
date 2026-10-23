@@ -9,6 +9,7 @@
 | tests/ai-test.js | 33/33 |
 | tests/smoke.js | geçti |
 | Electron (Linux kopyası, xvfb) | pencere, dosya yükleme, formül, yerel model erişimi geçti |
+| Windows kurulumu (`FormulaStudio-Setup-1.0.0.exe`, `tools/build-installer.sh`) | kullanıcı gerçek Windows'ta kurdu, program açıldı (23.10.2026) |
 
 Yeniden üretim: `EFS_DEV_NODE_MODULES=<electron+packager> node tools/build-desktop.js` ve `sh tools/make-web-zip.sh`.
 
