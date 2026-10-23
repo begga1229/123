@@ -30,6 +30,31 @@
   function sheetLastCol(sheetDesc) { var hs = (sheetDesc && sheetDesc.headers) || [], max = 0; for (var i = 0; i < hs.length; i++) max = Math.max(max, U().columnIndex(hs[i].col)); return max ? U().columnLetter(max) : null; }
   function colText(col, first, last) { return col + first + ':' + col + last; }
 
+  var SKIP_RE = /^(the|a|an|its|their|this|that|bu|şu|этот|эту|эта)$/;
+  var RET_BEFORE_RE = /^(верн|возвра|подтян|подстав|выве|получ|дай|извле|покаж|return|get|fetch|bring|pull|retrieve|show|give|display)/;
+  var KEY_BEFORE_RE = /^(найд|найт|ищи|иска|поиск|look|find|search|match|по|by|using)$|^(найд|ищ|look|find|search)/;
+  var RET_AFTER_RE = /^(getir|döndür|çek|göster|yazdır)/;
+  var KEY_AFTER_RE = /^(göre|ara|arat|bul)/;
+  function nearWord(pq, i, dir) {
+    var toks = pq.tokens || [];
+    for (var j = i; j >= 0 && j < toks.length; j += dir) { var t = toks[j]; if (!t || t.type === 'punct') continue; if (t.type === 'word' && SKIP_RE.test(H.fold(t.norm || ''))) continue; return t; }
+    return null;
+  }
+  /** 'key' | 'ret' | null: the role a lookup-sheet column mention plays, from the verb / preposition next to it. */
+  function refRole(pq, r) {
+    var end = r.tokenEnd || r.tokenIndex + 1;
+    var pv = nearWord(pq, r.tokenIndex - 1, -1), nx = nearWord(pq, end, 1);
+    var pw = pv && pv.type === 'word' ? H.fold(pv.norm || '') : '', nw = nx && nx.type === 'word' ? H.fold(nx.norm || '') : '';
+    if (pq.lang === 'tr') {
+      if (nw && KEY_AFTER_RE.test(nw)) return 'key';
+      if (nw && RET_AFTER_RE.test(nw)) return 'ret';
+      return null;
+    }
+    if (pw && RET_BEFORE_RE.test(pw)) return 'ret';
+    if (pw && KEY_BEFORE_RE.test(pw)) return 'key';
+    return null;
+  }
+
   /** Resolve every slot of a lookup: key cell, lookup range, return range, table + column index, sheet name. */
   function resolveLookup(pq, ctx, cand) {
     var out = { key: null, keyRef: null, lookup: null, retn: null, table: null, colIndex: null, sheet: null, leftOfKey: false, desc: null, explicitTable: false };
@@ -53,6 +78,17 @@
       }
     }
     var desc = ctx ? H.otherSheet(ctx, sheetName) : null;
+    if (desc && sheetName) {
+      // a header named on both sheets ("Цену" = Продажи!Цена and Товары!Цена) means the lookup sheet's column here;
+      // the lookup value on this sheet is found below by name
+      localRefs = localRefs.filter(function (r) {
+        var alt = r.source === 'header' && (r.alternatives || []).filter(function (al) { return al.sheet === sheetName && al.text; })[0];
+        if (!alt) return true;
+        sheetRefs.push(Object.assign({}, r, { sheet: alt.sheet, text: alt.text, col: alt.col, col2: alt.col, headerName: alt.headerName, type: alt.type, alternatives: null }));
+        return false;
+      });
+      sheetRefs = H.byPosition(sheetRefs);
+    }
     if (ctx && !desc && !sheetName && ctx.otherSheets) { var keys = Object.keys(ctx.otherSheets); if (keys.length === 1) { sheetName = keys[0]; desc = ctx.otherSheets[keys[0]]; H.assume(cand, T('Arama tablosu olarak “%s%” sayfası varsayıldı.', 'В качестве таблицы поиска взят лист «%s%».', 'Assumed the “%s%” sheet as the lookup table.'), { s: sheetName }); } }
     if (sheetName && ctx) sheetName = H.otherSheetName(ctx, sheetName);
     out.sheet = sheetName; out.desc = desc;
@@ -66,9 +102,15 @@
       // the ref tied to BY ("…koduna göre", "по коду", "by code") is the key column; the one tied to RETURN is the return column
       var keyCand = null, retCand = null;
       headerRefs.forEach(function (r) {
+        var role = refRole(pq, r);
+        if (role === 'key') keyCand = keyCand || r;
+        if (role === 'ret') retCand = retCand || r;
+      });
+      headerRefs.forEach(function (r) {
         var end = r.tokenEnd || r.tokenIndex + 1;
-        if (byIdx >= 0 && (byIdx === end || byIdx === r.tokenIndex - 1)) keyCand = keyCand || r;
-        if (retIdx >= 0 && (retIdx === end || retIdx === r.tokenIndex - 1)) retCand = retCand || r;
+        if (r === keyCand || r === retCand) return;
+        if (!keyCand && byIdx >= 0 && (byIdx === end || byIdx === r.tokenIndex - 1)) keyCand = r;
+        else if (!retCand && retIdx >= 0 && (retIdx === end || retIdx === r.tokenIndex - 1)) retCand = r;
       });
       if (!keyCand && !retCand && headerRefs.length >= 2) { keyCand = headerRefs[0]; retCand = headerRefs[headerRefs.length - 1]; }
       if (keyCand && !retCand) retCand = headerRefs.filter(function (r) { return r !== keyCand; })[0] || null;
@@ -139,12 +181,15 @@
     if (pq.thenValue && pq.thenValue.tokenIndex > idx) return H.valueNode(pq.thenValue, ctx);
     if (pq.elseValue && pq.elseValue.tokenIndex > idx) return H.valueNode(pq.elseValue, ctx);
     if (H.has(pq, 'BLANK')) return A().str('');
+    var tail = idx >= 0 && pq.tokens[idx] ? H.fold(String(pq.text || '').slice(pq.tokens[idx].start)) : '';
+    if (/(^|[^\p{L}])(boş|bos|пуст\p{L}*|blank|empty|nothing|ничего)([^\p{L}]|$)/u.test(tail)) return A().str('');
     return H.word(H.NOT_FOUND, H.lang(pq, opts));
   }
 
   /* ------------------------------------------------------------------ formula variants */
-  function buildVariant(kind, L, nf) {
+  function buildVariant(kind, L, nf, errFn) {
     var key = L.key;
+    errFn = errFn || 'IFERROR';
     if (kind === 'XLOOKUP') {
       var args = [key, rangeNode(L.lookup) || A().placeholder('lookup_range'), rangeNode(L.retn) || A().placeholder('return_range')];
       if (nf) args.push(nf);
@@ -152,14 +197,14 @@
     }
     if (kind === 'INDEX_MATCH') {
       var im = A().func('INDEX', rangeNode(L.retn) || A().placeholder('return_range'), A().func('MATCH', key, rangeNode(L.lookup) || A().placeholder('lookup_range'), 0));
-      return nf ? A().func('IFERROR', im, nf) : im;
+      return nf ? A().func(errFn, im, nf) : im;
     }
     if (kind === 'HLOOKUP') {
       var hl = A().func('HLOOKUP', key, L.table ? A().ref(L.table.abs ? H.absText(L.table.text) : L.table.text, L.table.sheet) : A().placeholder('table_array'), L.colIndex || A().placeholder('row'), A().bool(false));
-      return nf ? A().func('IFERROR', hl, nf) : hl;
+      return nf ? A().func(errFn, hl, nf) : hl;
     }
     var vl = A().func('VLOOKUP', key, L.table ? A().ref(L.table.abs ? H.absText(L.table.text) : L.table.text, L.table.sheet) : A().placeholder('table_array'), L.colIndex || A().placeholder('col_index'), A().bool(false));
-    return nf ? A().func('IFERROR', vl, nf) : vl;
+    return nf ? A().func(errFn, vl, nf) : vl;
   }
   function pickKind(pq, opts, L) {
     if (H.wants(pq, 'XLOOKUP') || H.has(pq, 'XLOOKUP_HINT')) return 'XLOOKUP';
@@ -181,8 +226,9 @@
     var L = resolveLookup(pq, ctx, cand);
     var nf = notFoundNode(pq, ctx, opts);
     var kind = pickKind(pq, opts, L);
-    cand.ast = buildVariant(kind, L, nf);
-    if (nf) cand.intent = 'lookup_not_found';
+    var errFn = H.wantsIfNa(pq) ? 'IFNA' : 'IFERROR';
+    cand.ast = buildVariant(kind, L, nf, errFn);
+    if (nf) { cand.intent = 'lookup_not_found'; cand.handlesError = true; }
     var lang = H.lang(pq, opts);
     var ex = explainLookup(kind, L, nf, lang);
     cand.explain = { tr: ex.tr, ru: ex.ru, en: ex.en };
@@ -192,7 +238,8 @@
     if (!L.lookup) H.miss(cand, 'lookup_range', T('Hangi sütunda aranacak?', 'В каком столбце искать?', 'Which column should be searched?'));
     var alts = ['XLOOKUP', 'VLOOKUP', 'INDEX_MATCH'].filter(function (k) { return k !== kind; });
     cand.alternatives = alts.map(function (k, i) {
-      var c = H.cand('lookup', buildVariant(k, L, nf), { confidence: 0.6 - i * 0.05, explain: explainLookup(k, L, nf, lang), target: cand.target, tags: k === 'XLOOKUP' ? ['2021'] : [] });
+      var c = H.cand('lookup', buildVariant(k, L, nf, errFn), { confidence: 0.6 - i * 0.05, explain: explainLookup(k, L, nf, lang), target: cand.target, tags: k === 'XLOOKUP' ? ['2021'] : [] });
+      if (nf) c.handlesError = true;
       return c;
     });
     return cand;

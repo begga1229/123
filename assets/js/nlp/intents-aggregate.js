@@ -102,7 +102,8 @@
     var pairs = H.criteriaPairs(cs, pq, ctx, fallbackRef, false);
     var conj = H.conjunction(cs, pq);
     var valueNode = valueRef ? H.rangeNode(valueRef, false) : A().placeholder(kind === 'average' ? 'range' : 'sum_range');
-    var sameRange = valueRef && firstCondRef && pairs.length === 1 && valueRef.text === firstCondRef.text && valueRef.sheet === firstCondRef.sheet;
+    var critRef = firstCondRef || (pairs.length === 1 ? pairs[0].ref : null);   // a condition without its own column compares the value range
+    var sameRange = valueRef && critRef && pairs.length === 1 && valueRef.text === critRef.text && valueRef.sheet === critRef.sheet;
     var fnBase = { sum: 'SUM', average: 'AVERAGE', count: 'COUNT', max: 'MAX', min: 'MIN' }[kind];
     var wantsPlural = H.wants(pq, [fnBase + 'IFS']);
     var ast;
@@ -243,7 +244,7 @@
       if (!s && !cs.length && pq.flags && pq.flags.question && !H.hasAggregate(pq) && H.any(pq, ['ROW', 'CELL', 'EMPTY', 'NOT_EMPTY'])) s = 0.55;
       if (!s) return 0;
       if (H.has(pq, 'COUNT_UNIQUE')) return 0.2;
-      if (cs.length === 1 && (cs[0].op === 'empty' || cs[0].op === 'notEmpty')) s = hasCellWord(pq) && !H.has(pq, 'ROW') ? 0.87 : 0.5;
+      if (cs.length === 1 && (cs[0].op === 'empty' || cs[0].op === 'notEmpty')) s = hasCellWord(pq) && !H.has(pq, 'ROW') && !cs[0].attribute ? 0.87 : 0.5;
       if (H.has(pq, 'CHARACTER') || H.has(pq, 'LENGTH')) s = Math.min(s, 0.3);
       return s;
     },
@@ -274,7 +275,7 @@
       if (!s && cs.length && pq.flags && pq.flags.question && !H.hasAggregate(pq) && !H.has(pq, 'IF')) s = 0.72;
       if (!s && cs.length && H.has(pq, 'ROW') && !H.hasAggregate(pq) && !H.has(pq, 'IF') && !H.any(pq, ['FILTER', 'SORT', 'LIST'])) s = 0.6;
       if (!s) return 0;
-      if (cs.length === 1 && (cs[0].op === 'empty' || cs[0].op === 'notEmpty') && hasCellWord(pq) && !H.has(pq, 'ROW') && !H.wants(pq, ['COUNTIF', 'COUNTIFS'])) s = 0.5;
+      if (cs.length === 1 && (cs[0].op === 'empty' || cs[0].op === 'notEmpty') && hasCellWord(pq) && !H.has(pq, 'ROW') && !H.wants(pq, ['COUNTIF', 'COUNTIFS']) && !cs[0].attribute) s = 0.5;
       if (cs.length === 1 && cs[0].refObj && cs[0].refObj.kind === 'cell' && !H.has(pq, 'COUNT')) s = 0.2;
       if (H.has(pq, 'DUPLICATE')) s = Math.min(s, 0.4);
       return s;
@@ -420,7 +421,11 @@
   defs.push({
     id: 'rank', category: 'aggregate', title: T('Sıralama numarası', 'Ранг', 'Rank'),
     examples: { tr: ['Tutara göre sıralama numarası ver (en büyük 1 olsun)', 'Tutara göre artan sıra numarası ver'], ru: ['Ранг по Сумме (наибольшая — первая)', 'Ранг по Сумме по возрастанию'], en: ['Rank by Amount, largest first', 'Ascending rank by Amount'] },
-    match: function (pq) { if (!H.has(pq, 'RANK')) return 0; if (H.any(pq, ['SORT']) && !H.rawHas(pq, /s[ıi]ra numaras|rank|ранг/)) return 0.3; return 0.9; },
+    match: function (pq) {
+      // "sıralama numarası" / "sıra numarası" / "rank" / "ранг": an explicit rank phrase beats SORT / SEQUENCE words around it
+      if (H.rawHas(pq, /s[ıi]ra(lama)? numaras|s[ıi]ralama (no|numara)|\brank(ing)?\b|ранг/)) return 0.95;
+      if (!H.has(pq, 'RANK')) return 0; if (H.any(pq, ['SORT'])) return 0.3; return 0.9;
+    },
     build: function (pq, ctx, opts) {
       var cand = H.cand('rank', null, {});
       var m = H.mainRef(pq, ctx, cand, { type: 'number' });

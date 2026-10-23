@@ -25,9 +25,15 @@
     want = want || {};
     var pool = H.byPosition(H.refs(pq, { sheet: null, free: true }));
     if (!pool.length) pool = H.byPosition(H.refs(pq, { sheet: null }));
-    pool = H.withoutOpRefs(pq, pool, ['DISCOUNT', 'VAT', 'SUM', 'TOTAL', 'PERCENT', 'SHARE', 'INCREASE', 'DECREASE', 'TAX']);
+    // the operation word first ("Скидка 20% на Сумму": Скидка is the operation, Сумма the operand), then aggregate words
+    pool = H.withoutOpRefs(pq, pool, ['DISCOUNT', 'VAT', 'PERCENT', 'SHARE', 'INCREASE', 'DECREASE', 'TAX']);
+    if (pool.length > 1) { var noOpHdr = pool.filter(function (r) { return !(r.source === 'header' && OP_HEADER_RE.test(H.fold(r.headerName || ''))); }); if (noOpHdr.length) pool = noOpHdr; }
+    pool = H.withoutOpRefs(pq, pool, ['SUM', 'TOTAL']);
     return H.mainRef(pq, ctx, cand, { type: want.type || 'number', pool: pool, slot: 'number', cellSlot: 'cell' });
   }
+  // "çarpımlarının toplamı", "сумма произведений", "sum of the products"
+  var SUMPROD_RE = /[cç]arp[ıi]m(lar)?[ıi]n[ıi]n toplam|сумм\S* произведени|sum of (the )?products/;
+  var OP_HEADER_RE = /indirim|iskonto|kdv|vergi|скидк|ндс|налог|discount|vat|tax/;
   function label(m) { return m.ref ? H.label(m.ref) : '…'; }
   function pct(pq) { return H.nums(pq, { free: true, percent: true }); }
   function plain(pq) { return H.nums(pq, { free: true, percent: false, noDate: true }); }
@@ -239,6 +245,7 @@
       if (H.wants(pq, 'SUMPRODUCT') && refs.length >= 2) return 0.95;
       var sumWord = H.hasFree ? (H.hasFree(pq, 'SUM') || H.hasFree(pq, 'TOTAL')) : H.any(pq, ['SUM', 'TOTAL']);
       if (refs.length >= 2 && sumWord && (H.any(pq, ['MULTIPLY', 'PRODUCT']) || H.rawHas(pq, MUL_RE))) return H.clamp(0.93 - logicPenalty(pq));
+      if (refs.length >= 2 && H.rawHas(pq, SUMPROD_RE)) return H.clamp(0.93 - logicPenalty(pq));
       return 0;
     },
     build: function (pq, ctx, opts) {
@@ -251,11 +258,13 @@
   function arith(id, op, re, concepts, title, examples, tpl) {
     defs.push({ id: id, category: 'math', title: title, examples: examples,
       match: function (pq, ctx) {
-        var sig = H.any(pq, concepts) || H.rawHas(pq, re);
+        // a weak concept (Russian "на" ≈ ×0.2) does not count as the operator word
+        var strong = (pq.concepts || []).some(function (c) { return concepts.indexOf(c.concept) >= 0 && !(typeof c.weight === 'number' && c.weight < 0.5); });
+        var sig = strong || H.rawHas(pq, re);
         if (!sig) return 0;
         var ops = operands(pq, ctx);
         if (ops.length < 2) return 0;
-        if (op === '*' && ops.filter(function (o) { return o.isRange; }).length >= 2 && H.any(pq, ['SUM', 'TOTAL'])) return 0.3;
+        if (op === '*' && ops.filter(function (o) { return o.isRange; }).length >= 2 && (H.any(pq, ['SUM', 'TOTAL']) || H.rawHas(pq, SUMPROD_RE))) return 0.3;
         if (op === '-' && ops.length >= 2 && ops[0].ref && ops[1].ref && ops[0].ref.type === 'date' && ops[1].ref.type === 'date') return 0.4;
         if (op === '-' && H.rawHas(pq, /g[uü]n|ay\b|y[ıi]l|дн|месяц|лет|days?|months?|years?/) && H.any(pq, ['DATE', 'DATE_DIFF'])) return 0.3;
         if (op === '+' && pct(pq).length) return 0;

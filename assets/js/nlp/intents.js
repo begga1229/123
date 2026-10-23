@@ -362,7 +362,7 @@
       if (c.valueRefObj && c.refObj && c.valueRefObj === c.refObj) continue;
       if (typeof c.value === 'string' && !c.valueRef) {
         var tok = pq.tokens && pq.tokens[c.valueTokenIndex];
-        if (tok && tok.type !== 'string') {
+        if (tok && tok.type !== 'string' && !H.dateFromRaw(tok.raw || '')) {
           // an unquoted word used as a value: drop parser noise (words that carry concepts, function words, lowercase verbs/nouns)
           if (tok.concepts && tok.concepts.length) continue;
           if (NOISE_VALUES[fold(tok.norm)]) continue;
@@ -619,10 +619,10 @@
     if (!pick && H.rawHas(pq, /\b(0|sıfır|sifir|ноль|zero)\b/) && /(^|[^\d])0([^\d]|$)/.test(pq.text.slice(Math.max(0, (pq.tokens[idx] || { start: 0 }).start)))) pick = A().num(0);
     return pick || A().str('');
   };
-  H.wantsIfError = function (pq) { return !!(pq && ((pq.flags && pq.flags.ignoreErrors) || H.has(pq, 'IFERROR'))); };
+  H.wantsIfError = function (pq) { return !!(pq && ((pq.flags && pq.flags.ignoreErrors) || H.has(pq, 'IFERROR') || H.wantsIfNa(pq))); };
   H.wantsIfNa = function (pq) { return H.rawHas(pq, /#(n\/a|yok|н\/д)/) || H.rawHas(pq, /\bifna\b|eğeryoksa|egeryoksa|еснд/); };
   H.wrapError = function (cand, pq, ctx, opts) {
-    if (!cand || !cand.ast) return cand;
+    if (!cand || !cand.ast || cand.handlesError) return cand;
     var fn = H.wantsIfNa(pq) ? 'IFNA' : 'IFERROR';
     if (H.usesFunction(cand.ast, ['IFERROR', 'IFNA'])) return cand;
     var inner = cand.ast, fb = H.errorFallback(pq, ctx, opts);

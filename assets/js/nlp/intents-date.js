@@ -61,9 +61,9 @@
   }
   function unitWanted(pq) {
     if (H.rawHas(pq, WORKDAY_RE) || H.any(pq, ['WORKDAY', 'NETWORKDAYS'])) return 'workday';
-    if (H.has(pq, 'YEARS_UNIT') || H.rawHas(pq, /ka[cç] y[ıi]l|y[ıi]l say|y[ıi]l var|y[ıi]l olarak|\bлет\b|год[а-я]*\b|years?\b/)) return 'year';
+    if (H.has(pq, 'YEARS_UNIT') || H.rawHas(pq, /ka[cç] y[ıi]l|y[ıi]l say|y[ıi]l var|y[ıi]l olarak|(^|[^а-яё])лет(?![а-яё])|(^|[^а-яё])год[а-яё]*|years?\b/)) return 'year';
     if (H.has(pq, 'MONTHS_UNIT') || H.rawHas(pq, /ka[cç] ay|ay say|\bay var|месяц|months?\b/)) return 'month';
-    if (H.has(pq, 'DAYS_UNIT') || H.rawHas(pq, /g[uü]n|дн(ей|я|и)\b|день|days?\b/)) return 'day';
+    if (H.has(pq, 'DAYS_UNIT') || H.rawHas(pq, /g[uü]n|дн(ей|я|и)(?![а-яё])|день|days?\b/)) return 'day';
     return null;
   }
   function dateSignals(pq) { return H.any(pq, ['DATE', 'TODAY', 'NOW', 'DATE_DIFF', 'AGE', 'ADD_DAYS', 'ADD_MONTHS', 'ADD_YEARS', 'END_OF_MONTH', 'START_OF_MONTH', 'WORKDAY', 'NETWORKDAYS', 'WEEKDAY', 'WEEKNUM', 'QUARTER', 'YEAR', 'MONTH', 'DAY', 'BIRTHDAY']) || H.rawHas(pq, /tarih|дат[аыеу]\b|\bdate|deadline|vade|срок/) || H.refs(pq, {}).some(function (r) { return r.type === 'date'; }); }
@@ -110,7 +110,7 @@
   /* ------------------------------------------------------------------ age */
   defs.push({ id: 'age', category: 'date', title: T('Doğum tarihinden yaş', 'Возраст по дате рождения', 'Age from birth date'),
     examples: { tr: ['Doğum tarihinden yaş hesapla', 'Doğum tarihinden yaşı yıl olarak hesapla ve N sütununa yaz'], ru: ['Посчитай возраст по дате рождения', 'Возраст в полных годах по Дате рождения'], en: ['Calculate age from Birth Date', 'Age in full years from K2'] },
-    match: function (pq) { if (!(H.has(pq, 'AGE') || H.rawHas(pq, /\bya[sş]([ıi]n?[ıi]?)?\b|возраст(?!ан)|\bage\b/))) return 0; if (H.has(pq, 'ELAPSED') && H.rawHas(pq, /g[uü]n|дн|day/)) return 0.3; return 0.92; },
+    match: function (pq) { if (!(H.has(pq, 'AGE') || H.rawHas(pq, /\bya[sş]([ıi]n?[ıi]?)?\b|возраст(?!ан)|\bage\b/))) return 0; if (H.has(pq, 'ELAPSED') && H.rawHas(pq, /g[uü]n|дн|day/)) return 0.3; if (twoRefs(pq) && !H.rawHas(pq, /do[gğ]um|рожд|birth|born/)) return 0.3; return 0.92; },
     build: function (pq, ctx, opts) {
       var cand = H.cand('age', null, {});
       var m = dateRef(pq, ctx, cand, { prefer: /dogum|рожд|birth|born/ });

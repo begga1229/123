@@ -242,6 +242,8 @@
       var sig = H.any(pq, ['TOP_N', 'BOTTOM_N']) || H.rawHas(pq, /\btop\b|топ|en y[uü]ksek \d|en b[uü]y[uü]k \d|en d[uü][sş][uü]k \d|en k[uü][cç][uü]k \d|ilk \d|\d+ наибольш|\d+ наименьш|\d+ крупнейш|largest \d|highest \d|lowest \d|smallest \d|first \d/);
       if (!sig) return 0;
       if (H.has(pq, 'CHARACTER') || H.has(pq, 'WORD')) return 0;
+      // "ilk 3 karakteri", "first 3 characters", "первые 3 символа": a text slice, not a top-N list
+      if (H.any(pq, ['LEFT_CHARS', 'RIGHT_CHARS', 'MID_CHARS']) || H.rawHas(pq, /karakter|harf|символ|знак|букв|character|letter|\bchars?\b/)) return 0;
       if (H.conds(pq).length && !H.rawHas(pq, LIST_RE)) return 0.4;
       return H.clamp(0.92 - arrayPenalty(opts));
     },

@@ -224,10 +224,18 @@
         for (var s = 0; s < sub.length; s++) out.push(sub[s]);
         continue;
       }
+      // "Топ-5", "top-10": a word glued to a count by a hyphen is two tokens
+      var hy = /^(\p{L}{2,})-(\d+)$/u.exec(raw);
+      if (hy && TOP_WORD_RE.test(lower(hy[1], lang))) {
+        out.push({ raw: hy[1], norm: lower(hy[1], lang), start: start, end: start + hy[1].length });
+        out.push({ raw: hy[2], norm: hy[2], start: end - hy[2].length, end: end });
+        continue;
+      }
       out.push({ raw: raw, norm: typeof t.norm === 'string' ? t.norm : lower(raw, lang), start: start, end: end });
     }
     return out;
   }
+  var TOP_WORD_RE = /^(топ|top|ilk|son|первые|последние|bottom|first|last)$/;
 
   /** Merge "'den" style suffix pieces into the preceding token and expose token.suffix. */
   function attachSuffixes(tokens, text) {
@@ -328,6 +336,7 @@
    * Single words: 'stem*' = prefix match (folded), 'word' = exact match. Phrases: arrays of such words. */
   var OWN = {
     tr: [
+      [['eşit*', 'veya', 'büyük*'], 'GTE'], [['eşit*', 'ya', 'da', 'büyük*'], 'GTE'], [['eşit*', 'veya', 'küçük*'], 'LTE'], [['eşit*', 'ya', 'da', 'küçük*'], 'LTE'],
       [['büyük*', 'veya', 'eşit*'], 'GTE'], [['büyük*', 'ya', 'da', 'eşit*'], 'GTE'], [['büyük*', 'eşit*'], 'GTE'], [['büyük*', 'veya', 'daha', 'fazla*'], 'GTE'],
       [['ve', 'üzeri*'], '!GTE'], [['ve', 'üstü*'], '!GTE'], [['ve', 'yukarı*'], '!GTE'], [['ve', 'fazla*'], '!GTE'], [['veya', 'üzeri*'], '!GTE'], [['ya', 'da', 'üzeri*'], 'GTE'], [['en', 'az'], 'GTE'], [['den', 'az', 'olmayan*'], 'GTE'],
       [['küçük*', 'veya', 'eşit*'], 'LTE'], [['küçük*', 'ya', 'da', 'eşit*'], 'LTE'], [['küçük*', 'eşit*'], 'LTE'], [['küçük*', 'veya', 'daha', 'az'], 'LTE'],
@@ -361,6 +370,7 @@
       ['her', 'EACH_ROW']
     ],
     ru: [
+      [['равн*', 'или', 'больше'], 'GTE'], [['равн*', 'или', 'меньше'], 'LTE'],
       [['не', 'менее'], 'GTE'], [['не', 'меньше'], 'GTE'], [['не', 'ниже'], 'GTE'], [['больше', 'или', 'равн*'], 'GTE'], [['больше', 'либо', 'равн*'], 'GTE'], [['более', 'или', 'равн*'], 'GTE'], [['как', 'минимум'], 'GTE'], [['и', 'выше'], '!GTE'], [['и', 'более'], '!GTE'], [['и', 'больше'], '!GTE'], [['или', 'больше'], '!GTE'], [['или', 'выше'], '!GTE'], [['или', 'более'], '!GTE'], [['начиная', 'с'], 'GTE'],
       [['не', 'более'], 'LTE'], [['не', 'больше'], 'LTE'], [['не', 'выше'], 'LTE'], [['не', 'превыша*'], 'LTE'], [['меньше', 'или', 'равн*'], 'LTE'], [['меньше', 'либо', 'равн*'], 'LTE'], [['менее', 'или', 'равн*'], 'LTE'], [['как', 'максимум'], 'LTE'], [['и', 'ниже'], '!LTE'], [['и', 'меньше'], '!LTE'], [['или', 'меньше'], '!LTE'], [['или', 'ниже'], '!LTE'], [['или', 'менее'], '!LTE'],
       [['не', 'равн*'], 'NEQ'], [['не', 'равен'], 'NEQ'], [['за', 'исключением'], 'NEQ'], [['не', 'является'], 'NEQ'], [['не', 'совпада*'], 'NEQ'], [['отличн*', 'от'], 'NEQ'], [['отличается', 'от'], 'NEQ'],
@@ -455,6 +465,8 @@
   var NO_VALUE_OPS = { EMPTY: 1, NOT_EMPTY: 1 };
   var MARKERS = { IF: 1, THEN: 1, ELSE: 1, OTHERWISE: 1 };
   var CONJ = { AND: 'AND', OR: 'OR' };
+  var ARITH_OPS = { DIVIDE: 1, MULTIPLY: 1, MINUS: 1, PLUS: 1 };
+  var ANCHOR_CONCEPTS = { COLUMN: 1, SHEET: 1, CELL: 1, ROW: 1 };
   var AGG_AMBIGUOUS = { SUM: 1, TOTAL: 1, AMOUNT: 1, COUNT: 1, COUNT_NONEMPTY: 1, COUNT_EMPTY: 1, AVERAGE: 1, MAX: 1, MIN: 1, PRODUCT: 1, MULTIPLY: 1, SUBTOTAL: 1, COUNT_UNIQUE: 1, RANK: 1 };
   var HEADER_STOP = { 'sutun': 1, 'sütun': 1, 'kolon': 1, 'satir': 1, 'hucre': 1, 'sayfa': 1, 'deger': 1, 'toplam': 1, 'столбец': 1, 'столбца': 1, 'столбцу': 1, 'столбце': 1, 'колонка': 1, 'колонке': 1, 'колонку': 1, 'строка': 1, 'ячейка': 1, 'лист': 1, 'значение': 1, 'итог': 1, 'column': 1, 'col': 1, 'row': 1, 'cell': 1, 'sheet': 1, 'value': 1, 'total': 1, 'sum': 1 };
 
@@ -648,7 +660,12 @@
     // phrase concepts override single-token concepts inside their span
     for (var z = 0; z < used.length; z++) {
       var ps = used[z];
-      for (var t = ps.start; t < ps.end; t++) { if (!tokens[t].phraseCleared) { tokens[t].concepts = []; tokens[t].phraseCleared = true; } }
+      for (var t = ps.start; t < ps.end; t++) {
+        if (tokens[t].phraseCleared) continue;
+        // structural nouns (column / sheet / cell / row) keep their meaning inside a lexicon phrase ("сумма столбца", "по столбцу")
+        var anchors = tokens[t].type === 'word' ? ownLookup(tokens[t].norm, lang).filter(function (c) { return ANCHOR_CONCEPTS[c.concept]; }) : [];
+        tokens[t].concepts = anchors; tokens[t].phraseCleared = true;
+      }
     }
     rangeWordPatterns(tokens, lang);
     for (var z2 = 0; z2 < used.length; z2++) {
@@ -762,17 +779,20 @@
 
     // 1. sheet mentions
     var sheetMentions = [];
+    var SHEET_NOUN_RE = /^(sayfa\p{L}*|лист|листа|листе|листу|листом|листы|листах|sheet|sheets|worksheet|worksheets)$/u;
+    // a capitalised name right next to a sheet word is the sheet name even when the lexicon gave it a meaning ("Список", "Liste")
+    var nameTok = function (tk) { return tk && (tk.type === 'string' || tk.type === 'word' && (!tk.concepts.length || /^\p{Lu}/u.test(tk.raw || '') && !SHEET_NOUN_RE.test(fold(tk.norm)))); };
     for (i = 0; i < tokens.length; i++) {
       t = tokens[i];
-      if (t.type !== 'word' || !hasConcept(t, 'SHEET')) continue;
+      if (t.type !== 'word' || !(hasConcept(t, 'SHEET') || SHEET_NOUN_RE.test(fold(t.norm)))) continue;
       var cand = null, ci = -1;
       if (lang === 'tr') {
         // "Ürünler sayfasındaki": word before
-        if (i > 0 && (tokens[i - 1].type === 'word' || tokens[i - 1].type === 'string') && !tokens[i - 1].concepts.length && !/^(bu|şu|o|aynı|diğer|başka|ayrı|yeni)$/.test(tokens[i - 1].norm)) { cand = tokens[i - 1].type === 'string' ? tokens[i - 1].value : tokens[i - 1].base; ci = i - 1; }
+        if (i > 0 && nameTok(tokens[i - 1]) && !tokens[i - 1].consumed && !/^(bu|şu|o|aynı|diğer|başka|ayrı|yeni)$/.test(tokens[i - 1].norm)) { cand = tokens[i - 1].type === 'string' ? tokens[i - 1].value : tokens[i - 1].base; ci = i - 1; }
         if (!cand && i + 1 < tokens.length && tokens[i + 1].type === 'string') { cand = tokens[i + 1].value; ci = i + 1; }
       } else {
         // "на листе Товары" / "sheet Products": word after, else word before
-        if (i + 1 < tokens.length && (tokens[i + 1].type === 'string' || tokens[i + 1].type === 'word' && !tokens[i + 1].concepts.length)) { cand = tokens[i + 1].type === 'string' ? tokens[i + 1].value : tokens[i + 1].base; ci = i + 1; }
+        if (i + 1 < tokens.length && nameTok(tokens[i + 1])) { cand = tokens[i + 1].type === 'string' ? tokens[i + 1].value : tokens[i + 1].base; ci = i + 1; }
         if (cand && ctx && !resolveSheetName(cand, ctx)) { cand = null; ci = -1; }
         if (!cand && i > 0 && (tokens[i - 1].type === 'word' && !tokens[i - 1].concepts.length || tokens[i - 1].type === 'string')) { cand = tokens[i - 1].type === 'string' ? tokens[i - 1].value : tokens[i - 1].base; ci = i - 1; }
       }
@@ -797,7 +817,7 @@
       }
       sheetMentions.push({ name: res, tokenIndex: i, markerIndex: i });
       t.sheetName = res;
-      if (looksSheet || (tokens[i + 1] && tokens[i + 1].type === 'ref')) t.consumed = true;
+      if (looksSheet || (tokens[i + 1] && tokens[i + 1].type === 'ref') || (ctx && ctx.otherSheets && ctx.otherSheets[res])) { t.consumed = true; t.usedBy = t.usedBy || 'sheet'; }
     }
     pq.sheets = sheetMentions;
 
@@ -823,6 +843,8 @@
       var whole = false, j;
       for (j = Math.max(0, i - 3); j < i; j++) if (hasConcept(tokens[j], 'ALL') || hasConcept(tokens[j], 'WHOLE_COLUMN')) whole = true;
       if (colAfter && hasConcept(nextT, 'WHOLE_COLUMN')) whole = true;
+      var afterRef = tokens[colAfter ? i + 2 : i + 1];   // "столбец H целиком", "column H entirely"
+      if (afterRef && afterRef.type === 'word' && (hasConcept(afterRef, 'WHOLE_COLUMN') || hasConcept(afterRef, 'ALL') && /^(целиком|полностью|tamamen|tamamı|entirely|whole)$/.test(afterRef.norm))) whole = true;
       var colParsed;
       if (ctx && firstRow && lastRow && !whole) colParsed = { text: t.base + firstRow + ':' + t.base + lastRow, kind: 'range', col: t.base, col2: t.base, row: firstRow, row2: lastRow, sheet: null };
       else colParsed = { text: t.base + ':' + t.base, kind: 'column', col: t.base, col2: t.base, row: null, row2: null, sheet: null };
@@ -948,7 +970,7 @@
     var words = headerWords(name);
     if (words.length !== 1) return false;
     var cs = lexLookup(words[0], lang);
-    for (var i = 0; i < cs.length; i++) if (AGG_AMBIGUOUS[cs[i].concept]) return true;
+    for (var i = 0; i < cs.length; i++) if (AGG_AMBIGUOUS[cs[i].concept] && !(typeof cs[i].weight === 'number' && cs[i].weight < 0.5)) return true;
     return false;
   }
   function windowWords(tokens, s, e, text) {
@@ -1032,9 +1054,11 @@
         j++; look++;
       }
       if (prev && hasAnyConcept(prev, COMPARATORS) && (lang === 'ru' || lang === 'en')) return 'condition';
+      // operand of an arithmetic word: "Сумма делить на Кол-во", "Tutar bölü Adet", "Amount divided by Quantity"
+      if (next && next.type === 'word' && (next.concepts || []).some(function (c) { return ARITH_OPS[c.concept] && !(c.weight < 0.5); })) return 'condition';
       // aggregate position: "Tutar toplamı", "Tutar ortalaması", "Amount total"
       var nx2 = tokens[cd.end];
-      if (nx2 && nx2.type === 'word' && hasAnyConcept(nx2, AGG_AMBIGUOUS) && fold(nx2.norm) !== fold(tokens[cd.start].norm) && !hasConcept(nx2, 'AMOUNT')) return 'aggregate';
+      if (lang !== 'ru' && nx2 && nx2.type === 'word' && hasAnyConcept(nx2, AGG_AMBIGUOUS) && fold(nx2.norm) !== fold(tokens[cd.start].norm) && !hasConcept(nx2, 'AMOUNT') && !hasConcept(nx2, 'ALL')) return 'aggregate';
       return null;
     }
     var kept = [];
@@ -1047,6 +1071,8 @@
     var final = [];
     for (var f = 0; f < kept.length; f++) {
       var kc = kept[f];
+      // the object of an aggregate phrase ("посчитай сумму …", "найди сумму …") is the operation, not the column
+      if (kc.ambiguous && kc.position !== 'strong' && (pq.concepts || []).some(function (pc) { return pc.phrase && AGG_AMBIGUOUS[pc.concept] && pc.tokenIndex < kc.start && pc.tokenEnd >= kc.end; })) continue;
       if (kc.ambiguous && !kc.position) {
         // adjacent (within 2 tokens, through a conjunction) to another header or explicit ref?
         var near = false;
@@ -1055,7 +1081,8 @@
           for (var g = lo; g < hi; g++) { var gt = tokens[g]; if (gt.type === 'punct') continue; if (!hasAnyConcept(gt, { AND: 1, OR: 1, WITH: 1 }) || hasConcept(gt, 'COLUMN')) return false; }
           return true;
         }
-        for (var o = 0; o < kept.length && !near; o++) if (o !== f && !(kept[o].ambiguous && !kept[o].position) && (kept[o].start >= kc.end && gapOk(kc.end, kept[o].start) || kc.start >= kept[o].end && gapOk(kept[o].end, kc.start))) near = true;
+        // "Сумма Кол-во" (aggregate word directly before a column, no conjunction) is "sum of Кол-во", not two columns
+        for (var o = 0; o < kept.length && !near; o++) if (o !== f && !(kept[o].ambiguous && !kept[o].position) && (kept[o].start > kc.end && gapOk(kc.end, kept[o].start) || kc.start >= kept[o].end && gapOk(kept[o].end, kc.start))) near = true;
         for (var r = 0; r < refs.length && !near; r++) if (refs[r].tokenIndex >= kc.end && gapOk(kc.end, refs[r].tokenIndex) || kc.start >= refs[r].tokenEnd && gapOk(refs[r].tokenEnd, kc.start)) near = true;
         if (!near) continue;
         kc.confidence = 0.7;
@@ -1112,8 +1139,12 @@
         var prepIsIn = prep && /^(в|во)$/.test(prep.norm);
         if (r.letterOnly && cw && /^(столбец|колонку|колонки|столбцы)$/.test(cw.norm) && (prepIsIn || hasWrite)) { isTarget = true; strength = 3; }
         if (r.letterOnly && cw && /^(столбце|колонке)$/.test(cw.norm) && hasWrite && prepIsIn) { isTarget = true; strength = 1; }
-        if (r.kind === 'cell' && prev && /^(ячейку|ячейке)$/.test(prev.norm)) { isTarget = true; strength = 3; }
-        if (r.kind === 'cell' && prepIsIn && hasWrite) { isTarget = true; strength = 2; }
+        // "в ячейку F2" (accusative) is a destination; "в ячейке F2" (locative) names where a value is, e.g. "больше значения в ячейке P1"
+        var cmpBefore = false;
+        for (var cb = Math.max(0, r.tokenIndex - 6); cb < r.tokenIndex; cb++) if (hasAnyConcept(tokens[cb], COMPARATORS)) cmpBefore = true;
+        if (r.kind === 'cell' && prev && prev.norm === 'ячейку') { isTarget = true; strength = 3; }
+        if (r.kind === 'cell' && prev && prev.norm === 'ячейке' && !cmpBefore) { isTarget = true; strength = hasWrite ? 3 : 1; }
+        if (r.kind === 'cell' && prepIsIn && hasWrite && !cmpBefore) { isTarget = true; strength = 2; }
         if (r.kind === 'cell' && prev && hasConcept(prev, 'WRITE')) { isTarget = true; strength = 2; }
       } else {
         var pw = prev && prev.norm, p2 = prev2 && prev2.norm;
@@ -1228,6 +1259,57 @@
     for (var o = 0; o < order.length; o++) if (ops.indexOf(order[o]) >= 0) return order[o];
     return ops[0];
   }
+  /* "Tarihi 01.01.2024'ten sonra", "после 01.01.2024", "Date is after 01/01/2024", "с датой позже, чем в ячейке F2":
+   * after / before words are comparators (GT / LT) when the sentence compares dates (a date literal or a date column). */
+  var DATE_LIT_RE = /^(\d{1,2}[.\/-]\d{1,2}[.\/-]\d{4}|\d{4}-\d{1,2}-\d{1,2})/;
+  var AFTER_RE = { tr: /^(sonra|sonrası|sonrasında|sonraki|sonrakiler\p{L}*)$/u, ru: /^(после|позже|позднее)$/u, en: /^(after|later)$/u };
+  var BEFORE_RE = { tr: /^(önce|öncesi|öncesinde|önceki|öncekiler\p{L}*)$/u, ru: /^(раньше|ранее|прежде)$/u, en: /^(before|earlier|prior)$/u };
+  function markDateComparators(pq, tokens, refs, ctx) {
+    var lang = pq.lang, aft = AFTER_RE[lang], bef = BEFORE_RE[lang];
+    if (!aft) return;
+    var dateLit = tokens.some(function (t) { return (t.type === 'number' || t.type === 'word') && DATE_LIT_RE.test(t.raw || ''); });
+    var dateRef = refs.some(function (r) { return r.type === 'date' || r.source === 'header' && r.headerName && ctx && (ctx.headers || []).some(function (h) { return h.name === r.headerName && h.type === 'date'; }); });
+    if (!dateLit && !dateRef) return;
+    for (var i = 0; i < tokens.length; i++) {
+      var t = tokens[i];
+      if (t.type !== 'word' || t.consumed && !t.headerRef) continue;
+      var op = aft.test(t.norm) ? 'GT' : bef.test(t.norm) ? 'LT' : null;
+      if (!op || hasAnyConcept(t, COMPARATORS)) continue;
+      t.concepts = t.concepts.filter(function (c) { return c.concept !== 'ADD' && c.concept !== 'LAST' && c.concept !== 'FIRST'; });
+      mergeConcepts(t.concepts, [{ concept: op, weight: 1 }]);
+      t.dateCompare = true;
+      pq.concepts = pq.concepts.filter(function (c) { return !(c.tokenIndex === i && (c.concept === 'ADD' || c.concept === 'LAST' || c.concept === 'FIRST')); });
+      pq.concepts.push({ concept: op, weight: 1, tokenIndex: i, tokenEnd: i + 1, start: t.start, end: t.end });
+    }
+    pq.concepts.sort(function (a, b) { return a.start - b.start; });
+    attachHelpers(pq);
+  }
+  /** A date comparison without its own column ("Сумма продаж после 01.01.2024") compares the first date column. */
+  function defaultDateRefs(pq, tokens, ctx) {
+    if (!ctx || !Array.isArray(ctx.headers)) return;
+    var dh = ctx.headers.filter(function (h) { return h.type === 'date'; })[0];
+    if (!dh) return;
+    pq.conditions.forEach(function (c) {
+      if (c.ref || !tokens[c.tokenIndex] || !tokens[c.tokenIndex].dateCompare) return;
+      var parsed = parseRefText(dh.dataRange || (dh.col + (ctx.firstDataRow || 2) + ':' + dh.col + (ctx.lastRow || 2)));
+      if (!parsed) return;
+      parsed.headerName = dh.name; parsed.type = 'date';
+      var ref = makeRef(parsed, 'default', c.tokenIndex, c.tokenIndex + 1, tokens);
+      ref.full = fullText(ref); ref.usedBy = 'condition';
+      c.ref = ref.full; c.refObj = ref;
+    });
+  }
+  /** TR "P1 hücresinden büyük", "F2 hücresindeki tarihten sonra": the compared value is the cell named before the cell word. */
+  function cellValueLeft(tokens, i, refs) {
+    var k = i - 1, abl = /(den|dan|ten|tan)$/;
+    var cellW = function (tk) { return tk && tk.type === 'word' && /^h[uü]cre/.test(tk.norm); };
+    var cellTok = null;
+    if (cellW(tokens[k]) && abl.test(tokens[k].norm)) cellTok = tokens[k - 1];
+    else if (tokens[k] && tokens[k].type === 'word' && abl.test(tokens[k].norm) && cellW(tokens[k - 1])) cellTok = tokens[k - 2];
+    if (!cellTok || cellTok.type !== 'ref') return null;
+    for (var r = 0; r < refs.length; r++) if (refs[r].tokenIndex === cellTok.index && refs[r].kind === 'cell') return { kind: 'ref', value: refs[r].full || fullText(refs[r]), ref: refs[r], tokenIndex: cellTok.index };
+    return null;
+  }
   function extractConditions(pq, tokens, refs) {
     var lang = pq.lang, conditions = [], i;
     var dirs = lang === 'tr' ? [-1, 1] : [1, -1];
@@ -1272,6 +1354,7 @@
           if (afterMarker || !condLike) continue;
           op = 'EMPTY'; found = true;
         } else {
+          if (lang === 'tr') value = cellValueLeft(tokens, i, refs);
           for (var dd = 0; dd < dirs.length && !value; dd++) {
             var from = dirs[dd] > 0 ? spanEnd - 1 : i;
             value = scanValue(tokens, from, dirs[dd], lang, refs, true, 4);
@@ -1322,7 +1405,37 @@
       // literal must not be the then/else value of a marker right before it
       if (lit.index > 0 && hasAnyConcept(tokens[lit.index - 1], { THEN: 1, ELSE: 1 }) && tokens[lit.index - 1].index !== r.tokenEnd - 1) continue;
       lit.consumed = true; lit.usedBy = 'condition'; r.usedBy = 'condition';
-      conditions.push({ ref: r.full || fullText(r), refObj: r, op: '=', value: lit.type === 'string' ? lit.value : lit.base, value2: null, valueRef: null, valueKind: 'str', isPercent: false, conjunction: null, position: pos, tokenIndex: pos, tokenEnd: Math.max(r.tokenEnd, lit.index + 1), start: Math.min(r.span[0], lit.start), end: Math.max(r.span[1], lit.end), hasIf: false, valueTokenIndex: lit.index, concept: 'EQ', implicit: lit.type !== 'string' });
+      // "не в городе "Казань"" / "not in City "Paris"": a negation before the column (through a preposition) → "<>"
+      var negOp = '=';
+      for (var nb = r.tokenIndex - 1, hops = 0; nb >= 0 && hops < 3; nb--, hops++) {
+        var nt2 = tokens[nb];
+        if (nt2.type === 'word' && /^(не|not)$/.test(nt2.norm)) { negOp = '<>'; nt2.consumed = true; break; }
+        if (!(nt2.type === 'word' && /^(в|во|на|из|с|со|in|from|at|of|the)$/.test(nt2.norm))) break;
+      }
+      conditions.push({ ref: r.full || fullText(r), refObj: r, op: negOp, value: lit.type === 'string' ? lit.value : lit.base, value2: null, valueRef: null, valueKind: 'str', isPercent: false, conjunction: null, position: pos, tokenIndex: pos, tokenEnd: Math.max(r.tokenEnd, lit.index + 1), start: Math.min(r.span[0], lit.start), end: Math.max(r.span[1], lit.end), hasIf: false, valueTokenIndex: lit.index, concept: 'EQ', implicit: lit.type !== 'string' });
+    }
+    // "Durumu boş olanları say", "строк с пустым Статусом", "empty cells in Status": an emptiness word next to a column named
+    // by its header alone (no column word — "Şehir sütununda boş hücre" stays a COUNTBLANK range) is an `empty` condition
+    var EMPTY_W = /^(boş|bos|пуст\p{L}*|незаполнен\p{L}*|empty|blank)$/u, BLANK_VERB = /^(bırak\p{L}*|kalsın|olsun|göster\p{L}*|yaz|оставь|оставить|оставлять|leave|show|return)$/u;
+    for (i = 0; i < refs.length; i++) {
+      var er = refs[i];
+      if (er.usedBy || er.source !== 'header' || er.columnWord || er.sheet) continue;
+      var et = null, ej;
+      if (lang === 'tr') { et = tokens[er.tokenEnd]; ej = er.tokenEnd; }
+      else for (ej = er.tokenIndex - 1; ej >= Math.max(0, er.tokenIndex - 4); ej--) {
+        var tj = tokens[ej];
+        if (tj.type === 'word' && EMPTY_W.test(tj.norm)) { et = tj; break; }
+        if (!(tj.type === 'word' && (hasAnyConcept(tj, { CELL: 1, ROW: 1, IN: 1, WITH: 1 }) || /^(в|с|со|in|with|of)$/.test(tj.norm)))) break;
+      }
+      if (!et || et.type !== 'word' || !EMPTY_W.test(et.norm) || et.usedBy === 'condition') continue;
+      var en = tokens[ej + 1], ep = tokens[ej - 1], marker = false;
+      if (en && en.type === 'word' && BLANK_VERB.test(en.norm) || ep && ep.type === 'word' && BLANK_VERB.test(ep.norm)) continue;
+      for (var mb = Math.max(0, Math.min(ej, er.tokenIndex) - 3); mb < Math.max(ej, er.tokenIndex); mb++) if (hasAnyConcept(tokens[mb], { ELSE: 1, THEN: 1, IFERROR: 1, OTHERWISE: 1 })) marker = true;
+      if (marker) continue;
+      if (conditions.some(function (c0) { return c0.refObj === er; })) continue;
+      et.consumed = true; et.usedBy = 'condition'; er.usedBy = 'condition';
+      var epos = Math.min(er.tokenIndex, ej);
+      conditions.push({ ref: er.full || fullText(er), refObj: er, op: 'empty', value: null, value2: null, valueRef: null, valueKind: null, isPercent: false, conjunction: null, position: epos, tokenIndex: epos, tokenEnd: Math.max(er.tokenEnd, ej + 1), start: Math.min(er.span[0], et.start), end: Math.max(er.span[1], et.end), hasIf: false, valueTokenIndex: undefined, concept: 'EMPTY', implicit: true, attribute: true });
     }
     conditions.sort(function (a, b) { return a.position - b.position; });
     // de-duplicate ("от 100 и выше" → one condition)
@@ -1441,6 +1554,8 @@
         var isPct = t.type === 'percent';
         var nx = tokens[i + 1], pv = tokens[i - 1];
         if (!isPct && (nx && nx.type === 'word' && hasConcept(nx, 'PERCENT') || pv && pv.type === 'word' && hasConcept(pv, 'PERCENT'))) isPct = true;
+        // "yüzde 10" / "10 процентов" inside a lexicon phrase ("yüzde 10 azalt") that cleared the PERCENT concept
+        if (!isPct && (lang === 'tr' ? pv && pv.type === 'word' && /^y[uü]zde$/.test(pv.norm) : nx && nx.type === 'word' && /^(процент\p{L}*|percent|pct)$/u.test(nx.norm))) isPct = true;
         numbers.push({ value: t.value, raw: t.raw, isPercent: isPct, tokenIndex: i, tokenEnd: i + 1, start: t.start, end: t.end, usedBy: t.usedBy || null });
         continue;
       }
@@ -1577,9 +1692,11 @@
       pq.concepts = concepts;
       attachHelpers(pq);
       pq.refs = extractRefs(pq, tokens, ctx, original);
+      markDateComparators(pq, tokens, pq.refs, ctx);
       pq.target = extractTarget(pq, tokens, pq.refs, ctx);
       collectNumbers(pq, tokens);
       pq.conditions = extractConditions(pq, tokens, pq.refs);
+      defaultDateRefs(pq, tokens, ctx);
       var te = extractThenElse(pq, tokens, pq.refs, pq.conditions);
       pq.thenValue = te.thenValue; pq.elseValue = te.elseValue;
       collectLiterals(pq, tokens);

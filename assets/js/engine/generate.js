@@ -123,7 +123,9 @@
   function helpWanted(pq, text) {
     var fx = (pq && pq.explicitFunctions) || [];
     var has = function (c) { return pq && typeof pq.has === 'function' && pq.has(c); };
-    if (fx.length && (has('HELP') || has('HOW_TO') || has('EXPLAIN') || has('EXAMPLE'))) return fx[0];
+    // "С помощью СУММЕСЛИ сложи …" / "… yardımıyla" / "with the help of …" name the tool to use, not a help request
+    var instrument = /(^|\s)(с|при)\s+помощ\S*|yard[ıi]m[ıi]yla|with the help of/i.test(text);
+    if (fx.length && ((has('HELP') && !instrument) || has('HOW_TO') || has('EXPLAIN') || has('EXAMPLE'))) return fx[0];
     if (fx.length && /nas[ıi]l kullan|ne i[şs]e yarar|nedir\??$|как (использовать|работает|пользоваться)|что делает|для чего|how (to|do i) use|what does .* do|syntax|s[öo]zdizimi|синтаксис/i.test(text)) return fx[0];
     var words = text.replace(/[?!.…]+$/g, '').trim().split(/\s+/);
     if (words.length === 1) { var e = catalogByName(words[0]); if (e && !/^[A-Za-z]{1,3}\d*$/.test(words[0])) return e.name; }

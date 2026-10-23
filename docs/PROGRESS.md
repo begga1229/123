@@ -1,4 +1,21 @@
-# Formula Studio — Kaldığımız yer / Где остановились / Where we stopped
+# Formula Studio — Durum / Статус / Status
+
+**23.10.2026 — Hafif plan tamamlandı.** Sözlük API'si yazıldı, kurallı motor düzeltildi, yapay zeka arayüzü ve Windows programı test edildi, iki ZIP üretildi (`dist/`).
+
+| Paket | Sonuç |
+|---|---|
+| tests/run.js tr / ru / en | %99,2 / %99,6 / %100 (kalan 3 vaka: doğru formül ilk 5'te ama 1. sırada değil: tr-115, tr-122, ru-219) |
+| Lehçe çevirisi | %100 (504/504) |
+| tests/ai-test.js | 33/33 |
+| tests/smoke.js | geçti |
+| Electron (Linux kopyası, xvfb) | pencere, dosya yükleme, formül, yerel model erişimi geçti |
+
+Yeniden üretim: `EFS_DEV_NODE_MODULES=<electron+packager> node tools/build-desktop.js` ve `sh tools/make-web-zip.sh`.
+
+---
+
+## Önceki durma noktası (22.10.2026, arşiv)
+
 
 Son durum: 22.10.2026. Dal: `claude/excel-formula-generator-app-a93jy8`.
 

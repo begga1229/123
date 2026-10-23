@@ -24,6 +24,15 @@
   }
   function nums(pq) { return H.nums(pq, { free: true, percent: false, noDate: true }); }
   function lits(pq) { return H.lits(pq, { free: true }); }
+  /** Literals of a replace request: "Замени в названии товара "Ручка" на "Pen"" — the parser may have read
+   * 'товара "Ручка"' as an equality test and "Pen" as a then-value; with a replace verb they are the old/new texts. */
+  function replLits(pq, repl) {
+    var ls = lits(pq);
+    if (!repl || ls.length >= 2) return ls;
+    var all = H.lits(pq), cs = H.conds(pq);
+    if (all.length >= 2 && all.length <= 3 && cs.every(function (c) { return c.op === '='; }) && !H.has(pq, 'IF')) return all;
+    return ls;
+  }
   function fill(id, pq, ctx, ref, ast, explain, tags) {
     return H.cand(id, ast, { explain: explain, target: H.target(pq, ctx, 'fill', ref), tags: tags || [] });
   }
@@ -202,8 +211,8 @@
   defs.push({ id: 'substitute', category: 'text', title: T('Metni değiştir (YERİNEKOY)', 'Заменить текст (ПОДСТАВИТЬ)', 'Replace text (SUBSTITUTE)'),
     examples: { tr: ['Ürün adındaki "Kalem" kelimesini "Pen" ile değiştir', 'Ürün adındaki tüm boşlukları kaldır'], ru: ['Замени в названии товара "Ручка" на "Pen"', 'Удали все пробелы из названия товара'], en: ['Replace "Pen" with "Pencil" in Product', 'Remove all spaces from Product'] },
     match: function (pq) {
-      var ls = lits(pq);
       var repl = H.any(pq, ['REPLACE', 'SUBSTITUTE']) || H.wants(pq, 'SUBSTITUTE');
+      var ls = replLits(pq, repl);
       var removeSpaces = (H.has(pq, 'SPACE') || H.rawHas(pq, /bo[sş]luk|пробел|space/)) && H.rawHas(pq, REMOVE_RE) && !H.has(pq, 'TRIM');
       if (removeSpaces && !H.rawHas(pq, /fazla|gereksiz|лишн|extra|double/)) return base(pq, 0.92);
       if (repl && ls.length >= 1 && !H.nums(pq, { free: true }).length) return base(pq, 0.92);
@@ -212,7 +221,8 @@
     },
     build: function (pq, ctx, opts) {
       var cand = H.cand('substitute', null, {});
-      var m = textRef(pq, ctx, cand), ls = lits(pq), lang = H.lang(pq, opts);
+      var ls = replLits(pq, H.any(pq, ['REPLACE', 'SUBSTITUTE']) || H.wants(pq, 'SUBSTITUTE')), lang = H.lang(pq, opts);
+      var m = textRef(pq, ctx, cand);
       var oldT, newT;
       if (ls.length >= 2) { oldT = ls[0].value; newT = ls[1].value; }
       else if (ls.length === 1) { oldT = ls[0].value; newT = ''; }
